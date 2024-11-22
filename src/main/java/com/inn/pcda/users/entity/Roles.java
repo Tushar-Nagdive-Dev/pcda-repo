@@ -1,5 +1,7 @@
 package com.inn.pcda.users.entity;
 
+import com.inn.pcda.configs.baseImplementation.BaseEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +16,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "roles")
 @Getter @Setter @NoArgsConstructor @ToString
-public class Roles {
+public class Roles extends BaseEntity{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
