@@ -11,12 +11,17 @@ import com.inn.pcda.users.repository.RoleRepository;
 import com.inn.pcda.users.repository.UserConfigRepository;
 import com.inn.pcda.users.repository.UserRepository;
 import com.inn.pcda.users.service.IRecaptchaValidationService;
+import com.inn.pcda.exceptions.RegistrationException;
 
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class RegistrationService {
-    
+
+    private static final Logger logger = LoggerFactory.getLogger(RegistrationService.class);
+
     @Autowired
     private UserRepository userRepo;
 
@@ -34,28 +39,44 @@ public class RegistrationService {
 
     @Transactional
     public void registerUser(RegistrationRequestDTO registrationRequest) {
-        if(!recaptchaValidationService.validateCaptcha(registrationRequest.getRecaptchaResponse())) {
-            throw new IllegalArgumentException("Invalid reCAPTCHA");
+        logger.info("Starting registration for username: {}", registrationRequest.getUsername());
+
+        // ReCAPTCHA validation
+        if (!recaptchaValidationService.validateCaptcha(registrationRequest.getRecaptchaResponse())) {
+            logger.warn("ReCAPTCHA validation failed for username: {}", registrationRequest.getUsername());
+            throw new RegistrationException("Invalid reCAPTCHA. Please try again.");
         }
 
-        if(this.userRepo.existsByUsername(registrationRequest.getUsername())) {
-            throw new IllegalArgumentException("Username already exists");
+        // Username and Email duplication checks
+        if (userRepo.existsByUsername(registrationRequest.getUsername())) {
+            logger.warn("Username already exists: {}", registrationRequest.getUsername());
+            throw new RegistrationException("Username already exists.");
         }
 
-        if(this.userRepo.existsByEmail(registrationRequest.getEmail())) {
-            throw new IllegalArgumentException("Provided Email Already in use");
+        if (userRepo.existsByEmail(registrationRequest.getEmail())) {
+            logger.warn("Email already in use: {}", registrationRequest.getEmail());
+            throw new RegistrationException("The provided email is already in use.");
         }
 
+        // // Password validation
+        // if (!registrationRequest.getPassword().equals(registrationRequest.getConfirmPassword())) {
+        //     throw new RegistrationException("Passwords do not match.");
+        // }
+
+        // Creating user
         Users user = new Users();
         user.setUsername(registrationRequest.getUsername());
         user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
         user.setFirstName(registrationRequest.getFirstName());
         user.setLastName(registrationRequest.getLastName());
         user.setEmail(registrationRequest.getEmail());
-        user.setRole(roleRepo.findByName(registrationRequest.getRoleName()).orElseThrow(() -> new IllegalArgumentException("Invalid role name"))); 
-        user = this.userRepo.save(user);
+        user.setRole(roleRepo.findByName(registrationRequest.getRoleName())
+                .orElseThrow(() -> new RegistrationException("Invalid role name provided.")));
 
-        // Create and save the UserConfig
+        user = userRepo.save(user);
+        logger.info("User registered successfully with username: {}", user.getUsername());
+
+        // Creating and saving UserConfig
         UserConfigs userConfigs = new UserConfigs();
         userConfigs.setUser(user);
         userConfigs.setPasswordCounter(0);
@@ -63,6 +84,8 @@ public class RegistrationService {
         userConfigs.setTermAndCondition('N');
         userConfigs.setEmailVerifiedCount(0);
         userConfigs.setMobileVerifiedCount(0);
-        this.userConfigRepo.save(userConfigs);
+        userConfigRepo.save(userConfigs);
+
+        logger.info("UserConfig created for user: {}", user.getUsername());
     }
 }
