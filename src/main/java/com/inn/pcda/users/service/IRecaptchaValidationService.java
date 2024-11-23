@@ -1,6 +1,5 @@
 package com.inn.pcda.users.service;
 
-public interface RecaptchaValidationService {
-    
+public interface IRecaptchaValidationService {
     public boolean validateCaptcha(String recaptchaResponse);
 }

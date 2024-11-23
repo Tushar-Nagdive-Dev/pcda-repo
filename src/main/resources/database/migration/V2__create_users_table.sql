@@ -50,5 +50,5 @@ CREATE TABLE user_config (
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Base entity
     updated_by INT, -- Base entity
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Base entity
-    ip_address VARCHAR(50) DEFAULT '0.0.0.0', -- Base entity
+    ip_address VARCHAR(50) DEFAULT '0.0.0.0' -- Base entity
 );

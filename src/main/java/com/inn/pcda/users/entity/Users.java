@@ -1,6 +1,5 @@
 package com.inn.pcda.users.entity;
 
-import org.apache.catalina.startup.UserConfig;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.inn.pcda.configs.baseImplementation.BaseEntity;
@@ -66,6 +65,6 @@ public class Users extends BaseEntity {
     private Boolean isOldPassword = false;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private UserConfig userConfig; // User configuration details
+    private UserConfigs userConfig; // User configuration details
 
 }

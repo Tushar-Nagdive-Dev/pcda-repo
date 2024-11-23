@@ -9,11 +9,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inn.pcda.users.service.RecaptchaValidationService;
+import com.inn.pcda.users.service.IRecaptchaValidationService;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-
 
 @RestController
 @RequestMapping("/auth")
@@ -23,7 +22,7 @@ public class LoginController {
     private AuthenticationManager authenticationManager;
 
     @Autowired 
-    private RecaptchaValidationService recaptchaValidationService;
+    private IRecaptchaValidationService recaptchaValidationService;
 
     @GetMapping("/login")
     public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password, @RequestParam String recaptchaResponse) {

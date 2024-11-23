@@ -4,11 +4,13 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.inn.pcda.users.entity.LoginAttempt;
 import com.inn.pcda.users.repository.LoginAttemptRepository;
 import com.inn.pcda.users.service.ILoginAttemptService;
 
+@Service
 public class LoginAttemptService implements ILoginAttemptService{
 
     private static final Integer MAX_ATTEMPTS = 5;
