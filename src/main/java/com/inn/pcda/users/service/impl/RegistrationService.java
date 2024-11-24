@@ -10,7 +10,6 @@ import com.inn.pcda.users.entity.Users;
 import com.inn.pcda.users.repository.RoleRepository;
 import com.inn.pcda.users.repository.UserConfigRepository;
 import com.inn.pcda.users.repository.UserRepository;
-import com.inn.pcda.users.service.IRecaptchaValidationService;
 import com.inn.pcda.exceptions.RegistrationException;
 
 import jakarta.transaction.Transactional;
@@ -32,7 +31,7 @@ public class RegistrationService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private IRecaptchaValidationService recaptchaValidationService;
+    private RecaptchaValidationService recaptchaValidationService;
 
     @Autowired
     private UserConfigRepository userConfigRepo;

@@ -1,38 +1,43 @@
 package com.inn.pcda.users.service.impl;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import com.inn.pcda.users.service.IRecaptchaValidationService;
-
 @Service
-public class RecaptchaValidationService implements IRecaptchaValidationService{
+public class RecaptchaValidationService {
 
-    @Value("${recaptcha.secret:default-secret}")
+    @Value("${recaptcha.secret:6LfS6IcqAAAAAOOmv8mFQ8xG3sysOlTDT29dPA5A}")
     private String recaptchaSecret;
 
     @Value("${recaptcha.verify.url:https://www.google.com/recaptcha/api/siteverify}")
     private String recaptchaVerifyUrl;
 
-    @Override
     public boolean validateCaptcha(String recaptchaResponse) {
         RestTemplate restTemplate = new RestTemplate();
+
+        // Prepare request parameters
         Map<String, String> params = new HashMap<>();
         params.put("secret", recaptchaSecret);
         params.put("response", recaptchaResponse);
-    
-        try {
-            Map<String, Object> response = restTemplate.postForObject(recaptchaVerifyUrl, params, Map.class);
-            return response != null && (Boolean) response.get("success");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+
+        // Make API call to Google reCAPTCHA
+        ResponseEntity<Map<String, Object>> responseEntity = restTemplate.exchange(
+            recaptchaVerifyUrl,
+            HttpMethod.POST,
+            new HttpEntity<>(params),
+            new ParameterizedTypeReference<>() {}
+        );
+
+        // Process response
+        Map<String, Object> responseBody = responseEntity.getBody();
+        return responseBody != null && Boolean.TRUE.equals(responseBody.get("success"));
     }
-    
-    
 }

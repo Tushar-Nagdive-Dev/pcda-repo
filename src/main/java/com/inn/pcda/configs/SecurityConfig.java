@@ -34,31 +34,30 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity (re-enable in production)
+            .cors(cors -> cors.configurationSource(request -> new org.springframework.web.cors.CorsConfiguration().applyPermitDefaultValues()))
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                // Public endpoints
-                .requestMatchers("/auth/register", "/auth/login", "/css/**", "/js/**").permitAll()
-                // Role-based access
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/user/**").hasRole("USER")
-                .requestMatchers("/officer/**").hasRole("OFFICER")
-                // All other endpoints require authentication
-                .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                .loginPage("/auth/login") // Corrected with leading slash
-                .failureUrl("/auth/login?error") // Corrected with leading slash
-                .defaultSuccessUrl("/") // Redirect to home page after successful login
-                .permitAll()
-            )
+                .requestMatchers(
+                    "/", 
+                    "/auth/**", 
+                    "/index.html", 
+                    "/static/**", 
+                    "/favicon.ico", 
+                    "/css/**", 
+                    "/js/**", 
+                    "/images/**"
+                ).permitAll()
+                .anyRequest().authenticated())
+            .formLogin(form -> form.disable())
             .logout(logout -> logout
-                .logoutUrl("/auth/logout") // Correct logout URL
-                .logoutSuccessUrl("/auth/login") // Redirect to login page after logout
-                .permitAll()
-            );
-
+                .logoutUrl("/auth/logout")
+                .logoutSuccessUrl("/auth/login")
+                .permitAll());
         return http.build();
     }
+
+
+
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
