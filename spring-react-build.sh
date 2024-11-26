@@ -12,6 +12,15 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
+echo "Stopping existing application if exists..."
+PID=$(lsof -t -i:8888)
+if [ -n "$PID" ]; then
+  kill -9 $PID
+  echo "Stopped application running on port 8888."
+else
+    echo "Already Stop! no need to close"
+fi
+
 echo -e "${GREEN}Starting the build and deploy process...${NC}"
 
 # Step 1: Build the React application

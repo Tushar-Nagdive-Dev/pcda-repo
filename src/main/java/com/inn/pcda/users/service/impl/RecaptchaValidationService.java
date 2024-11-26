@@ -14,7 +14,7 @@ import java.util.Map;
 @Service
 public class RecaptchaValidationService {
 
-    @Value("${recaptcha.secret:6LfS6IcqAAAAAOOmv8mFQ8xG3sysOlTDT29dPA5A}")
+    @Value("${recaptcha.secret:6LeWR4kqAAAAADRTLtTGooVr_2zO1HHu9yUYUQVn}")
     private String recaptchaSecret;
 
     @Value("${recaptcha.verify.url:https://www.google.com/recaptcha/api/siteverify}")

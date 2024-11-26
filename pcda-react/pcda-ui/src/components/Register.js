@@ -94,7 +94,7 @@ const Register = () => {
                         />
                     </div>
                     <ReCAPTCHA
-                        sitekey="6LfS6IcqAAAAAOOmv8mFQ8xG3sysOlTDT29dPA5A"
+                        sitekey="6LeWR4kqAAAAAL60cTL4y8Cqcyle7GsUzpz7PbXP"
                         onChange={(token) => setRecaptchaToken(token)}
                     />
                     <button type="submit" className="btn btn-primary w-100 mt-3">Register</button>
