@@ -1,9 +1,9 @@
 CREATE TABLE roles (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
-    created_by VARCHAR(100),
+    created_by INT,
     description TEXT,
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_by VARCHAR(100),
+    updated_by INT,
     updated_date TIMESTAMP
 );

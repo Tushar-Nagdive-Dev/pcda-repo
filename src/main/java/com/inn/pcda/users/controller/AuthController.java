@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import com.inn.pcda.configs.baseImplementation.baseservice.ICaptchaService;
 import com.inn.pcda.configs.utils.JwtUtil;
 import com.inn.pcda.exceptions.RegistrationException;
+import com.inn.pcda.users.dto.LoginRequestDTO;
 import com.inn.pcda.users.dto.RegistrationRequestDTO;
 import com.inn.pcda.users.service.impl.RegistrationService;
 
@@ -37,15 +38,11 @@ public class AuthController {
      * Login API (POST)
      */
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(
-            @RequestParam String username,
-            @RequestParam String password,
-            @RequestParam String captchaToken,
-            @RequestParam String captchaInput) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequestDTO loginRequet) {
         Map<String, String> response = new HashMap<>();
 
         // Validate custom captcha
-        boolean isCaptchaValid = captchaService.validateCaptcha(captchaToken, captchaInput);
+        boolean isCaptchaValid = captchaService.validateCaptcha(loginRequet.getCaptchaToken(), loginRequet.getCaptchaInput());
         if (!isCaptchaValid) {
             response.put("status", "error");
             response.put("message", "Invalid captcha. Please try again.");
@@ -54,7 +51,7 @@ public class AuthController {
 
         try {
             // Authenticate user
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequet.getUsername(), loginRequet.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // Generate JWT Token
