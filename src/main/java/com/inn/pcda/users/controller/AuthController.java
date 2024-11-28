@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import com.inn.pcda.configs.baseImplementation.baseservice.ICaptchaService;
+import com.inn.pcda.configs.utils.JwtUtil;
 import com.inn.pcda.exceptions.RegistrationException;
 import com.inn.pcda.users.dto.RegistrationRequestDTO;
 import com.inn.pcda.users.service.impl.RegistrationService;
@@ -28,6 +29,9 @@ public class AuthController {
 
     @Autowired
     private ICaptchaService captchaService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     /**
      * Login API (POST)
@@ -50,16 +54,20 @@ public class AuthController {
 
         try {
             // Authenticate user
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username, password));
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            // Generate JWT Token
+            String token = jwtUtil.generateToken(authentication);
 
             response.put("status", "success");
             response.put("message", "Login successful.");
+            response.put("token", token);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("status", "error");
             response.put("message", "Invalid username or password.");
+            response.put("token", null);
             return ResponseEntity.badRequest().body(response);
         }
     }

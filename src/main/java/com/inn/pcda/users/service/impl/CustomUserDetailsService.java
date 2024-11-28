@@ -1,6 +1,10 @@
 package com.inn.pcda.users.service.impl;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,10 +24,14 @@ public class CustomUserDetailsService implements ICustomUserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Users user = this.userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
+        // Convert role to GrantedAuthority
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getName());
+
+        // Build UserDetails
         return User.builder()
             .username(user.getUsername())
             .password(user.getPassword())
-            .roles(user.getRole().getName())
+            .authorities(Collections.singleton(authority))
             .build();
     }
     

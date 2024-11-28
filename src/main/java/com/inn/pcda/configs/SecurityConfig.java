@@ -9,7 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.inn.pcda.configs.utils.JwtFilter;
 import com.inn.pcda.users.service.ICustomUserDetailsService;
 
 @Configuration
@@ -17,8 +19,11 @@ public class SecurityConfig {
 
     private final ICustomUserDetailsService customUserDetailsService;
 
-    public SecurityConfig(ICustomUserDetailsService customUserDetailsService) {
+    private final JwtFilter jwtFilter;
+
+    public SecurityConfig(ICustomUserDetailsService customUserDetailsService, JwtFilter jwtFilter) {
         this.customUserDetailsService = customUserDetailsService;
+        this.jwtFilter = jwtFilter;
     }
 
     @Bean
@@ -47,7 +52,10 @@ public class SecurityConfig {
                     "/js/**", 
                     "/images/**"
                 ).permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/officer/**").hasRole("OFFICER")
                 .anyRequest().authenticated())
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
             .formLogin(form -> form.disable())
             .logout(logout -> logout
                 .logoutUrl("/auth/logout")
