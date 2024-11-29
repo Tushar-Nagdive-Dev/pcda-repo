@@ -1,4 +1,7 @@
-
-const API_AUTH_BASE_URL = "http://localhost:8888/auth";
-
-export default API_AUTH_BASE_URL;
+const API_BASE_URLS = {
+    AUTH: "http://localhost:8888/auth",
+    MESSAGE: "http://localhost:8888/api/messages",
+  };
+  
+  export default API_BASE_URLS;
+  

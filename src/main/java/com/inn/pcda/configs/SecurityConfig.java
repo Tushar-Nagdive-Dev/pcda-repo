@@ -50,9 +50,10 @@ public class SecurityConfig {
                     "/favicon.ico", 
                     "/css/**", 
                     "/js/**", 
-                    "/images/**"
+                    "/images/**",
+                    "/api/messages/**"
                 ).permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/admin/**", "/api/messages").hasRole("ADMIN")
                 .requestMatchers("/api/officer/**").hasRole("OFFICER")
                 .anyRequest().authenticated())
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
