@@ -9,15 +9,26 @@ import AccessibilityContextProvider, {
 import AboutUs from "./pages/AboutUs";
 import Main from "./pages/Main";
 import RootLayout from "./pages/RootLayout";
-import AdminDashboard from "./pages/Officer/OfficerDashboard";
-import OfficerProtectPrivateRoute from "./pages/Officer/OfficerProtectPrivateRoute";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminProtectPrivateRoute from "./pages/Admin/AdminProtectPrivateRoute";
 import Downloads from "./pages/Downloads";
 import Sections from "./pages/Sections";
 import ContactUs from "./pages/ContactUs";
 import NewsAndEvents from "./pages/NewsAndEvents";
-import path from "path";
 import RTI from "./pages/RTI";
 import FAQ from "./pages/FAQ";
+import DynamicNewsAndEvents from "./pages/DynamicNewsAndEvents";
+import LoginProtectRoute from "./pages/LoginProtectLayout";
+
+/* Admin */
+import AdminNewsAndNotificationTableList from "./pages/Admin/AdminNewsAndNotificationTableList";
+import CreateNewsAndNotificationForm from "./pages/Admin/CreateNewsAndNotificationForm";
+import AdminOutletLayout from "./pages/Admin/AdminOutletLayout";
+import AdminTestiomonialForm from "./pages/Admin/AdminTestiomonialForm";
+import UpdateAdminNewsAndNotificationForm from "./pages/Admin/UpdateAdminNewsAndNotificationForm";
+import UpdateAdminTestimonialForm from "./pages/Admin/UpdateAdminTestimonialForm";
+import AdminTestimonialTableList from "./pages/Admin/AdminTestimonialTableList";
+import AdminFAQTableList from "./pages/Admin/AdminFAQTableList";
 
 const websiteTitle = "Welcome to PCDA(O) Pune ";
 
@@ -32,15 +43,49 @@ const routes = [
       { path: "/sections", element: <Sections /> },
       { path: "/download", element: <Downloads /> },
       { path: "/contact-us", element: <ContactUs /> },
-      { path: "/news-and-events", element: <NewsAndEvents />},
-      { path: "/rti", element: <RTI />},
-      { path: "/faq", element: <FAQ />},
+      { path: "/news-and-events", element: <NewsAndEvents /> },
+      { path: "/news-and-events/:id", element: <DynamicNewsAndEvents /> },
+      { path: "/rti", element: <RTI /> },
+      { path: "/faq", element: <FAQ /> },
     ],
   },
   {
     path: "/login",
-    element: <OfficerProtectPrivateRoute />,
-    children: [{ index: true, element: <AdminDashboard /> }],
+    element: <LoginProtectRoute />,
+  },
+  {
+    path: "/admin",
+    element: <AdminProtectPrivateRoute />,
+    children: [
+      { index: true, element: <AdminDashboard /> },
+      {
+        path: "news-and-notification",
+        element: <AdminOutletLayout />,
+        children: [
+          { index: true, element: <AdminNewsAndNotificationTableList /> },
+          { path: "new", element: <CreateNewsAndNotificationForm /> },
+          { path: "edit/:id", element: <UpdateAdminNewsAndNotificationForm />}
+        ],
+      },
+      {
+        path: "testimonial",
+        element: <AdminOutletLayout />,
+        children: [
+          { index: true, element: <AdminTestimonialTableList /> },
+          { path: "new", element: <AdminTestiomonialForm /> },
+          { path: "edit/:id", element: <UpdateAdminTestimonialForm /> },
+        ],
+      },
+      {
+        path: "faq",
+        element: <AdminOutletLayout />,
+        children: [
+          { index: true, element: <AdminFAQTableList /> },
+          { path: "new", element: <AdminTestiomonialForm /> },
+          { path: "edit/:id", element: <UpdateAdminTestimonialForm /> },
+        ],
+      },
+    ],
   },
 ];
 
