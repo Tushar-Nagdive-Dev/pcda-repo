@@ -1,0 +1,7 @@
+[data-rmiz-modal-overlay="hidden"] {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+[data-rmiz-modal-overlay="visible"] {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
