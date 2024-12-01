@@ -1,18 +1,22 @@
+import React from "react";
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { LoginValidation } from "./LoginValidationSchema";
 
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import captchaDemoPic from "@/assets/images/captcha_demo.png";
+import { Numpad, SignIn } from "@phosphor-icons/react";
 import { InputWithIcon } from "../ui/inputwithicon";
 import { KeyRound, UserRound } from "lucide-react";
 import { Numpad } from "@phosphor-icons/react";
@@ -35,7 +39,6 @@ function LoginForm({ onLoginSuccess }) {
       captcha: "", // Ensure this exists
     },
   });
-  
 
   // Fetch captcha when the component mounts
   useEffect(() => {
@@ -82,11 +85,15 @@ function LoginForm({ onLoginSuccess }) {
     }
   };
 
+  function onSubmit(values) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values);
+  }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="space-y-4 mb-7">
-          {/* User ID Field */}
+        <div className="md:max-lg:space-y-1 mid_hd_screen:max-full_hd_screen:space-y-2 space-y-4 mb-7">
           <FormField
             control={form.control}
             name="userid"
@@ -104,8 +111,6 @@ function LoginForm({ onLoginSuccess }) {
               </FormItem>
             )}
           />
-
-          {/* Password Field */}
           <FormField
             control={form.control}
             name="password"
@@ -115,7 +120,7 @@ function LoginForm({ onLoginSuccess }) {
                 <FormControl>
                   <InputWithIcon
                     startIcon={KeyRound}
-                    placeholder="Enter Password"
+                    placeholder="Enter Passsword"
                     {...field}
                   />
                 </FormControl>
@@ -124,9 +129,8 @@ function LoginForm({ onLoginSuccess }) {
             )}
           />
 
-          {/* Captcha Section */}
           <div className="space-y-3">
-            {captchaImage ? (
+          {captchaImage ? (
               <img
                 src={captchaImage}
                 alt="captcha code"
@@ -141,6 +145,8 @@ function LoginForm({ onLoginSuccess }) {
             >
               Refresh
             </p>
+            {/* <img src={captchaDemoPic} alt="captcha's code" className="h-full" />
+            <p className="text-statebluecolor cursor-pointer">Refresh</p> */}
           </div>
 
           <FormField
@@ -161,13 +167,8 @@ function LoginForm({ onLoginSuccess }) {
           />
         </div>
 
-        {/* Error and Success Messages */}
-        {error && <p className="text-red-600">{error}</p>}
-        {success && <p className="text-green-600">{success}</p>}
-
-        {/* Submit Button */}
         <Button type="submit" className="text-white w-full bg-statebluecolor">
-          Sign In
+          Sign In <SignIn size={24} color="#ffffff" />
         </Button>
       </form>
     </Form>

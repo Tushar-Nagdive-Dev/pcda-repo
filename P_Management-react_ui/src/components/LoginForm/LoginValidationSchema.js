@@ -1,4 +1,4 @@
-import * as z from "zod";
+import { z } from "zod";
 
 export const LoginValidation = z.object({
   userid: z.string().nonempty("User ID is required"),
