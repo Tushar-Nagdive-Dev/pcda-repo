@@ -1,5 +1,7 @@
 import React from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import ContactUsInlineTitleAndContent from "./ContactUsInlineTitleAndContent";
+import ContactUsTitleAndContent from "./ContactUsTitleAndContent";
 
 const transitionStyles = {
   entering: { opacity: 0.5 },
@@ -77,8 +79,8 @@ const contactusData = [
       designation: "Office-In-Charge",
       email: "ramkc.56566@gov.in",
       timings: {
-          date: "Monday To Friday",
-          timing: "(09:00hr to 13:30Hr) & (14:30Hr to 17:30hr)",
+        date: "Monday To Friday",
+        timing: "(09:00hr to 13:30Hr) & (14:30Hr to 17:30hr)",
       },
       contact_no: {
         name: "For Serving Officers",
@@ -93,7 +95,7 @@ function ContactUsSection() {
   const [currentStage, setCurrentStage] = React.useState(0);
   return (
     <div className="w-full h-full  flex px-custom my-12">
-      <div className="w-2/6 h-full flex flex-col space-y-5">
+      <div className="w-1/2 h-full flex flex-col space-y-5">
         {contactusData.map((item, index) => (
           <React.Fragment key={item.id}>
             <div
@@ -118,44 +120,224 @@ function ContactUsSection() {
         ))}
       </div>
       {/* Content Section */}
-      <div className="relative w-auto">
+      <div className="relative w-full">
         <TransitionGroup component={null}>
           <CSSTransition key={currentStage} timeout={300}>
             {(state) => (
               <>
-                {/* {contactusData.map((item, index) => (
-                  <React.Fragment key={item.id}>
-                    {currentStage === index && (
-                      <div
-                        style={{
-                          ...transitionStyles[state],
-                        }}
-                        className={`p-10 ${
-                          currentStage === index
-                            ? index === 1
-                              ? "bg-selectedSecondary rounded-lg"
-                              : "bg-selectedSecondary rounded-r-lg rounded-b-lg"
-                            : "bg-mainsecondarysecond rounded-lg"
-                        }`}
-                      >
-                        <div className="flex gap-16">
-                          <div className="w-full flex flex-col space-y-8 text-ternaryGrey font-medium">
-                            <div className="w-full">
-                              <img
-                                src={item.image}
-                                alt={item.title}
-                                className="h-[480px] w-full bg-cover rounded-lg"
-                              />
-                            </div>
-                            <p className="max-h-[250px] overflow-y-auto text-justify">
-                              {item.description}
-                            </p>
-                          </div>
+                {/* Office of The Principal Controller of Defence Accounts (Officers)*/}
+                {currentStage === 0 && (
+                  <div
+                    style={{
+                      ...transitionStyles[state],
+                    }}
+                    className={`h-full p-10 ${
+                      currentStage !== 0
+                        ? "bg-selectedSecondary rounded-lg"
+                        : "bg-selectedSecondary rounded-r-lg rounded-b-lg"
+                    }`}
+                  >
+                    <div className="flex flex-col space-y-6">
+                      <div className="flex flex-col gap-2">
+                        <p className="text-mainprimarycolor font-bold text-xl">
+                          Office Of The Principal Controller Of Defence Accounts
+                          (Officers)
+                        </p>
+                        <p className="text-mainprimarycolor text-lg">
+                          Golibar Maidan, Pune - 411 001
+                        </p>
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <ContactUsInlineTitleAndContent
+                          title="Fax"
+                          info="(020) 2645-3446"
+                        />
+                        <ContactUsInlineTitleAndContent
+                          title="Website"
+                          info="https://pcdaopune.gov.in"
+                        />
+                      </div>
+
+                      <p className="text-mainprimarycolor font-bold text-lg">
+                        PCDA(O) Exchange
+                      </p>
+
+                      <div className="flex flex-col gap-2">
+                        <ContactUsInlineTitleAndContent
+                          title="Pro Civil"
+                          info="(020) 2640-1100"
+                        />
+                        <ContactUsInlineTitleAndContent
+                          title="Army"
+                          info="https://pcdaopune.gov.in"
+                        />
+                      </div>
+
+                      <p className="text-mainprimarycolor font-bold text-lg">
+                        Timings
+                      </p>
+
+                      <div className="flex flex-col gap-2">
+                        <ContactUsInlineTitleAndContent
+                          bigtitle="Timings"
+                          title="PRO Timing"
+                          info="Monday To Friday (08:30hr to 16:00Hr)"
+                        />
+                        <ContactUsInlineTitleAndContent
+                          title="Office Timing"
+                          info="(09:30hr to 18:00Hr)"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Details of Chief Vigilance Officer (CVO) in DAD*/}
+                {currentStage === 1 && (
+                  <div
+                    style={{
+                      ...transitionStyles[state],
+                    }}
+                    className={`h-full p-10 ${
+                      currentStage === 1
+                        ? "bg-selectedSecondary rounded-lg"
+                        : "bg-selectedSecondary rounded-r-lg rounded-b-lg"
+                    }`}
+                  >
+                    <div className="flex flex-col space-y-4">
+                      <ContactUsTitleAndContent
+                        title="Shri. Rajesh Chandra"
+                        info="IDAS, Jt.CGDA & CVO"
+                      />
+
+                      <ContactUsTitleAndContent
+                        title="Address"
+                        info="Office Of The CGDA, Ulan Batar Road, Palam, Delhi Cantt-110010"
+                      />
+
+                      <ContactUsTitleAndContent
+                        title="Telephone"
+                        info="011-20893013"
+                      />
+
+                      <ContactUsTitleAndContent
+                        title="Email"
+                        info="chandra44e.dad@gov.in"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Details of Vigilance Officer (VO) in PCDA(O)*/}
+                {currentStage === 2 && (
+                  <div
+                    style={{
+                      ...transitionStyles[state],
+                    }}
+                    className={`h-full p-10 ${
+                      currentStage === 1
+                        ? "bg-selectedSecondary rounded-lg"
+                        : "bg-selectedSecondary rounded-r-lg rounded-b-lg"
+                    }`}
+                  >
+                    <div className="flex flex-col space-y-4">
+                      <ContactUsTitleAndContent
+                        title="Shri. Prakash Chandra"
+                        info="IDAS, Addl. CDA & VO"
+                      />
+
+                      <ContactUsTitleAndContent
+                        title="Address"
+                        info="Office Of The PCDA(O), Golibar Maidan, Pune-411011"
+                      />
+
+                      <ContactUsTitleAndContent
+                        title="Telephone"
+                        info="020-26401102"
+                      />
+
+                      <ContactUsTitleAndContent
+                        title="Email"
+                        info="chandraprakash.dad@hub.nic.in"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Details of Aramy Pay And Allowances Contact Centre (APACC)*/}
+                {currentStage === 3 && (
+                  <div
+                    style={{
+                      ...transitionStyles[state],
+                    }}
+                    className={`h-full p-10 ${
+                      currentStage === 1
+                        ? "bg-selectedSecondary rounded-lg"
+                        : "bg-selectedSecondary rounded-r-lg rounded-b-lg"
+                    }`}
+                  >
+                    <div className="flex flex-col space-y-6">
+                      <div className="flex flex-col gap-2">
+                        <p className="text-mainprimarycolor font-bold text-xl">
+                          Army Pay And Allowances Contact Centre (APACC)
+                        </p>
+                        <p className="text-mainprimarycolor text-lg">
+                          At PCDA(O), Pune - 411 001.
+                        </p>
+                      </div>
+                      <ContactUsTitleAndContent
+                        title="Lt. Col. Himani"
+                        info="Office-In-Charge"
+                      />
+
+                      <ContactUsTitleAndContent
+                        title="Email"
+                        info="ramkc.56566@gov.in"
+                      />
+
+                      <div className="w-full grid grid-cols-2">
+                        <div className="flex flex-col space-y-2">
+                          <p className="text-mainprimarycolor font-bold text-xl">
+                            For Serving Officers
+                          </p>
+                          <ContactUsInlineTitleAndContent
+                            title="ASCON"
+                            info="7275 & 7975"
+                          />
+                          <ContactUsInlineTitleAndContent
+                            title="Civ Landline"
+                            info="(020) 2645-0691"
+                          />
+                        </div>
+
+                        <div className="flex flex-col space-y-2">
+                          <p className="text-mainprimarycolor font-bold text-xl">
+                            For Retired Officers
+                          </p>
+                          <ContactUsInlineTitleAndContent
+                            title="Mobile No."
+                            info="9309781033"
+                          />
+                          <ContactUsInlineTitleAndContent
+                            title="Civ Landline"
+                            info="(020) 2997-0971"
+                          />
                         </div>
                       </div>
-                    )}
-                  </React.Fragment>
-                ))} */}
+
+                      <div className="flex flex-col space-y-4">
+                        <p className="text-mainprimarycolor font-bold text-xl">
+                          Timings
+                        </p>
+                        <ContactUsTitleAndContent
+                          title="Monday to Friday"
+                          info="(09:00hr to 13:30Hr) & (14:30Hr to 17:30hr)"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
               </>
             )}
           </CSSTransition>

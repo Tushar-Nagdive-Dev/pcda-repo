@@ -5,7 +5,7 @@ function LeftBorderWithTitle({ className, textSize, title }) {
   return (
     <p
       className={cn(
-        `w-full inline-block border-l-8 border-l-newprimaryColor ${textSize} text-mainprimarycolor pl-4`,
+        `w-full inline-block border-l-4 border-l-newprimaryColor ${textSize} text-mainprimarycolor pl-4`,
         className
       )}
     >
