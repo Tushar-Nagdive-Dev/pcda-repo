@@ -74,7 +74,7 @@ function MainHeader() {
             alt="PCDA(O)'s logo"
             src={pcdaoLogo}
             height="70"
-            className="inline-block w-56"
+            className="inline-block w-56 xl_screen:w-64"
           />{" "}
           <div className="flex gap-5 items-center">
             <div className="flex items-center h-full">
@@ -110,7 +110,7 @@ function MainHeader() {
             </div>
             <button
               onClick={() => navigate("/login")}
-              className="flex gap-2 px-7 py-3 bg-loginButtonPrimary hover:bg-loginButtonHover text-white rounded-3xl h-fit"
+              className="flex gap-2 lg:max-full_hd_screen:px-6 py-3 bg-loginButtonPrimary hover:bg-loginButtonHover text-white rounded-3xl h-fit"
             >
               {" "}
               Login <SignIn size={22} color="#ffffff" />

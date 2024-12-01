@@ -16,7 +16,7 @@ function Main() {
   return (
     <>
       <div className="px-custom space-y-24">
-        <div className="w-full mt-10 flex flex-row gap-10">
+        <div className="w-full h-full mt-10 flex flex-row gap-8">
           <LandingSlider />
           <LatestLandingUpdateLists />
         </div>

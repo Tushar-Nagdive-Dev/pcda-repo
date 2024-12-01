@@ -1,10 +1,10 @@
 import React from "react";
 import LoginComponent from "../components/LoginComponent";
 
-function Login({ onLoginSuccess }) {
+function Login() {
   return (
     <>
-      <LoginComponent onLoginSuccess={onLoginSuccess} />
+      <LoginComponent />
     </>
   );
 }
