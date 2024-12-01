@@ -142,6 +142,7 @@ function LandingSections() {
               <SectionCardLogoWithTitle
                 title={slide.section}
                 icon={slide.icon}
+                description={slide.description}
               />
             </SwiperSlide>
           ))}

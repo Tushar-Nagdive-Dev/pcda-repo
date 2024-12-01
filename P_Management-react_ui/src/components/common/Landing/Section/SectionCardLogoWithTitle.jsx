@@ -28,7 +28,7 @@ import React from "react";
 
 // export default SectionCardLogoWithTitle;
 
-function SectionCardLogoWithTitle({ title, icon }) {
+function SectionCardLogoWithTitle({ title, icon, description }) {
   return (
     <div className="min-w-72 max-w-80 h-full group/sectioncard relative cursor-pointer">
       {/* Default View */}
@@ -57,8 +57,7 @@ function SectionCardLogoWithTitle({ title, icon }) {
             {title} Section
           </h5>
           <p className="text-white text-base">
-            Record Section deals with receipt of dak/sorting, distribution to
-            concerned sections and dispatch of all dak through the post.
+            {description}
           </p>
         </div>
 
