@@ -9,16 +9,16 @@ export const UserRoleContext = createContext({
 
 function UserRoleContextProvider({ children }) {
   /* for checking login components */
-  // const [user, setUser] = useState(null);
-  // const [role, setRole] = useState(null);
+   const [user, setUser] = useState(null);
+   const [role, setRole] = useState(null);
   /**** */
 
   /* This are dummy data. Call dispatch this data from backend. */
-    const [user, setUser] = useState({
-      username: "we",
-      id: "2as",
-    });
-    const [role, setRole] = useState("admin");
+    // const [user, setUser] = useState({
+    //   username: "we",
+    //   id: "2as",
+    // });
+    // const [role, setRole] = useState("admin");
 
   return (
     <UserRoleContext.Provider value={{ user, role, setUser, setRole }}>

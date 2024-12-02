@@ -1,4 +1,3 @@
-import React from "react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
@@ -19,7 +18,6 @@ import captchaDemoPic from "@/assets/images/captcha_demo.png";
 import { Numpad, SignIn } from "@phosphor-icons/react";
 import { InputWithIcon } from "../ui/inputwithicon";
 import { KeyRound, UserRound } from "lucide-react";
-import { Numpad } from "@phosphor-icons/react";
 import { Navigate, useNavigate } from "react-router-dom";
 
 function LoginForm({ onLoginSuccess }) {
@@ -85,11 +83,6 @@ function LoginForm({ onLoginSuccess }) {
     }
   };
 
-  function onSubmit(values) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
