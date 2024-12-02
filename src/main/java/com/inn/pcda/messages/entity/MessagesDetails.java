@@ -38,5 +38,7 @@ public class MessagesDetails extends BaseEntity {
     @Column(nullable = false)
     private Boolean flag = false;
 
+    private Integer order;
+
     // Additional fields from BaseEntity are inherited
 }

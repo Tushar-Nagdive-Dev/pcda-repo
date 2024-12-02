@@ -74,7 +74,7 @@ function LandingSections() {
   };
 
   return (
-    <div className="w-full flex flex-col space-y-6 bg-adminCard px-custom py-36">
+    <div className="w-full flex flex-col space-y-6 bg-adminCard px-custom pt-24 pb-28">
       <LeftBorderWithTitle
         textSize="text-base"
         title="Welcome to Principal Controller of Defence Accounts (officers)"
@@ -86,7 +86,7 @@ function LandingSections() {
       <div className={landingSectionCss["custom-swiper-container"]}>
         <Swiper
           slidesPerView={4}
-          spaceBetween={20}
+          spaceBetween={10}
           navigation={true}
           freeMode={true}
           modules={[FreeMode, Navigation]}

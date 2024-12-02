@@ -130,8 +130,13 @@ function ContactUsSection() {
                   <div
                     style={{
                       ...transitionStyles[state],
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
                     }}
-                    className={`h-full p-10 ${
+                    className={`p-10 ${
                       currentStage !== 0
                         ? "bg-selectedSecondary rounded-lg"
                         : "bg-selectedSecondary rounded-r-lg rounded-b-lg"

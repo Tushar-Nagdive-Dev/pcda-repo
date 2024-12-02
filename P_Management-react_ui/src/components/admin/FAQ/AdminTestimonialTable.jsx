@@ -1,6 +1,7 @@
 import React from 'react'
-import { FAQDataTable } from "./data-table-components/admin-faq-data-table";
-import { adminColumns } from "./data-table-components/admin-faq-columns";
+import {DataTableToolbar} from "../TableComponents/admin-data-table-toolbar.jsx";
+import {AdminCommonDataTable} from "../TableComponents/admin-data-table.jsx";
+import {faqColumns} from "./data-table-components/admin-faq-columns.jsx";
 
 const data = [
     {
@@ -30,7 +31,9 @@ const data = [
 function AdminFAQTable() {
   return (
     <div>
-      <FAQDataTable data={data} columns={adminColumns} />
+        <AdminCommonDataTable data={data} columns={faqColumns} searchInputField={"question"}>
+            <DataTableToolbar/>
+        </AdminCommonDataTable>
     </div>
   )
 }

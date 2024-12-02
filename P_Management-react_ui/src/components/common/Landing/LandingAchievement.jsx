@@ -6,12 +6,12 @@ import { AccessibilityContext } from "../../../context/AccessibilityContext";
 function LandingAchievement() {
   const accessibilityCtx = useContext(AccessibilityContext);
   return (
-    <div className="w-full px-custom py-36  mt-24">
+    <div className="w-full px-custom py-24">
       <div className="flex gap-14">
         <img
           src={acheivementLogo}
           alt="PCDAOs Achievement"
-          className="w-[45%] "
+          className="w-[45%] object-cover"
         />
         <div className="flex flex-col space-y-6">
           <LeftBorderWithTitle
@@ -20,7 +20,7 @@ function LandingAchievement() {
             className="text-titleColor"
           />
           <h4 className="text-3xl text-titleColor font-bold">Honor</h4>
-          <p className={`text-titleColor ${accessibilityCtx.getFontSizeClass("text-base")} `}>
+          <p className={`text-titleColor ${accessibilityCtx.getFontSizeClass("text-base")} text-justify`}>
             Welcome to the Principal Controller of Defence Accounts (PCDA) (O),
             a distinguished arm of the Defence Accounts Department (DAD),
             dedicated to managing the pay and allowances of Indian Army

@@ -1,9 +1,7 @@
 import React from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-import indiaSignLogo from "@/assets/icons/india_logo_1.svg";
-import indiaSignOne from "@/assets/icons/india_logo_2.svg";
-import indiaCountryMap from "@/assets/icons/india_country_map.svg";
+import calculatorIcon from "@/assets/icons/calculator.svg";
 import CalculatorCard from "./Calculator/CalculatorCard";
 
 const transitionStyles = {
@@ -27,15 +25,15 @@ function LandingCalculator() {
     <div className="w-full flex h-full">
       <div className="flex flex-col gap-6">
         <div
-          className={`flex bg-orangeIndiaForegroundColor  justify-center items-center gap-14 py-5 px-10 cursor-pointer transition-all  ${currentStage !== 1 ? "mr-4" : null
-            }`}
+          className={`h-full flex bg-orangeIndiaForegroundColor justify-center items-center gap-14 py-5 px-10 cursor-pointer transition-all mr-6
+            `}
           onClick={() => {
             setCurrentStage(1);
             setIsCheckedDisclaimer(false);
             setOpenCalculator(false);
           }}
         >
-          <img src={indiaSignLogo} alt="India's Logo" className="h-24 w-24" />
+          <img src={calculatorIcon} alt="India's Logo" className="h-24 w-24" />
           <h3 className="text-orangeIndiaPrimaryColor text-xl font-bold max-w-[300px]">
             Option Calculator For Fixation on Promotion in 7th CPC
           </h3>
@@ -53,20 +51,20 @@ function LandingCalculator() {
           </h3>
         </div> */}
 
-        <div
-          className={`flex bg-greenIndiaForegroundColor justify-center items-center gap-14 py-5 px-10 cursor-pointer transition-all  ${currentStage !== 2 ? "mr-4" : null
-            }`}
-          onClick={() => {
-            setCurrentStage(2);
-            setIsCheckedDisclaimer(false);
-            setOpenCalculator(false);
-          }}
-        >
-          <img src={indiaCountryMap} alt="India's Logo" className="h-24 w-24" />
-          <h3 className="text-greenIndiaPrimaryColor text-lg font-bold max-w-[300px]">
-            Switchover Pay Calculator
-          </h3>
-        </div>
+        {/*<div*/}
+        {/*  className={`flex bg-greenIndiaForegroundColor justify-center items-center gap-14 py-5 px-10 cursor-pointer transition-all  ${currentStage !== 2 ? "mr-4" : null*/}
+        {/*    }`}*/}
+        {/*  onClick={() => {*/}
+        {/*    setCurrentStage(2);*/}
+        {/*    setIsCheckedDisclaimer(false);*/}
+        {/*    setOpenCalculator(false);*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  <img src={indiaCountryMap} alt="India's Logo" className="h-24 w-24" />*/}
+        {/*  <h3 className="text-greenIndiaPrimaryColor text-lg font-bold max-w-[300px]">*/}
+        {/*    Switchover Pay Calculator*/}
+        {/*  </h3>*/}
+        {/*</div>*/}
       </div>
 
       {/* Content Section */}
@@ -92,7 +90,7 @@ function LandingCalculator() {
               >
                 {currentStage === 1 && (
                   <CalculatorCard
-                    title_bg_color="darkOrange"
+                    className={"bg-darkOrange"}
                     title="CALCULATOR DEVELOPED BY PCDA(O) FOR PAY FIXATION ON
                         PROMOTION IN 7TH CPC"
                     info_one=" In order to facilitate the Army Officers to ascertain their pay on
@@ -117,50 +115,21 @@ function LandingCalculator() {
                   </CalculatorCard>
                 )}
 
-                {currentStage === 2 && (
-                  <CalculatorCard
-                    title_bg_color="darkGreenTitle"
-                    title="Pay Rules/Regulations, 2017 for Army, MNS Officers & equivalents:- Opportunity for revision of Option to come over to revised Pay Structure."
-                    info_one="Personnel of Army/MNS Officers who were promoted/financially upgraded between 01.01.2016 and the date of Notification of Pay Rules by this Ministry i.e. 03.05.2017 and who have been requesting for re-exercising of option to switch over to the 7th CPC structure shall be permitted to re-exercise their option in terms of Rules 5 & 6 thereof. The revised option shall be exercised within a period of one hundred and eighty days i.e. 19/11/2023 from the date of issue of this letter. The option exercised in terms of these orders shall be final and shall not be liable to any further change under any circumstances. All other terms and conditions laid down in the Said Rules 5 & 6 of Pay Rules/Regulations 2017 shall continue to be applicable."
-                    info_two="Comments and suggestions to improve the above Pay Calculator further with regard to its user friendliness and accuracy may be sent at email id generalquery-pcdaopune [at] nic [dot] in . The final version of Pay Calculator will be made available thereafter."
-                    isCheckedDisclaimer={isCheckedDisclaimer}
-                    setIsCheckedDisclaimer={setIsCheckedDisclaimer}
-                    openCalculator={openCalculator}
-                    setOpenCalculator={setOpenCalculator}
-                  >
-                    Form Components
-                  </CalculatorCard>
-                )}
+                {/*{currentStage === 2 && (*/}
+                {/*  <CalculatorCard*/}
+                {/*    title_bg_color="darkGreenTitle"*/}
+                {/*    title="Pay Rules/Regulations, 2017 for Army, MNS Officers & equivalents:- Opportunity for revision of Option to come over to revised Pay Structure."*/}
+                {/*    info_one="Personnel of Army/MNS Officers who were promoted/financially upgraded between 01.01.2016 and the date of Notification of Pay Rules by this Ministry i.e. 03.05.2017 and who have been requesting for re-exercising of option to switch over to the 7th CPC structure shall be permitted to re-exercise their option in terms of Rules 5 & 6 thereof. The revised option shall be exercised within a period of one hundred and eighty days i.e. 19/11/2023 from the date of issue of this letter. The option exercised in terms of these orders shall be final and shall not be liable to any further change under any circumstances. All other terms and conditions laid down in the Said Rules 5 & 6 of Pay Rules/Regulations 2017 shall continue to be applicable."*/}
+                {/*    info_two="Comments and suggestions to improve the above Pay Calculator further with regard to its user friendliness and accuracy may be sent at email id generalquery-pcdaopune [at] nic [dot] in . The final version of Pay Calculator will be made available thereafter."*/}
+                {/*    isCheckedDisclaimer={isCheckedDisclaimer}*/}
+                {/*    setIsCheckedDisclaimer={setIsCheckedDisclaimer}*/}
+                {/*    openCalculator={openCalculator}*/}
+                {/*    setOpenCalculator={setOpenCalculator}*/}
+                {/*  >*/}
+                {/*    Form Components*/}
+                {/*  </CalculatorCard>*/}
+                {/*)}*/}
 
-                {/* {currentStage === 3 && (
-                  <div className="flex gap-16">
-                    <div className="flex flex-col space-y-3 text-greenIndiaPrimaryColor">
-                      <h3 className="text-3xl font-bold">
-                        Historical and Cultural Insights
-                      </h3>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur. Augue ut ornare
-                        volutpat tincidunt magnis elit purus sed. Sit imperdiet
-                        eros a nibh aenean dignissim. Tellus amet ipsum mauris
-                        id tellus posuere posuere. Sit tristique euismod cursus
-                        aliquet integer quis sit feugiat proin. Egestas elit
-                        volutpat nulla aliquam molestie. Duis et lorem
-                        condimentum eu dolor in. Aliquam et pulvinar vitae
-                        tristique arcu neque hendrerit. Dolor diam fringilla ac
-                        molestie nec. Consectetur feugiat semper leo dignissim
-                        aenean ut amet. Viverra purus volutpat risus netus morbi
-                        facilisis.
-                      </p>
-                    </div>
-                    <div className="w-full">
-                      <img
-                        src={indiaCountryMap}
-                        alt="India's Sign Logo"
-                        className="h-[290px]"
-                      />
-                    </div>
-                  </div>
-                )} */}
               </div>
             )}
           </CSSTransition>

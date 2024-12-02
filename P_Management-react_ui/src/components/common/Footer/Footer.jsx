@@ -36,7 +36,7 @@ function Footer() {
                 src={pcdaoLogo}
                 alt="PCDAO\'s logo"
                 height={60}
-                className="w-44 h-auto"
+                className="w-52 h-auto"
               />
               <p className="w-full flex flex-wrap">
                 Lorem ipsum dolor sit amet consectetur. Urna placerat leo nam
@@ -50,7 +50,7 @@ function Footer() {
                     src={contactIcon}
                     className="w-[55px] h-[58px] max-w-[55px] absolute top-0 -left-2"
                   />
-                  <div className="w-full h-full flex flex-col">
+                  <div className="w-full h-full flex flex-col pl-8">
                     <p className="p-0 m-0 leading-0">Helpline</p>
                     <p className="font-bold leading-0 p-0 m-0">
                       (020) 2640-1100

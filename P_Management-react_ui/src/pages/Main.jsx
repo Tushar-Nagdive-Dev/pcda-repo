@@ -15,7 +15,7 @@ import LandingAppreciations from "../components/common/Landing/LandingAppreciati
 function Main() {
   return (
     <>
-      <div className="px-custom space-y-24">
+      <div className="px-custom ">
         <div className="w-full h-full mt-10 flex flex-row gap-8">
           <LandingSlider />
           <LatestLandingUpdateLists />
@@ -23,12 +23,12 @@ function Main() {
         {/* <ClientTransactionSummary /> */}
       </div>
       <LandingImportantLinks />
-      <div className="px-custom space-y-24">
+      <div className="px-custom">
         <LandingAboutUs />
       </div>
       <LandingSections />
 
-      <div className="px-custom space-y-24 my-24">
+      <div className="px-custom my-24">
         <LandingCalculator />
       </div>
       <LandingTestimonial />

@@ -1,9 +1,9 @@
 import React from "react";
-import { DataTableColumnHeader } from "./admin-testimonial-data-table-column-header";
 import { TestimonialDataTableRowActions } from "./admin-testimonial-data-table-row-actions";
+import {AdminDataTableColumnHeader} from "../../TableComponents/admin-data-table-column-header.jsx";
 
 
-export const adminColumns = [
+export const testimonialColumns = [
   {
     id: "sr_no",
     header: ({ table }) => <p className>Sr. No.</p>,
@@ -14,7 +14,7 @@ export const adminColumns = [
   {
     accessorKey: "person_name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <AdminDataTableColumnHeader column={column} title="Name" />
     ),
     cell: ({ row }) => (
       <div className="w-[150px] capitalize">{row.getValue("person_name")}</div>
@@ -93,7 +93,7 @@ export const adminColumns = [
   {
     accessorKey: "created_date",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Created Date" />
+      <AdminDataTableColumnHeader column={column} title="Created Date" />
     ),
     cell: ({ row }) => {
       const date = new Date(row.getValue("created_date"));

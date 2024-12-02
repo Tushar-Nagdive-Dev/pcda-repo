@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button"
 
-function AdminDeleteDialog({ children }) {
+function AdminDeleteDialog({ callback,children }) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -48,7 +48,7 @@ function AdminDeleteDialog({ children }) {
         <DialogClose asChild>
           <Button className="bg-transparent border-newprimaryColor text-titleColor" type="button">Cancel</Button>
           </DialogClose>
-          <Button variant="destructive" type="button">Confirm</Button>
+          <Button variant="destructive" type="button" onClick={callback}>Confirm</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

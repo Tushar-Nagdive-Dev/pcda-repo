@@ -6,7 +6,7 @@ import { AccessibilityContext } from "../../../context/AccessibilityContext";
 function LandingAboutUs() {
   const accessibilityCtx = useContext(AccessibilityContext);
   return (
-    <div className="w-full flex flex-col space-y-6 my-24">
+    <div className="w-full flex flex-col space-y-6 py-24">
       <LeftBorderWithTitle
         textSize="text-base"
         title="Principal Controller of Defence Accounts (Officers)"

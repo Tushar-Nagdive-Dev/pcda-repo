@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import pcdaoLogo from "@/assets/logo/pcdao_logo-removebg.png";
 import LoginForm from "./LoginForm/LoginForm";
 
-function LoginComponent({ onLoginSuccess }) {
+function LoginComponent() {
   return (
     <>
       <div className="relative h-[100svh] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-60-40 lg:px-0">
@@ -41,7 +41,7 @@ function LoginComponent({ onLoginSuccess }) {
             </div>
             <div></div>
 
-            <LoginForm onLoginSuccess={onLoginSuccess} />
+            <LoginForm />
             <Link
               to={"/forgotpassword"}
               className="px-8 text-center text-sm text-statebluecolor raleway-font underline-offset-2"

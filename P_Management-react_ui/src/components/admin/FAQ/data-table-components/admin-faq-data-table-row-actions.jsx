@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export function DataTableRowActions({ row }) {
+export function FAQDataTableRowActions({ row }) {
   const navigate = useNavigate();
   return (
     <div className="flex gap-2 justify-center items-center">

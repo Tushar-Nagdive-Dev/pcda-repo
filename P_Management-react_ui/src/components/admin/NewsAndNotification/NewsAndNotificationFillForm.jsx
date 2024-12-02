@@ -23,6 +23,7 @@ import {
 
 import { Textarea } from "@/components/ui/textarea";
 import { NewsandNotificationValidation } from "./NewsAndNotificationFormValidation";
+import apiClient from "../../../auth/ApiClient";
 
 function NewsAndNotificationFillForm() {
   const form = useForm({
@@ -36,9 +37,46 @@ function NewsAndNotificationFillForm() {
     },
   });
 
-  function onSubmit(values) {
+  async function onSubmit(values) {
     console.log(values);
+  
+    // Determine type
+    const type =
+      values.type === "News & Notification"
+        ? "NEWS_AND_NOTIFICATION"
+        : values.type === "News"
+        ? "NEWS"
+        : "";
+  
+    // Determine status
+    const status =
+      values.status === "Active"
+        ? "ACTIVE"
+        : values.status === "In-Active"
+        ? "INACTIVE"
+        : "";
+  
+    // Construct newAndNotification object
+    const newAndNotification = {
+      titleEnglish: values.title,
+      titleHindi: values.title_hindi,
+      type: type,
+      status: status,
+      isNew: values.isNew,
+      uiOrder: 0, // Default value
+    };
+  
+    try {
+      // Make the API call
+      const response = await apiClient.post("news",newAndNotification);
+      console.log("Response from API:", response);
+      alert("News and Notification created successfully!");
+    } catch (error) {
+      console.error("Error creating News and Notification:", error);
+      alert("Failed to create News and Notification. Please try again.");
+    }
   }
+  
   return (
     <div className="bg-adminBreadCrumbsBg flex flex-col p-10 rounded-lg">
       <h3 className="font-raleway text-2xl text-center font-bold">
@@ -139,7 +177,7 @@ function NewsAndNotificationFillForm() {
 
               <FormField
                 control={form.control}
-                name="new"
+                name="isNew"
                 render={({ field }) => (
                   <FormItem className="flex gap-2 items-center">
                     <FormControl>

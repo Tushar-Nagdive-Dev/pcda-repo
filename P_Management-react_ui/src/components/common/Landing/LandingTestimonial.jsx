@@ -64,7 +64,7 @@ function LandingTestimonial() {
   };
 
   return (
-    <div className="w-full h-full px-custom py-16 my-24">
+    <div className="w-full h-full px-custom my-24">
       <div className="flex flex-col space-y-6">
         <LeftBorderWithTitle
           textSize="text-base"
@@ -129,7 +129,7 @@ function LandingTestimonial() {
           <img
             src={testimionalImage}
             alt="Testimonial"
-            className="w-full max-h-80 object-cover"
+            className="w-full max-h-96 object-cover"
           />
           {/* Gradient Overlay */}
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-gray-200 to-transparent z-10"></div>
@@ -153,7 +153,7 @@ function LandingTestimonial() {
                     className={landingTestminionalCss["my-slide"]}
                   >
                     <div className="h-full flex flex-col justify-between px-10">
-                      <p className="max-h-44 overflow-y-auto scrollbar-thin text-justify text-titleColor w-3/4">{slide.comment}</p>
+                      <p className="max-h-44 overflow-y-auto scrollbar-thin text-justify text-titleColor font-semibold w-3/4">{slide.comment}</p>
 
                       <div className="flex gap-3 w-fit">
                         <img src={slide.person_picture} alt={`${slide.person_name}'s picture`} className="rounded-full w-14 h-14 border-2 border-statebluecolor" />

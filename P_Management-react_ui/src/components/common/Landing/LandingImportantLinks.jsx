@@ -97,7 +97,7 @@ function LandingImportantLinks() {
     }
   };
   return (
-    <div className="w-full px-custom py-32 bg-adminCard my-16">
+    <div className="w-full px-custom pt-24 pb-28  bg-adminCard mt-16">
       <div className="w-full flex flex-col space-y-6">
         <LeftBorderWithTitle
           textSize="text-base"

@@ -1,20 +1,8 @@
 import React from "react";
-import { DataTableColumnHeader } from "./admin-faq-data-table-column-header";
-import { DataTableRowActions } from "./admin-faq-data-table-row-actions";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { TrendingUp, TrendingDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Checkbox } from "@/components/ui/checkbox";
+import {AdminDataTableColumnHeader} from "../../TableComponents/admin-data-table-column-header.jsx";
+import { FAQDataTableRowActions } from "./admin-faq-data-table-row-actions";
 
-export const adminColumns = [
+export const faqColumns = [
   {
     id: "sr_no",
     header: ({ table }) => <p className>Sr. No.</p>,
@@ -25,7 +13,7 @@ export const adminColumns = [
   {
     accessorKey: "question",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Question" />
+      <AdminDataTableColumnHeader column={column} title="Question" />
     ),
     cell: ({ row }) => (
       <div className="w-[150px] capitalize">{row.getValue("question")}</div>
@@ -101,7 +89,7 @@ export const adminColumns = [
   {
     accessorKey: "created_date",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Created Date" />
+      <AdminDataTableColumnHeader column={column} title="Created Date" />
     ),
     cell: ({ row }) => {
       const date = new Date(row.getValue("created_date"));
@@ -152,6 +140,6 @@ export const adminColumns = [
   {
     id: "actions",
     header: ({ column }) => <p className>Actions</p>,
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => <FAQDataTableRowActions row={row} />,
   },
 ];

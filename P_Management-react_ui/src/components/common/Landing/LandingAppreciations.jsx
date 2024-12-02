@@ -6,7 +6,7 @@ import appreciationsLetter from "@/assets/images/apperications_letter.svg"
 
 function LandingAppreciations() {
   return (
-    <div className="w-full flex flex-col space-y-6 bg-mainsecondarysecond px-custom py-36">
+    <div className="w-full flex flex-col space-y-6 bg-mainsecondarysecond px-custom py-24">
       <LeftBorderWithTitle
         textSize="text-base"
         title="Honored"
@@ -42,7 +42,7 @@ function LandingAppreciations() {
           <div className="flex space-x-6">
             <img src={quoteIcon} className="h-full" />
             <div className="flex flex-col space-y-3">
-              <p className="text-[100px] text-mainprimarycolor font-bold leading-tight">
+              <p className="text-[90px] text-mainprimarycolor font-bold leading-tight">
                 2000+
               </p>
               <p className="text-mainprimarycolor font-bold">Appreciations</p>
@@ -51,7 +51,7 @@ function LandingAppreciations() {
         </div>
 
         <div className="w-1/2 h-full flex flex-row-reverse">
-        <img src={appreciationsLetter} alt="Appreciations letter" className="w-auto h-auto max-h-full object-contain"/>
+        <img src={appreciationsLetter} alt="Appreciations letter" className="w-auto h-auto max-h-full max-w-[550px] object-contain"/>
         </div>
       </div>
     </div>

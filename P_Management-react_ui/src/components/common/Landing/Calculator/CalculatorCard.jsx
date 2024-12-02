@@ -1,8 +1,9 @@
 import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { cn } from "@/lib/utils"
 
 function CalculatorCard({
-  title_bg_color,
+  className,
   title,
   info_one,
   info_two,
@@ -19,7 +20,7 @@ function CalculatorCard({
       ) : (
         <div className="flex flex-col space-y-3">
           <h3
-            className={`text-3xl font-bold text-white bg-${title_bg_color.toString()} p-2 text-justify`}
+            className={cn(`text-2xl 2xl:text-3xl font-bold text-white p-2 text-justify`, className)}
           >
             {title}
           </h3>
@@ -56,7 +57,7 @@ function CalculatorCard({
             </p>
           </div>
 
-          <div className="w-full flex flex-row-reverse ">
+          <div className="w-full flex flex-row-reverse pt-10">
             <button
               className="w-fit rounded-full px-4 py-3 bg-statebluecolor text-white disabled:bg-gray-400 disabled:cursor-not-allowed"
               disabled={!isCheckedDisclaimer}

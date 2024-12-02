@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const LoginValidation = z.object({
-  userid: z.string().nonempty("User ID is required"),
-  password: z.string().nonempty("Password is required"),
-  captcha: z.string().nonempty("Captcha is required"), // Add captcha validation
+  userid: z.string().min(2).max(50),
+  password: z.string().min(4),
+  captcha: z.string().min(6)
 });

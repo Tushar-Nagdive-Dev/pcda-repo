@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginValidation } from "./LoginValidationSchema";
+import axios from "axios";
 
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,27 +17,26 @@ import captchaDemoPic from "@/assets/images/captcha_demo.png";
 import { Numpad, SignIn } from "@phosphor-icons/react";
 import { InputWithIcon } from "../ui/inputwithicon";
 import { KeyRound, UserRound } from "lucide-react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { setToken } from "../../auth/ApiClient";
 
-function LoginForm({ onLoginSuccess }) {
-
-  const navigate = useNavigate();
+function LoginComponent() {
+  const navigate = useNavigate()
+  const form = useForm({
+    resolver: zodResolver(LoginValidation),
+    defaultValues: {
+      userid: "",
+      password: "",
+      captcha: "",
+    },
+  });
 
   const [captchaImage, setCaptchaImage] = useState("");
   const [captchaToken, setCaptchaToken] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const form = useForm({
-    resolver: zodResolver(LoginValidation),
-    defaultValues: {
-      userid: "",
-      password: "",
-      captcha: "", // Ensure this exists
-    },
-  });
-
-  // Fetch captcha when the component mounts
+  // Fetch captcha on component mount
   useEffect(() => {
     generateCaptcha();
   }, []);
@@ -60,22 +58,24 @@ function LoginForm({ onLoginSuccess }) {
   };
 
   const onSubmit = async (values) => {
-    if (!values.captcha) {
+    const { userid, password, captcha } = values;
+
+    if (!captcha) {
       setError("Please enter the captcha.");
       return;
     }
 
     try {
       const response = await axios.post("http://localhost:8888/auth/login", {
-        username: values.userid,
-        password: values.password,
+        username: userid,
+        password,
         captchaToken,
-        captchaInput: values.captcha,
+        captchaInput: captcha,
       });
-
       setSuccess(response.data.message);
       setError("");
-      onLoginSuccess(true);
+      setToken(response.data.token);
+      navigate('/admin');
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please try again.");
       setSuccess("");
@@ -84,88 +84,102 @@ function LoginForm({ onLoginSuccess }) {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="md:max-lg:space-y-1 mid_hd_screen:max-full_hd_screen:space-y-2 space-y-4 mb-7">
-          <FormField
-            control={form.control}
-            name="userid"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>User ID</FormLabel>
-                <FormControl>
-                  <InputWithIcon
-                    startIcon={UserRound}
-                    placeholder="Enter User ID"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <InputWithIcon
-                    startIcon={KeyRound}
-                    placeholder="Enter Passsword"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <div className="space-y-3">
-          {captchaImage ? (
-              <img
-                src={captchaImage}
-                alt="captcha code"
-                className="h-full"
+    <div className="container mt-5">
+      <div className="card shadow p-4 mx-auto" style={{ maxWidth: "400px" }}>
+        <h2 className="text-center mb-4">Login</h2>
+        {error && <div className="alert alert-danger">{error}</div>}
+        {success && <div className="alert alert-success">{success}</div>}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="space-y-4 mb-7">
+              {/* User ID Field */}
+              <FormField
+                control={form.control}
+                name="userid"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>User ID</FormLabel>
+                    <FormControl>
+                      <InputWithIcon
+                        startIcon={UserRound}
+                        placeholder="Enter User ID"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            ) : (
-              <p>Loading captcha...</p>
-            )}
-            <p
-              className="text-statebluecolor cursor-pointer"
-              onClick={generateCaptcha}
-            >
-              Refresh
-            </p>
-            {/* <img src={captchaDemoPic} alt="captcha's code" className="h-full" />
-            <p className="text-statebluecolor cursor-pointer">Refresh</p> */}
-          </div>
 
-          <FormField
-            control={form.control}
-            name="captcha"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <InputWithIcon
-                    startIcon={Numpad}
-                    placeholder="Enter Captcha"
-                    {...field}
+              {/* Password Field */}
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <InputWithIcon
+                        startIcon={KeyRound}
+                        placeholder="Enter Password"
+                        type="password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Captcha Field */}
+              <div className="space-y-3 text-center">
+                {captchaImage ? (
+                  <img
+                    src={captchaImage}
+                    alt="captcha"
+                    className="mb-3"
+                    style={{ maxWidth: "100%", height: "auto" }}
                   />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+                ) : (
+                  <img
+                    src={captchaDemoPic}
+                    alt="captcha placeholder"
+                    className="h-full"
+                  />
+                )}
+                <p
+                  className="text-statebluecolor cursor-pointer"
+                  onClick={generateCaptcha}
+                >
+                  Refresh
+                </p>
+              </div>
+              <FormField
+                control={form.control}
+                name="captcha"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <InputWithIcon
+                        startIcon={Numpad}
+                        placeholder="Enter Captcha"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-        <Button type="submit" className="text-white w-full bg-statebluecolor">
-          Sign In <SignIn size={24} color="#ffffff" />
-        </Button>
-      </form>
-    </Form>
+            <Button type="submit" className="text-white w-full bg-statebluecolor">
+              Sign In <SignIn size={24} color="#ffffff" />
+            </Button>
+          </form>
+        </Form>
+      </div>
+    </div>
   );
 }
 
-export default LoginForm;
+export default LoginComponent;

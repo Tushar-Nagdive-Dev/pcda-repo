@@ -92,4 +92,26 @@ public class JwtUtil {
         Date expiration = extractClaims(token).getExpiration();
         return expiration.before(new Date());
     }
+
+    public boolean validateRefreshToken(String refreshToken) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(refreshToken)
+                    .getBody();
+    
+            // Check if the token has expired
+            Date expiration = claims.getExpiration();
+            if (expiration.before(new Date())) {
+                return false; // Token is expired
+            }
+    
+            return true; // Token is valid
+        } catch (JwtException | IllegalArgumentException e) {
+            // Log the exception if needed
+            return false; // Token is invalid
+        }
+    }
+    
 }

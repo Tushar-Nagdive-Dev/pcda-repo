@@ -1,20 +1,16 @@
 import React from "react";
-import { DataTableColumnHeader } from "./admin-news-notification-data-table-column-header";
+import { AdminDataTableColumnHeader } from "../../TableComponents/admin-data-table-column-header.jsx";
 import { DataTableRowActions } from "./admin-news-notification-data-table-row-actions";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TrendingUp, TrendingDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Checkbox } from "@/components/ui/checkbox";
 
-export const adminColumns = [
+export const newsAndNotificationColumns = [
   {
     id: "sr_no",
     header: ({ table }) => <p className>Sr. No.</p>,
@@ -25,7 +21,7 @@ export const adminColumns = [
   {
     accessorKey: "title",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Title" />
+      <AdminDataTableColumnHeader column={column} title="Title" />
     ),
     cell: ({ row }) => (
       <div className="w-[150px] capitalize">{row.getValue("title")}</div>
@@ -94,7 +90,7 @@ export const adminColumns = [
   {
     accessorKey: "created_date",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Created Date" />
+      <AdminDataTableColumnHeader column={column} title="Created Date" />
     ),
     cell: ({ row }) => {
       const date = new Date(row.getValue("created_date"));
