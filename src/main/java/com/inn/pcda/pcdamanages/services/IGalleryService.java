@@ -10,4 +10,8 @@ public interface IGalleryService {
     public Gallery addGallery(GalleryDTO galleryDTO);
 
     public List<Gallery> getAllGalleries();
+
+    public Boolean updateGalleryById(GalleryDTO galleryDTO, Long id);
+
+    public Boolean deleteGalleryById(Long id);
 }
