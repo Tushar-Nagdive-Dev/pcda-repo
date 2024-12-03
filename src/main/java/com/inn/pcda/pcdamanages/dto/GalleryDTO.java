@@ -1,8 +1,9 @@
 package com.inn.pcda.pcdamanages.dto;
 
 import com.inn.pcda.pcdamanages.enums.GalleryTypes;
-
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class GalleryDTO {
@@ -10,5 +11,5 @@ public class GalleryDTO {
     private GalleryTypes type;
     private Integer year;
     private Boolean isActive;
-    private Integer uploadFileId;
+    private List<Integer> uploadFileIds; // List to support multiple file attachments
 }

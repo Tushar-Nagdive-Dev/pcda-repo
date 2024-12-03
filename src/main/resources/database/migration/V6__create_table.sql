@@ -15,14 +15,21 @@ CREATE TABLE testimonial (
 
 CREATE TABLE gallery (
     id SERIAL PRIMARY KEY,
-    event_name VARCHAR(255),
-    type gallery_types_enum, -- Use enum type
-    year INT,
-    is_active BOOLEAN DEFAULT FALSE,
-    upload_file_id INT,
+    event_name VARCHAR(255) NOT NULL,
+    type gallery_types_enum NOT NULL, -- Enum type for gallery type
+    year INT NOT NULL,
+    is_active BOOLEAN DEFAULT FALSE NOT NULL,
     created_by INT,
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_by INT,
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     ip_address VARCHAR(50) DEFAULT '0.0.0.0'
 );
+
+CREATE TABLE gallery_files (
+    id SERIAL PRIMARY KEY,
+    gallery_id INT NOT NULL REFERENCES gallery(id) ON DELETE CASCADE,
+    file_id INT NOT NULL
+);
+
+

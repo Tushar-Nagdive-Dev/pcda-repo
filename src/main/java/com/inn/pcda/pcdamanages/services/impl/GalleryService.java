@@ -32,10 +32,10 @@ public class GalleryService implements IGalleryService {
         try {
             Gallery gallery = new Gallery();
             gallery.setEventName(galleryDTO.getEventName());
-            gallery.setIsActive(galleryDTO.getIsActive());
             gallery.setType(galleryDTO.getType());
             gallery.setYear(galleryDTO.getYear());
-            gallery.setUploadFileId(galleryDTO.getUploadFileId());
+            gallery.setIsActive(galleryDTO.getIsActive() != null ? galleryDTO.getIsActive() : false); // Default to false
+            gallery.setUploadFileIds(galleryDTO.getUploadFileIds() != null ? galleryDTO.getUploadFileIds() : List.of()); // Default empty list
 
             Gallery savedGallery = galleryRepo.save(gallery);
             log.info("Gallery successfully added with ID: {}", savedGallery.getId());
@@ -76,10 +76,10 @@ public class GalleryService implements IGalleryService {
             if (galleryOptional.isPresent()) {
                 Gallery galleryDb = galleryOptional.get();
                 galleryDb.setEventName(galleryDTO.getEventName());
-                galleryDb.setIsActive(galleryDTO.getIsActive());
                 galleryDb.setType(galleryDTO.getType());
-                galleryDb.setUploadFileId(galleryDTO.getUploadFileId());
                 galleryDb.setYear(galleryDTO.getYear());
+                galleryDb.setIsActive(galleryDTO.getIsActive() != null ? galleryDTO.getIsActive() : galleryDb.getIsActive());
+                galleryDb.setUploadFileIds(galleryDTO.getUploadFileIds() != null ? galleryDTO.getUploadFileIds() : galleryDb.getUploadFileIds());
 
                 galleryRepo.save(galleryDb);
                 log.info("Gallery successfully updated with ID: {}", id);
