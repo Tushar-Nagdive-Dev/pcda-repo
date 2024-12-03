@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -40,7 +39,7 @@ public class NewsNofiticationController {
     }
 
     @GetMapping()
-    public List<NewsAndNotification> getAllNewsAndNotifications(@RequestParam String param) {
+    public List<NewsAndNotification> getAllNewsAndNotifications() {
         return this.iNewsNotificationService.getAllNewsAndNotifications();
     }
     
