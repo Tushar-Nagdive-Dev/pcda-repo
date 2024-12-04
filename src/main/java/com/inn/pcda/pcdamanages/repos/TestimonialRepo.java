@@ -8,4 +8,5 @@ import com.inn.pcda.pcdamanages.entity.Testimonial;
 @Repository
 public interface TestimonialRepo extends JpaRepository<Testimonial, Long>{
     
+    
 }

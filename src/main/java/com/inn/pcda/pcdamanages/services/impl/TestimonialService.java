@@ -1,10 +1,14 @@
 package com.inn.pcda.pcdamanages.services.impl;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.inn.pcda.common.service.IFileUploadService;
 import com.inn.pcda.pcdamanages.dto.TestimonialDTO;
 import com.inn.pcda.pcdamanages.entity.Testimonial;
 import com.inn.pcda.pcdamanages.repos.TestimonialRepo;
@@ -17,25 +21,112 @@ import lombok.extern.slf4j.Slf4j;
 public class TestimonialService implements ITestimonialService {
 
     @Autowired
-    private TestimonialRepo testmonialRepo;
-    
+    private TestimonialRepo testimonialRepo;
+
+    @Autowired
+    private IFileUploadService fileUploadService;
+
     @Override
     public Testimonial addTestimonial(TestimonialDTO testimonialDTO) {
-       log.info("Inside @class TestimonialService @method testimonialDTO : {}", testimonialDTO.toString());
-        Testimonial testimonial = new Testimonial();
-        testimonial.setImageId(testimonialDTO.getImageId());
-        testimonial.setIsNew(testimonialDTO.getIsNew());
-        testimonial.setName(testimonialDTO.getName());
-        testimonial.setPosition(testimonialDTO.getPosition());
-        testimonial.setStatus(testimonialDTO.getStatus());
-        testimonial.setTestimonialBrief(testimonialDTO.getTestimonialBrief());
-        return this.testmonialRepo.save(testimonial);
+        log.info("Inside @class TestimonialService @method addTestimonial : {}", testimonialDTO);
+        if (testimonialDTO == null) {
+            log.error("TestimonialDTO is null");
+            return null;
+        }
+        Testimonial testimonial = mapToEntity(testimonialDTO);
+        return testimonialRepo.save(testimonial);
     }
 
     @Override
     public List<Testimonial> getAllTestimonials() {
         log.info("Inside @class TestimonialService @method getAllTestimonials");
-        return this.testmonialRepo.findAll();
+        return testimonialRepo.findAll();
     }
-    
+
+    @Override
+    public Integer uploadProfileImage(Long id, MultipartFile file) {
+        log.info("Inside @class TestimonialService @method uploadProfileImage for id: {}", id);
+        if (file == null || id == null) {
+            log.error("File or Testimonial ID is null");
+            return null;
+        }
+        try {
+            Integer imageId = fileUploadService.saveFile(file);
+            Optional<Testimonial> optionalTestimonial = testimonialRepo.findById(id);
+
+            if (optionalTestimonial.isPresent()) {
+                Testimonial testimonial = optionalTestimonial.get();
+                testimonial.setImageId(imageId);
+                testimonialRepo.save(testimonial);
+                return imageId;
+            } else {
+                log.error("Testimonial with id: {} not found", id);
+                return null;
+            }
+        } catch (IOException e) {
+            log.error("Error while uploading file: {}", e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public Testimonial updateTestimonial(TestimonialDTO testimonialDTO, Long id) {
+        log.info("Inside @class TestimonialService @method updateTestimonial for id: {}", id);
+        if (testimonialDTO == null || id == null) {
+            log.error("TestimonialDTO or ID is null");
+            return null;
+        }
+
+        Optional<Testimonial> optionalTestimonial = testimonialRepo.findById(id);
+
+        if (optionalTestimonial.isPresent()) {
+            Testimonial testimonial = optionalTestimonial.get();
+            mapToEntity(testimonialDTO, testimonial);
+            return testimonialRepo.save(testimonial);
+        } else {
+            log.error("Testimonial with id: {} not found", id);
+            return null;
+        }
+    }
+
+    private Testimonial mapToEntity(TestimonialDTO dto) {
+        Testimonial testimonial = new Testimonial();
+        testimonial.setImageId(dto.getImageId());
+        testimonial.setIsNew(dto.getIsNew());
+        testimonial.setName(dto.getName());
+        testimonial.setPosition(dto.getPosition());
+        testimonial.setStatus(dto.getStatus());
+        testimonial.setTestimonialBrief(dto.getTestimonialBrief());
+        return testimonial;
+    }
+
+    private void mapToEntity(TestimonialDTO dto, Testimonial entity) {
+        entity.setImageId(dto.getImageId());
+        entity.setIsNew(dto.getIsNew());
+        entity.setName(dto.getName());
+        entity.setPosition(dto.getPosition());
+        entity.setStatus(dto.getStatus());
+        entity.setTestimonialBrief(dto.getTestimonialBrief());
+    }
+
+    @Override
+    public Boolean deleteTestimonialById(Long id) {
+        log.info("Inside @class TestimonialService @method deleteTestimonialById for id: {}", id);
+        
+        if (id == null) {
+            log.error("Provided ID is null");
+            return false;
+        }
+        
+        Optional<Testimonial> optionalTestimonial = testimonialRepo.findById(id);
+        if (optionalTestimonial.isPresent()) {
+            testimonialRepo.deleteById(id);
+            log.info("Successfully deleted Testimonial with id: {}", id);
+            return true;
+        } else {
+            log.error("Testimonial with id: {} not found", id);
+            return false;
+        }
+    }
+
 }
