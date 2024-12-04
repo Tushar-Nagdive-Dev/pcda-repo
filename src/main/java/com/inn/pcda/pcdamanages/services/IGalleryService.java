@@ -2,6 +2,8 @@ package com.inn.pcda.pcdamanages.services;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.inn.pcda.pcdamanages.dto.GalleryDTO;
 import com.inn.pcda.pcdamanages.entity.Gallery;
 import com.inn.pcda.pcdamanages.entity.Testimonial;
@@ -17,4 +19,6 @@ public interface IGalleryService {
     public Boolean deleteGalleryById(Long id);
 
     public Testimonial updateTestimonial();
+
+    public List<Integer> uploadFiles(Long id, MultipartFile[] files);
 }

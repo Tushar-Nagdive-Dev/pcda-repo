@@ -5,7 +5,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.inn.pcda.common.service.impl.FileStorageService;
 import com.inn.pcda.pcdamanages.dto.GalleryDTO;
 import com.inn.pcda.pcdamanages.entity.Gallery;
 import com.inn.pcda.pcdamanages.entity.Testimonial;
@@ -20,6 +22,9 @@ public class GalleryService implements IGalleryService {
 
     @Autowired
     private GalleryRepo galleryRepo;
+
+    @Autowired
+    private FileStorageService fileStorageService;
 
     @Override
     public Gallery addGallery(GalleryDTO galleryDTO) {
@@ -120,5 +125,29 @@ public class GalleryService implements IGalleryService {
     public Testimonial updateTestimonial() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'updateTestimonial'");
+    }
+
+    @Override
+    public List<Integer> uploadFiles(Long id, MultipartFile[] files) {
+        Optional<Gallery> optionalGallery = galleryRepo.findById(id);
+
+        if (optionalGallery.isPresent()) {
+            Gallery gallery = optionalGallery.get();
+            List<Integer> fileIds = fileStorageService.storeFiles(files);
+
+            // Add new file IDs to the existing list
+            List<Integer> currentFileIds = gallery.getUploadFileIds();
+            if (currentFileIds != null) {
+                currentFileIds.addAll(fileIds);
+            } else {
+                currentFileIds = fileIds;
+            }
+
+            gallery.setUploadFileIds(currentFileIds);
+            galleryRepo.save(gallery);
+            return fileIds;
+        } else {
+            return null; // Gallery not found
+        }
     }
 }

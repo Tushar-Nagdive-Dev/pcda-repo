@@ -6,8 +6,10 @@ import com.inn.pcda.pcdamanages.services.IGalleryService;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -88,6 +90,19 @@ public class GalleryController {
         } catch (Exception e) {
             log.error("Error while deleting gallery with id {}", id, e);
             return ResponseEntity.internalServerError().build(); // 500 Internal Server Error
+        }
+    }
+
+    @PostMapping("/{id}/upload")
+    public ResponseEntity<List<Integer>> uploadGalleryFiles(
+            @PathVariable Long id,
+            @RequestParam("files") MultipartFile[] files) {
+        List<Integer> fileIds = iGalleryService.uploadFiles(id, files);
+        if (fileIds != null) {
+            return ResponseEntity.ok(fileIds);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(null);
         }
     }
 }
