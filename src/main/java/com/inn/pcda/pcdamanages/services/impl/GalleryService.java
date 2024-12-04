@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.inn.pcda.pcdamanages.dto.GalleryDTO;
 import com.inn.pcda.pcdamanages.entity.Gallery;
+import com.inn.pcda.pcdamanages.entity.Testimonial;
 import com.inn.pcda.pcdamanages.repos.GalleryRepo;
 import com.inn.pcda.pcdamanages.services.IGalleryService;
 
@@ -113,5 +114,11 @@ public class GalleryService implements IGalleryService {
             log.error("Error while deleting gallery with ID: {}", id, e);
             throw new RuntimeException("Failed to delete gallery", e);
         }
+    }
+
+    @Override
+    public Testimonial updateTestimonial() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateTestimonial'");
     }
 }

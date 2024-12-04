@@ -1,20 +1,17 @@
 package com.inn.pcda.newandnotication.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inn.pcda.newandnotication.dto.NewsNotificationDTO;
 import com.inn.pcda.newandnotication.entity.NewsAndNotification;
 import com.inn.pcda.newandnotication.services.INewsNotificationService;
 
-import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

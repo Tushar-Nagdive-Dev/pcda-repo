@@ -13,10 +13,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Slf4j
-@RestController("/api/testimonial")
+@RestController
+@RequestMapping("/api/testimonial")
 public class TestimonialController {
 
     @Autowired
@@ -33,5 +36,11 @@ public class TestimonialController {
         log.info("Inside @class TestimonialController @method getAllTestimonials");
         return iTestimonialService.getAllTestimonials();
     }
+
+    // @PostMapping("/{id}")
+    // public String updateTestimonials(@RequestBody TestimonialDTO testimonialDTO, @PathVariable("id") Long id) {
+        
+    // }
+    
     
 }
