@@ -16,7 +16,7 @@ CREATE TABLE testimonial (
 CREATE TABLE gallery (
     id SERIAL PRIMARY KEY,
     event_name VARCHAR(255) NOT NULL,
-    type gallery_types_enum NOT NULL, -- Enum type for gallery type
+    type VARCHAR(50), -- Temporarily use VARCHAR
     year INT NOT NULL,
     is_active BOOLEAN DEFAULT FALSE NOT NULL,
     created_by INT,
@@ -25,6 +25,7 @@ CREATE TABLE gallery (
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     ip_address VARCHAR(50) DEFAULT '0.0.0.0'
 );
+
 
 CREATE TABLE gallery_files (
     id SERIAL PRIMARY KEY,

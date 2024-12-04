@@ -1,6 +1,7 @@
 package com.inn.pcda.newandnotication.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,20 @@ public class NewsNotificationsService implements INewsNotificationService{
         log.info("Inside @class NewsNotificationsService @method deleteNewsAndNotificationById : {}", id);
         this.newsNotificationRepo.deleteById(id);
         return true;
+    }
+
+    @Override
+    public NewsAndNotification updateNewsAndNotification(NewsNotificationDTO newsNotificationDTO, Long id) {
+        NewsAndNotification newsAndNotification = new NewsAndNotification();
+        newsAndNotification = this.newsNotificationRepo.findById(id).get();
+        newsAndNotification.setIsNew(newsAndNotification.getIsNew());
+        newsAndNotification.setStatus(newsNotificationDTO.getStatus());
+        newsAndNotification.setTitleEnglish(newsNotificationDTO.getTitleEnglish());
+        newsAndNotification.setTitleHindi(newsNotificationDTO.getTitleHindi());
+        newsAndNotification.setType(newsNotificationDTO.getType());
+        newsAndNotification.setUiOrder(newsAndNotification.getUiOrder());
+        return this.newsNotificationRepo.save(newsAndNotification);
+        
     }
     
 }
