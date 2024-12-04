@@ -5,10 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.inn.pcda.common.service.IFileUploadService;
 
+@Service
 public class FileUploadService implements IFileUploadService  {
 
     private static final String UPLOAD_DIR = "uploads/";
