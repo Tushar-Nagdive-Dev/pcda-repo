@@ -1,5 +1,16 @@
 package com.inn.pcda.newandnotication.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,20 +20,6 @@ import com.inn.pcda.newandnotication.services.INewsNotificationService;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
-
-
-
 @RestController
 @RequestMapping("/api/news")
 @Slf4j
@@ -30,27 +27,59 @@ public class NewsNofiticationController {
 
     @Autowired
     private INewsNotificationService iNewsNotificationService;
-    
-    
-    @PostMapping()
-    public ResponseEntity<NewsAndNotification> createNewsAndNotification(@RequestBody NewsNotificationDTO newsNotificationDTO) {
-        log.info("Inside @class NewsNofiticationController @method createNewsAndNotification type : {}", newsNotificationDTO.getType());
-        return ResponseEntity.ok(iNewsNotificationService.createNewsAndNotifications(newsNotificationDTO));
+
+    @PostMapping
+    public ResponseEntity<?> createNewsAndNotification(@RequestBody NewsNotificationDTO newsNotificationDTO) {
+        log.info("Inside @class NewsNofiticationController @method createNewsAndNotification");
+        
+        if (newsNotificationDTO == null) {
+            return ResponseEntity.badRequest().body("NewsNotificationDTO is null");
+        }
+
+        NewsAndNotification createdNews = iNewsNotificationService.createNewsAndNotifications(newsNotificationDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdNews);
     }
 
-    @GetMapping()
-    public List<NewsAndNotification> getAllNewsAndNotifications() {
-        return this.iNewsNotificationService.getAllNewsAndNotifications();
+    @GetMapping
+    public ResponseEntity<List<NewsAndNotification>> getAllNewsAndNotifications() {
+        log.info("Inside @class NewsNofiticationController @method getAllNewsAndNotifications");
+
+        List<NewsAndNotification> newsList = iNewsNotificationService.getAllNewsAndNotifications();
+        if (newsList.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(newsList);
     }
-    
+
     @DeleteMapping("/{id}")
-    public Boolean deleteNewsAndNotificationbyId(@PathVariable("id") Long id) {
-        log.info("Inside @class NewsNofiticationController @method deleteNewsAndNotificationbyId id: {}", id);
-        return this.iNewsNotificationService.deleteNewsAndNotificationById(id);
+    public ResponseEntity<?> deleteNewsAndNotificationById(@PathVariable("id") Long id) {
+        log.info("Inside @class NewsNofiticationController @method deleteNewsAndNotificationById : {}", id);
+
+        Boolean isDeleted = iNewsNotificationService.deleteNewsAndNotificationById(id);
+        if (isDeleted) {
+            return ResponseEntity.ok("NewsAndNotification deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("NewsAndNotification with id: " + id + " not found");
+        }
     }
 
     @PutMapping("/{id}")
-    public NewsAndNotification updateNewAndNotofication(@RequestBody NewsNotificationDTO newsNotificationDTO, @PathVariable("id") Long id) {
-       return this.iNewsNotificationService.updateNewsAndNotification(newsNotificationDTO, id);
+    public ResponseEntity<?> updateNewAndNotification(
+            @RequestBody NewsNotificationDTO newsNotificationDTO,
+            @PathVariable("id") Long id) {
+        log.info("Inside @class NewsNofiticationController @method updateNewAndNotification for id: {}", id);
+
+        if (newsNotificationDTO == null) {
+            return ResponseEntity.badRequest().body("NewsNotificationDTO is null");
+        }
+
+        NewsAndNotification updatedNews = iNewsNotificationService.updateNewsAndNotification(newsNotificationDTO, id);
+        if (updatedNews != null) {
+            return ResponseEntity.ok(updatedNews);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("NewsAndNotification with id: " + id + " not found");
+        }
     }
 }

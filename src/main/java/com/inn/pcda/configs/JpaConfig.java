@@ -9,7 +9,7 @@ import com.inn.pcda.configs.baseImplementation.audits.CustomAuditorAware;
 import com.inn.pcda.users.repository.UserRepository;
 
 @Configuration
-@EnableJpaAuditing(auditorAwareRef = "auditorProvider")
+@EnableJpaAuditing(auditorAwareRef = "auditorProvider", modifyOnCreate = false)
 public class JpaConfig {
 
     private final UserRepository userRepository;

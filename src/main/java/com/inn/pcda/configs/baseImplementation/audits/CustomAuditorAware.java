@@ -5,8 +5,9 @@ import java.util.Optional;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import com.inn.pcda.users.entity.CustomUserDetails;
 import com.inn.pcda.users.entity.Users;
 import com.inn.pcda.users.repository.UserRepository;
 
@@ -21,18 +22,22 @@ public class CustomAuditorAware implements AuditorAware<Long> {
     @Override
     public Optional<Long> getCurrentAuditor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
+
+        if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
             return Optional.empty();
         }
 
         Object principal = authentication.getPrincipal();
-        if (principal instanceof User) {
-            String username = ((User) principal).getUsername();
-            // Fetch the Users entity from the repository
-            return userRepository.findByUsername(username)
-                .map(Users::getId);
+
+        // Use a custom UserDetails implementation or cast to retrieve user ID
+        if (principal instanceof CustomUserDetails) { 
+            return Optional.of(((CustomUserDetails) principal).getId());
         }
 
         return Optional.empty();
     }
+
+
+
+
 }
