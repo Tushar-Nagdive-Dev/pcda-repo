@@ -8,9 +8,9 @@ function LandingAboutUs() {
   return (
     <div className="w-full flex flex-col space-y-6 py-24">
       <LeftBorderWithTitle
-        textSize="text-base"
-        title="Principal Controller of Defence Accounts (Officers)"
-        className="text-mainprimarycolor"
+       textSize="text-base"
+       title="Principal Controller of Defence Accounts (Officers)"
+       className="text-newprimaryColor font-semibold text-lg"
       />
       <h4
         className={`text-3xl text-mainprimarycolor font-bold`}
@@ -18,7 +18,7 @@ function LandingAboutUs() {
         About Us
       </h4>
       <div className="w-full flex gap-10">
-        <div className="w-[65%] relative">
+        <div className="w-[75%] relative">
           <img
             src={pcdaoBuildingClipped}
             alt="PCDAO's Building"

@@ -60,7 +60,7 @@ function LandingUpcomingEvents() {
       <LeftBorderWithTitle
         textSize="text-2xl"
         title="Upcoming Events"
-        className="text-mainprimarycolor"
+        className="text-newprimaryColor text-lg font-semibold"
       />
       <div className="grid grid-cols-4 gap-5">
         {Array.from({ length: 4 }).map((_, index) => (

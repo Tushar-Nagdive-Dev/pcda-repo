@@ -2,7 +2,7 @@ import React from "react";
 import {AdminDataTableColumnHeader} from "../../TableComponents/admin-data-table-column-header.jsx";
 import { FAQDataTableRowActions } from "./admin-faq-data-table-row-actions";
 
-export const faqColumns = [
+export const faqColumns = (refreshFAQ) => [
   {
     id: "sr_no",
     header: ({ table }) => <p className>Sr. No.</p>,
@@ -77,7 +77,7 @@ export const faqColumns = [
       return (
         <div className="flex space-x-2">
           <span className="max-w-[200px] line-clamp-3 font-medium capitalize">
-            {row.getValue("created_by")}
+            {row.getValue("created_by") || "-"}
           </span>
         </div>
       );
@@ -112,7 +112,7 @@ export const faqColumns = [
       return (
         <div className="flex space-x-2">
           <span className="max-w-[200px] line-clamp-3 font-medium capitalize">
-            {row.getValue("updated_by")}
+            {row.getValue("updated_by") || "-"}
           </span>
         </div>
       );
@@ -140,6 +140,6 @@ export const faqColumns = [
   {
     id: "actions",
     header: ({ column }) => <p className>Actions</p>,
-    cell: ({ row }) => <FAQDataTableRowActions row={row} />,
+    cell: ({ row }) => <FAQDataTableRowActions row={row} refreshFAQ={refreshFAQ}/>,
   },
 ];

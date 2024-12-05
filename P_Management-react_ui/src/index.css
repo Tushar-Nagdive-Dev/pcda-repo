@@ -37,6 +37,11 @@
   font-family: "Poppins", sans-serif;
 }
 
+html body[data-scroll-locked] {
+  overflow: visible !important;
+  margin-right: 0 !important;
+}
+
 body,
 html {
   width: 100%;

@@ -4,16 +4,16 @@ import TitleWithInfo from "../components/common/Downloads/TitleWithInfo";
 import TitleWithLinkCard from "../components/common/TitleWithLinkCard";
 import { Separator } from "@/components/ui/separator";
 import LinkWithTitleCard from "../components/common/LinkWithTitleCard";
-import { recordSectionLinkLists, recordSectionContactDetails, PROSectionLinkLists, PROSectionContactDetails, RetiredOfficerSectionLinkLists, RetiredOfficerContactDetails } from "../components/common/Section/sectionData";
+import { recordSectionLinkLists, recordSectionContactDetails, PROSectionLinkLists, PROSectionContactDetails, RetiredOfficerSectionLinkLists, RetiredOfficerContactDetails } from "../components/common/Wing/sectionData";
 import ContactDetailsCard from "../components/common/ContactDetailsCard";
 
 function Sections() {
   return (
     <div>
-      <Breadcrumbs title="Sections" />
+      <Breadcrumbs title="Wings" />
       <div className="px-custom py-14 w-full h-full">
         <div className="flex flex-col space-y-10">
-          {/* Record Section */}
+          {/* Record Wing */}
           <TitleWithInfo
             title="Record Section"
             subtitle="Record Section deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post. Record Section deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post. Record Section deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post. Record Section deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post."
@@ -54,7 +54,7 @@ function Sections() {
 
           <Separator className="my-4 h-1" />
 
-          {/* PRO Section */}
+          {/* PRO Wing */}
           <TitleWithInfo
             title="PRO Section"
             subtitle="PRO section is a help desk for receiving the Army Officers and settling their queries, directing the officers to the concerned AOs/AAOs of the section where the queries can not be settled at the desk."
@@ -95,7 +95,7 @@ function Sections() {
 
           <Separator className="my-4 h-1" />
 
-          {/* Retired Officer Section */}
+          {/* Retired Officer Wing */}
           <TitleWithInfo
             title="Retired Officer Section"
             subtitle="Post Superannuation Cell (PSC) deals with queries correspondence of officers after finalisation of account."

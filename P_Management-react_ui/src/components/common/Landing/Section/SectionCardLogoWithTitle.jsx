@@ -18,7 +18,7 @@ import React from "react";
 //         <h5 className="text-base text-statebluecolor font-bold">{title}</h5>
 //         <p className="text-white text-base">
 //           {" "}
-//           Record Section deals with receipt of dak/sorting, distribution to
+//           Record Wing deals with receipt of dak/sorting, distribution to
 //           concerned sections and dispatch of all dak through the post.
 //         </p>
 //       </div>
@@ -30,7 +30,7 @@ import React from "react";
 
 function SectionCardLogoWithTitle({ title, icon, description }) {
   return (
-    <div className="min-w-72 max-w-80 h-full group/sectioncard relative cursor-pointer">
+    <div className="min-w-72 max-w-96 h-full group/sectioncard relative cursor-pointer">
       {/* Default View */}
       <div className="absolute w-full h-full flex flex-col justify-center items-center space-y-4 bg-white py-12 px-6 rounded-xl transition-opacity duration-500 opacity-100 group-hover/sectioncard:opacity-0 z-10">
         <img
@@ -40,11 +40,11 @@ function SectionCardLogoWithTitle({ title, icon, description }) {
         />
         <h5 className="text-mainprimarycolor text-2xl font-bold text-center">
           {title
-            ? title.split(" Section").map((part, index) => (
+            ? title.split(" Wing").map((part, index) => (
                 <span key={index} className="block">
                   {part}
                   <br />
-                  {index === 0 && " Section"}
+                  {index === 0 && " Wing"}
                 </span>
               ))
             : "No text available"}

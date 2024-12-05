@@ -157,7 +157,7 @@ function EditAdminTestiomonialForm() {
                 className="w-fit text-white  bg-newprimaryColor"
                 size="lg"
               >
-                Submit
+                Save
               </Button>
             </div>
           </form>

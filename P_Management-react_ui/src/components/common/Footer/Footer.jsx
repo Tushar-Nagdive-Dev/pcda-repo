@@ -1,125 +1,180 @@
-import React from "react";
-import pcdaoLogo from "../../../assets/logo/pcdao_logo.png";
-import contactIcon from "../../../assets/icons/Union.png";
-import { Globe, Printer } from "@phosphor-icons/react";
-import { Link } from "react-router-dom";
-import VisitorNoMessage from "./VisitorNoMessage";
-import LastSectionFooter from "./LastSectionFooter";
+import React from 'react'
+import pcdaoLogo from '../../../assets/logo/pcdao_logo.png'
+import contactIcon from '../../../assets/icons/Union.png'
+import { Globe, Phone, Printer } from '@phosphor-icons/react'
+import { Link } from 'react-router-dom'
+import VisitorNoMessage from './VisitorNoMessage'
+import LastSectionFooter from './LastSectionFooter'
 
 const menuListOne = [
-  { id: "privacy", name: "Privacy Policy", link: "#" },
-  { id: "disclaimer", name: "Disclaimer", link: "#" },
-  { id: "help", name: "Help", link: "#" },
-  { id: "terms", name: "Terms & Conditions", link: "#" },
-  { id: "accessibility", name: "Accessibility Statement", link: "#" },
-  { id: "copyright", name: "Copyright Policy", link: "#" },
-  { id: "contact", name: "Contact Us", link: "#" },
-];
+ {
+  title: 'Pages',
+  menu_list: [
+   { id: 'about', name: 'About Us', link: 'about-us' },
+   { id: 'rti', name: 'RTI', link: 'rti' },
+   { id: 'news', name: 'News & Events', link: 'news-and-events' },
+   { id: 'download', name: 'Download', link: 'download' },
+   { id: 'faq', name: 'FAQ', link: 'faq' },
+   { id: 'contact_us', name: 'Contact Us', link: 'contact-us' },
+  ],
+ },
+]
 
 const menuListTwo = [
-  { id: "rti", name: "RTI", link: "#" },
-  { id: "organization-chart", name: "Organization Chart", link: "#" },
-  { id: "downloads", name: "Downloads", link: "#" },
-  { id: "feedback", name: "Feedback", link: "#" },
-  { id: "profile", name: "Profile", link: "#" },
-  { id: "new-schemes", name: "New Schemes", link: "#" },
-];
+ {
+  title: 'Wings',
+  menu_list: [
+   { id: 'ledger', name: 'Ledger Wing', link: 'wings/ledger' },
+   { id: 'central', name: 'Central Wing', link: 'wings/central' },
+   { id: 'transportation', name: 'Transportation', link: 'wings/transportation' },
+  ],
+ },
+
+]
 
 function Footer() {
-  return (
-    <>
-      <footer>
-        <div className="h-full bg-mainprimarysecondcolor text-white px-custom py-8">
-          <div className="flex flex-row space-x-8">
-            <div className="flex flex-1 flex-col space-y-4 min-w-[350px]">
-              <img
-                src={pcdaoLogo}
-                alt="PCDAO\'s logo"
-                height={60}
-                className="w-52 h-auto"
-              />
-              <p className="w-full flex flex-wrap">
-                Lorem ipsum dolor sit amet consectetur. Urna placerat leo nam
-                ullamcorper elit sapien quam. Consectetur lectus non senectus
-                dui malesuada. Read More
-              </p>
+ return (
+  <>
+   <footer>
+    <div className="h-full bg-newprimaryColor text-white px-custom py-8">
+     <div className="flex flex-row space-x-14">
+      <div className="flex flex-col space-y-4">
 
-              <div>
-                <div className="w-fit h-full bg-statebluecolor px-5 relative  rounded-2xl">
-                  <img
-                    src={contactIcon}
-                    className="w-[55px] h-[58px] max-w-[55px] absolute top-0 -left-2"
-                  />
-                  <div className="w-full h-full flex flex-col pl-8">
-                    <p className="p-0 m-0 leading-0">Helpline</p>
-                    <p className="font-bold leading-0 p-0 m-0">
-                      (020) 2640-1100
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-1 flex-col space-y-2 min-w-[500px]">
-              <h2 className="text-xl font-bold">
-                Office of the Principal Controller
-              </h2>
-              <h2 className="text-xl font-bold">
-                of Defence Accounts (Officers)
-              </h2>
-              <p className="w-full my-3">Golibar Maidan, Pune - 411 001.</p>
+       <div className="flex gap-2">
+        <img
+         src={pcdaoLogo}
+         alt="PCDAO\'s logo"
+         height={60}
+         className="w-72 h-fit"
+        />
+        <p className="w-full flex flex-wrap h-fit text-justify">
+         The PCDA (O) is an abbreviation for the Principal Controller of Defence Accounts (Officers). It is a
+         organization under the Ministry of Defence, Government of India, responsible for handling the pension and other
+         related matters of Defence Service Personnel.
+        </p>
+       </div>
 
-              <div className="w-full h-full flex flex-col gap-3">
-                <div className="flex h-fit flex-row gap-3 items-center">
-                  <div className="w-9 h-9 rounded-full bg-statebluecolor flex justify-center items-center">
-                    <Printer size={24} color="#ffffff" />
-                  </div>
-                  <p className="p-0 m-0"> Fax: (020) 2645-3446</p>
-                </div>
-                <div className="flex h-fit flex-row gap-3 items-center">
-                  <div className="w-9 h-9 rounded-full bg-statebluecolor flex justify-center items-center">
-                    <Globe size={24} color="#ffffff" />
-                  </div>
-                  <p className="p-0 m-0">
-                    {" "}
-                    Website: https://pcdaopune[dot]gov[dot]in
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex shrink flex-col space-y-2 text-wrap">
-              <div className="h-full flex flex-row gap-20">
-                <ul className="flex flex-col space-y-3 list-disc">
-                  {menuListOne.map((item) => (
-                    <Link
-                      key={item.id}
-                      to={item.link}
-                      className="text-footermenulistcolor no-underline"
-                    >
-                      <li>{item.name}</li>
-                    </Link>
-                  ))}
-                </ul>
-                <ul className="flex flex-col space-y-3 list-disc">
-                  {menuListTwo.map((item) => (
-                    <Link
-                      key={item.id}
-                      to={item.link}
-                      className="text-footermenulistcolor no-underline"
-                    >
-                      <li>{item.name}</li>
-                    </Link>
-                  ))}
-                </ul>
-              </div>
-            </div>
+       <div className="flex flex-1 flex-col space-y-2 w-full">
+        <h2 className="text-xl font-semibold">
+         Office of the Principal Controller of Defence Accounts (Officers)
+        </h2>
+        <p className="w-full my-3">Golibar Maidan, Pune - 411 001.</p>
+       </div>
+
+       <div className="grid grid-cols-2 gap-3">
+        <div className="w-full h-full flex flex-col gap-3">
+         <p className="text-xl text-[#0099FF]">Fax & Website</p>
+         <div className="flex h-fit flex-row gap-3 items-center">
+          <div className="w-9 h-9 rounded-full bg-white flex justify-center items-center">
+           <Printer size={24} color="#fffff" />
           </div>
-
-          <VisitorNoMessage />
+          <p className="p-0 m-0"> Fax: (020) 2645-3446</p>
+         </div>
+         <div className="flex h-fit flex-row gap-3 items-center">
+          <div className="w-9 h-9 rounded-full bg-white flex justify-center items-center">
+           <Globe size={24} color="#fffff" />
+          </div>
+          <p className="p-0 m-0">
+           {' '}
+           Website: https://pcdaopune[dot]gov[dot]in
+          </p>
+         </div>
         </div>
-        <LastSectionFooter />
-      </footer>
-    </>
-  );
+
+        <div className="w-full h-full flex flex-col gap-3">
+         <p className="text-xl text-[#0099FF]">PCDA(O) Exchange</p>
+         <div className="flex h-fit flex-row gap-3 items-center">
+          <div className="w-9 h-9 rounded-full bg-white flex justify-center items-center">
+           <Phone size={24} color="#fffff" />
+          </div>
+          <p className="p-0 m-0"> PRO CIVIL: (020) 2645-3446</p>
+         </div>
+         <div className="flex h-fit flex-row gap-3 items-center">
+          <div className="w-9 h-9 rounded-full bg-white flex justify-center items-center">
+           <Phone size={24} color="#fffff" />
+          </div>
+          <p className="p-0 m-0">
+           {' '}
+           ARMY: (020) 2645-3446
+          </p>
+         </div>
+        </div>
+       </div>
+
+      </div>
+
+
+      {/*<div className="flex flex-1 flex-col space-y-2 min-w-[500px]">*/}
+      {/*  <h2 className="text-xl font-bold">*/}
+      {/*    Office of the Principal Controller*/}
+      {/*  </h2>*/}
+      {/*  <h2 className="text-xl font-bold">*/}
+      {/*    of Defence Accounts (Officers)*/}
+      {/*  </h2>*/}
+      {/*  <p className="w-full my-3">Golibar Maidan, Pune - 411 001.</p>*/}
+
+      {/*  <div className="w-full h-full flex flex-col gap-3">*/}
+      {/*    <div className="flex h-fit flex-row gap-3 items-center">*/}
+      {/*      <div className="w-9 h-9 rounded-full bg-statebluecolor flex justify-center items-center">*/}
+      {/*        <Printer size={24} color="#ffffff" />*/}
+      {/*      </div>*/}
+      {/*      <p className="p-0 m-0"> Fax: (020) 2645-3446</p>*/}
+      {/*    </div>*/}
+      {/*    <div className="flex h-fit flex-row gap-3 items-center">*/}
+      {/*      <div className="w-9 h-9 rounded-full bg-statebluecolor flex justify-center items-center">*/}
+      {/*        <Globe size={24} color="#ffffff" />*/}
+      {/*      </div>*/}
+      {/*      <p className="p-0 m-0">*/}
+      {/*        {" "}*/}
+      {/*        Website: https://pcdaopune[dot]gov[dot]in*/}
+      {/*      </p>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
+      <div className="min-w-[350px] xl:min-w-[500px] flex flex-col items-end space-y-2 text-wrap">
+       <div className="h-full flex flex-row gap-20">
+        <ul className="flex flex-col space-y-3">
+         {menuListOne.map((item) => (
+          <React.Fragment key={item.title}>
+           <p className="text-[#0099FF]">{item.title}</p>
+           {item.menu_list.map(subMenuItem => (
+            <Link
+             key={subMenuItem.id}
+             to={subMenuItem.link}
+             className="text-footermenulistcolor no-underline"
+            >
+             <li>{subMenuItem.name}</li>
+            </Link>
+           ))}
+          </React.Fragment>
+         ))}
+        </ul>
+        <ul className="flex flex-col space-y-3">
+         {menuListTwo.map((item) => (
+          <React.Fragment key={item.title}>
+           <p className="text-[#0099FF]">{item.title}</p>
+           {item.menu_list.map(subMenuItem => (
+            <Link
+             key={subMenuItem.id}
+             to={subMenuItem.link}
+             className="text-footermenulistcolor no-underline"
+            >
+             <li>{subMenuItem.name}</li>
+            </Link>
+           ))}
+          </React.Fragment>
+         ))}
+        </ul>
+       </div>
+      </div>
+     </div>
+
+     <VisitorNoMessage />
+    </div>
+    <LastSectionFooter />
+   </footer>
+  </>
+ )
 }
 
-export default Footer;
+export default Footer

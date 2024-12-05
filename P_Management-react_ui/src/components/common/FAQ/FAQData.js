@@ -75,7 +75,7 @@ Last Pay certificate`,
     ],
   },
   {
-    name: "Travelling Allowances",
+    name: "Transportation Wing",
     lists: [
       {
         title: "TA/DA/LTC General",
@@ -122,7 +122,7 @@ Auth.: Govt of India, Min. of Finance, Dept of Expenditure, New Delhi O M No. 19
     ],
   },
   {
-    name: "Ration Money Allowance",
+    name: "Central Wing",
     lists: [
       {
         title: "Ration Money Allowance",
@@ -137,72 +137,72 @@ Auth.: Govt of India, Min. of Finance, Dept of Expenditure, New Delhi O M No. 19
       },
     ],
   },
-  {
-    name: "R&H Allowance",
-    lists: [
-      {
-        title: "R&H Allowance",
-        questions_lists: [
-          {
-            id: "rh1",
-            question:
-              "Being posted in Siachen, I am entitled to Siachen Allowance (R&HMaximum) + Highly Active Field Are(HAFA) (R1H1). What is the change inmy entitlement?",
-            content: `There is no change in entitlement in Siachen as the location does not figure in MoD letter dated 21 Apr 2022.`,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Rent Section",
-    lists: [
-      {
-        title: "Rent Section",
-        questions_lists: [
-          {
-            id: "spr1",
-            question: "Why License Fee & Furniture charges deducted continuously after vacation of accommodation?",
-            content: `Online vacation report not received till date from AAO BSO / AO GE concerned. In case Officer vacated any of the accommodation, this office may please be informed through letter or FAX (020 - 26453446) or email (generalquery-pcdaopune[at]nic[dot]in) or on ADN through APACC, addressed to “SAO, Rent Cell” so as to stop the recovery. The Officer has to approach concerned AAO BSO or AO GE for forwarding the vacation report online to this office through PROJECT BHAWAN for refund of the excess recovery of License Fee and Furniture charges etc.`,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Selected Place of Residence (SPR)",
-    lists: [
-      {
-        title: "Selected Place of Residence (SPR)",
-        questions_lists: [
-          {
-            id: "spr1",
-            question: "What is a SPR? What are the entitlements based on it?",
-            content: `SPR means ‘Selected Place of Residence’. Choice of SPR is applicable in cases where officers are posted to Field/ Concessional areas where family is not allowed. In such cases, the officers are permitted to move the family at ‘Selected Place of Residence’ (SPR) or at Home Town or retain family accommodation at the old duty station.`,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    name: "e-MRO",
-    lists: [
-      {
-        title: "e-MRO",
-        questions_lists: [
-          {
-            id: "em1",
-            question:
-              "What is the purpose for implementing e-MRO for Defence remittances?",
-            content: `Due to advancement of technology and introduction of smartphone and computer the concept of e-MRO has since been originated. In e-MRO project the remittance of any amount may be done at anywhere and anytime (24X7) with help of computer/smartphone/laptop/tablet and internet. The depositor may deposit the amount through debit card/credit card/internet banking or cash by generating an e-challan with a validity period. Through the media of e-challan the amount can be remitted in any branch of SBI, thus the requirement to visit Treasury Branch can be dispensed with.`,
-          },
-          {
-            id: "em2",
-            question:
-              "What is the Uniform Resource Locator (URL) of e-MRO portal of SBI?",
-            content: `The URL of e-MRO Portal of SBI is https://www.onlinesbi.sbi/sbicollect/icollecthome.html. A link of e-MRO portal of SBI is also given given on homepage of PCDA (O) Pune website https://pcdaopune.gov.in`,
-          },
-        ],
-      },
-    ],
-  },
+  // {
+  //   name: "R&H Allowance",
+  //   lists: [
+  //     {
+  //       title: "R&H Allowance",
+  //       questions_lists: [
+  //         {
+  //           id: "rh1",
+  //           question:
+  //             "Being posted in Siachen, I am entitled to Siachen Allowance (R&HMaximum) + Highly Active Field Are(HAFA) (R1H1). What is the change inmy entitlement?",
+  //           content: `There is no change in entitlement in Siachen as the location does not figure in MoD letter dated 21 Apr 2022.`,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: "Rent Wing",
+  //   lists: [
+  //     {
+  //       title: "Rent Wing",
+  //       questions_lists: [
+  //         {
+  //           id: "spr1",
+  //           question: "Why License Fee & Furniture charges deducted continuously after vacation of accommodation?",
+  //           content: `Online vacation report not received till date from AAO BSO / AO GE concerned. In case Officer vacated any of the accommodation, this office may please be informed through letter or FAX (020 - 26453446) or email (generalquery-pcdaopune[at]nic[dot]in) or on ADN through APACC, addressed to “SAO, Rent Cell” so as to stop the recovery. The Officer has to approach concerned AAO BSO or AO GE for forwarding the vacation report online to this office through PROJECT BHAWAN for refund of the excess recovery of License Fee and Furniture charges etc.`,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: "Selected Place of Residence (SPR)",
+  //   lists: [
+  //     {
+  //       title: "Selected Place of Residence (SPR)",
+  //       questions_lists: [
+  //         {
+  //           id: "spr1",
+  //           question: "What is a SPR? What are the entitlements based on it?",
+  //           content: `SPR means ‘Selected Place of Residence’. Choice of SPR is applicable in cases where officers are posted to Field/ Concessional areas where family is not allowed. In such cases, the officers are permitted to move the family at ‘Selected Place of Residence’ (SPR) or at Home Town or retain family accommodation at the old duty station.`,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: "e-MRO",
+  //   lists: [
+  //     {
+  //       title: "e-MRO",
+  //       questions_lists: [
+  //         {
+  //           id: "em1",
+  //           question:
+  //             "What is the purpose for implementing e-MRO for Defence remittances?",
+  //           content: `Due to advancement of technology and introduction of smartphone and computer the concept of e-MRO has since been originated. In e-MRO project the remittance of any amount may be done at anywhere and anytime (24X7) with help of computer/smartphone/laptop/tablet and internet. The depositor may deposit the amount through debit card/credit card/internet banking or cash by generating an e-challan with a validity period. Through the media of e-challan the amount can be remitted in any branch of SBI, thus the requirement to visit Treasury Branch can be dispensed with.`,
+  //         },
+  //         {
+  //           id: "em2",
+  //           question:
+  //             "What is the Uniform Resource Locator (URL) of e-MRO portal of SBI?",
+  //           content: `The URL of e-MRO Portal of SBI is https://www.onlinesbi.sbi/sbicollect/icollecthome.html. A link of e-MRO portal of SBI is also given given on homepage of PCDA (O) Pune website https://pcdaopune.gov.in`,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
 ];

@@ -36,7 +36,7 @@ function Main() {
         <LandingUpcomingEvents />
       </div> */}
       <LandingAppreciations />
-      <LandingAchievement />
+      {/*<LandingAchievement />*/}
     </>
   );
 }

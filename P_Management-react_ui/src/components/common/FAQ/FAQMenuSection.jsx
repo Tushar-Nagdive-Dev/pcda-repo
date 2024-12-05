@@ -9,34 +9,18 @@ const navbarMenuList = [
   },
   {
     id: "m2",
-    title: "Travelling Allowances",
+    title: "Transportation Wing",
   },
   {
     id: "m3",
-    title: "Ration Money Allowance",
-  },
-  {
-    id: "m4",
-    title: "R&H Allowance",
-  },
-  {
-    id: "m5",
-    title: "Rent Section",
-  },
-  {
-    id: "m6",
-    title: "Selected Place of Residence (SPR)",
-  },
-  {
-    id: "m7",
-    title: "e-MRO",
+    title: "Central Wing",
   },
 ];
 
 function FAQMenuSection({ currentTab, setCurrentTab }) {
   return (
     <div className="w-full flex">
-      <div className="flex items-center h-full">
+      <div className="flex items-center h-full w-full">
         <TransitionGroup component={null}>
           {navbarMenuList.map((item) => (
             <CSSTransition
@@ -49,6 +33,7 @@ function FAQMenuSection({ currentTab, setCurrentTab }) {
                 variant={currentTab === item.title ? "default" : "hover"}
                 size="lg"
                 onClick={() => setCurrentTab(item.title)}
+                className="w-full h-16 text-lg"
               >
                 {item.title}
               </Button>

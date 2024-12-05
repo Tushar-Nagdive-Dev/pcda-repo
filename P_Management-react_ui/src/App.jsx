@@ -1,5 +1,7 @@
 import { useEffect, useState, createRef, useContext } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
 
 import AccessibilityContextProvider, {
@@ -10,7 +12,6 @@ import AboutUs from './pages/AboutUs'
 import Main from './pages/Main'
 import RootLayout from './pages/RootLayout'
 import AdminDashboard from './pages/Admin/AdminDashboard'
-import AdminProtectPrivateRoute from './pages/Admin/AdminProtectPrivateRoute'
 import Downloads from './pages/Downloads'
 import Sections from './pages/Sections'
 import ContactUs from './pages/ContactUs'
@@ -18,7 +19,6 @@ import NewsAndEvents from './pages/NewsAndEvents'
 import RTI from './pages/RTI'
 import FAQ from './pages/FAQ'
 import DynamicNewsAndEvents from './pages/DynamicNewsAndEvents'
-import LoginProtectRoute from './pages/LoginProtectLayout'
 
 /* Admin */
 import AdminNewsAndNotificationTableList from './pages/Admin/NewsAndNotification/AdminNewsAndNotificationTableList.jsx'
@@ -37,6 +37,13 @@ import AdminFAQSectionForm from './pages/Admin/FAQ/AdminFAQSectionForm.jsx'
 import EditAdminFaqSectionForm from './pages/Admin/FAQ/EditAdminFAQSectionForm.jsx'
 import LoginComponent from './components/LoginComponent.jsx'
 import AdminRootLayout from './pages/Admin/AdminRootLayout.jsx'
+import AdminProtectPrivateRoute from './pages/Admin/AdminProtectPrivateRoute'
+import EditAdminFAQForm from './components/admin/FAQ/EditAdminFAQForm.jsx'
+import AdminEditFAQForm from './pages/Admin/FAQ/AdminEditFAQForm.jsx'
+import AdminEditFaqForm from './pages/Admin/FAQ/AdminEditFAQForm.jsx'
+import LedgerWing from './components/common/Wing/LedgerWing.jsx'
+import CentralWing from './components/common/Wing/CentralWing.jsx'
+import TransportationWing from './components/common/Wing/TransportationWing.jsx'
 
 const websiteTitle = 'Welcome to PCDA(O) Pune '
 
@@ -48,7 +55,13 @@ const routes = [
   children: [
    { index: true, element: <Main /> },
    { path: '/about-us', element: <AboutUs /> },
-   { path: '/sections', element: <Sections /> },
+   {
+    path: '/wings', children: [
+     { path: 'ledger', element: <LedgerWing /> },
+     { path: 'transportation', element: <TransportationWing /> },
+     { path: 'central', element: <CentralWing /> },
+    ],
+   },
    { path: '/download', element: <Downloads /> },
    { path: '/contact-us', element: <ContactUs /> },
    { path: '/news-and-events', element: <NewsAndEvents /> },
@@ -63,10 +76,7 @@ const routes = [
  },
  {
   path: '/admin',
-  element: (<AdminProtectPrivateRoute>
-    <AdminRootLayout />
-  </AdminProtectPrivateRoute>),
-
+  element: <AdminProtectPrivateRoute><AdminRootLayout /></AdminProtectPrivateRoute>,
   children: [
    { index: true, element: <AdminDashboard /> },
    {
@@ -90,7 +100,7 @@ const routes = [
     children: [
      { index: true, element: <AdminFAQTableList /> },
      { path: 'new', element: <AdminFAQForm /> },
-     { path: 'edit/:id', element: <UpdateAdminTestimonialForm /> },
+     { path: 'edit/:id', element: <AdminEditFaqForm /> },
      { path: 'add-section', element: <AdminFAQSectionForm /> },
      { path: 'edit-section/:id', element: <EditAdminFaqSectionForm /> },
     ],
@@ -148,7 +158,12 @@ function App() {
   document.title = title
  }, [title])
 
- return <RouterProvider router={router}></RouterProvider>
+ return (
+  <>
+   <ToastContainer />
+   <RouterProvider router={router}></RouterProvider>
+  </>
+)
 }
 
 export default App

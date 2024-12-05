@@ -15,9 +15,9 @@ function LinkWithTitleCard({ title, link, view_link }) {
         </li>
       </a>
       <div className="flex gap-2 items-center">
-        <a href={view_link} target="_blank" rel="noopener noreferrer">
-          <Eye size={24} color="#0D6EFD" className="cursor-pointer" />
-        </a>
+        {/*<a href={view_link} target="_blank" rel="noopener noreferrer">*/}
+        {/*  <Eye size={24} color="#0D6EFD" className="cursor-pointer" />*/}
+        {/*</a>*/}
         <a href={link} target="_blank" rel="noopener noreferrer">
           <DownloadSimple
             size={24}

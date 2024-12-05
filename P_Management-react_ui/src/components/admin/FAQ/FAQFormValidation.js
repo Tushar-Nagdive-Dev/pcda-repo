@@ -5,5 +5,5 @@ export const FAQValidation = z.object({
  answer: z.string().min(5),
  wing: z.string({ required_error: "Please select a wing"}),
  section: z.string({ required_error: "Please select a section" }),
- active: z.string(),
+ active: z.boolean().nullable(),
 });

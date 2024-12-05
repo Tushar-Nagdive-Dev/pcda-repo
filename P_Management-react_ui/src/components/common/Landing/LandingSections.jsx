@@ -23,31 +23,31 @@ import SectionCardLogoWithTitle from "./Section/SectionCardLogoWithTitle";
 const slides = [
   {
     id: 1,
-    icon: recordIcons,
-    section: "Record",
+    icon: ledgerIcons,
+    section: "Ledger",
     description:
-      "Record Section deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post.",
+     "Ledger wing section maintains the IRLAs of all the Officers for prompt and correct authorization of the Pay and Allowances.",
   },
   {
     id: 2,
+    icon: transportationIcons,
+    section: "Transportation",
+    description:
+     "Transportation Wing deals with Audit and Payment of Personal Claims for Temporary Duty, Leave Travel Concession, Permanent Posting, Courses, etc.",
+  },
+  {
+    id: 3,
+    icon: recordIcons,
+    section: "Record",
+    description:
+      "Record Wing deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post.",
+  },
+  {
+    id: 4,
     icon: proIcons,
     section: "PRO",
     description:
       "PRO section is a help desk for receiving the Army Officers and settling their queries, directing the officers to the concerned AOs/AAOs of the section where the queries can not be settled at the desk.",
-  },
-  {
-    id: 3,
-    icon: transportationIcons,
-    section: "Transportation",
-    description:
-      "Transportation Wing deals with Audit and Payment of Personal Claims for Temporary Duty, Leave Travel Concession, Permanent Posting, Courses, etc.",
-  },
-  {
-    id: 4,
-    icon: ledgerIcons,
-    section: "Ledger",
-    description:
-      "Ledger wing section maintains the IRLAs of all the Officers for prompt and correct authorization of the Pay and Allowances.",
   },
   {
     id: 5,
@@ -78,7 +78,7 @@ function LandingSections() {
       <LeftBorderWithTitle
         textSize="text-base"
         title="Welcome to Principal Controller of Defence Accounts (officers)"
-        className="text-mainprimarycolor"
+        className="text-newprimaryColor text-lg font-semibold"
       />
       <h4 className="text-3xl text-mainprimarycolor font-bold mb-9">
         Sections
@@ -86,7 +86,7 @@ function LandingSections() {
       <div className={landingSectionCss["custom-swiper-container"]}>
         <Swiper
           slidesPerView={4}
-          spaceBetween={10}
+
           navigation={true}
           freeMode={true}
           modules={[FreeMode, Navigation]}
@@ -114,11 +114,11 @@ function LandingSections() {
                 }}
               >
                 {slide.section
-                  ? slide.section.split(" Section").map((part, index) => (
+                  ? slide.section.split(" Wing").map((part, index) => (
                       <span key={index} className="block">
                         {part}
                         <br />
-                        {index === 0 && " Section"}
+                        {index === 0 && " Wing"}
                       </span>
                     ))
                   : "No text available"}
@@ -190,11 +190,11 @@ onSwiper={(swiper) => (swiperRef.current = swiper)}
     </div>
     <p className={landingSectionCss["slide-text"]}>
       {slide.section
-        ? slide.section.split(" Section").map((part, index) => (
+        ? slide.section.split(" Wing").map((part, index) => (
             <span key={index} className="block">
               {part}
               <br />
-              {index === 0 && " Section"}
+              {index === 0 && " Wing"}
             </span>
           ))
         : "No text available"}

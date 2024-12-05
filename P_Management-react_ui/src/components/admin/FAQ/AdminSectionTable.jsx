@@ -16,7 +16,7 @@ const data = [
  },
  {
   id: "section2",
-  section_name: "Rent Section",
+  section_name: "Rent Wing",
   order: 25,
   status: "In-Active",
   created_by: "J N Tulekar",

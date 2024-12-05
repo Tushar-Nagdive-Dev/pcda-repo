@@ -2,7 +2,7 @@ import React from "react";
 import AdminBreadcrumbs from "../../../components/admin/AdminBreadcrumbs.jsx";
 import { Link } from "react-router-dom";
 import { ListPlus, Plus } from "@phosphor-icons/react";
-import AdminFAQTable from "../../../components/admin/FAQ/AdminTestimonialTable.jsx";
+import AdminFAQTable from "../../../components/admin/FAQ/AdminFAQTable.jsx";
 
 function AdminFAQTableList() {
   return (

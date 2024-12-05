@@ -3,6 +3,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import calculatorIcon from "@/assets/icons/calculator.svg";
 import CalculatorCard from "./Calculator/CalculatorCard";
+import CalculatorForm from './Calculator/CalculatorForm.jsx'
 
 const transitionStyles = {
   entering: { opacity: 0.5 },
@@ -34,8 +35,8 @@ function LandingCalculator() {
           }}
         >
           <img src={calculatorIcon} alt="India's Logo" className="h-24 w-24" />
-          <h3 className="text-orangeIndiaPrimaryColor text-xl font-bold max-w-[300px]">
-            Option Calculator For Fixation on Promotion in 7th CPC
+          <h3 className="text-orangeIndiaPrimaryColor text-2xl font-bold max-w-[300px]">
+           Effect of option on pay at the time of promotion
           </h3>
         </div>
 
@@ -67,7 +68,7 @@ function LandingCalculator() {
         {/*</div>*/}
       </div>
 
-      {/* Content Section */}
+      {/* Content Wing */}
       <div className=" w-3/4 ">
         <TransitionGroup component={null}>
           <CSSTransition key={currentStage} timeout={300}>
@@ -111,7 +112,7 @@ function LandingCalculator() {
                     openCalculator={openCalculator}
                     setOpenCalculator={setOpenCalculator}
                   >
-                    Form Components
+                    <CalculatorForm />
                   </CalculatorCard>
                 )}
 

@@ -1,17 +1,13 @@
 package com.inn.pcda.pcdamanages.services;
 
-import java.util.List;
-
-import com.inn.pcda.pcdamanages.dto.FAQDetailsDTO;
+import com.inn.pcda.pcdamanages.dto.FAQWithQuestionsDTO;
+import com.inn.pcda.pcdamanages.dto.SectionDTO;
 import com.inn.pcda.pcdamanages.entity.FAQ;
+import com.inn.pcda.pcdamanages.entity.Section;
 
 public interface IFAQDetailsService {
-    
-    public FAQ addFAQDetails(FAQDetailsDTO FAQDetailsDTO);
 
-    public List<FAQ> getAllFAQs();
+    public Section addSection(SectionDTO sectionDTO);
 
-    public Boolean updateFAQDetails(Long id, FAQDetailsDTO faqDetailsDTO);
-
-    public Boolean deleteFAQbyId(Long id);
+    public FAQ addFAQWithQuestionsAndAnswers(FAQWithQuestionsDTO faqWithQuestionsDTO);
 }

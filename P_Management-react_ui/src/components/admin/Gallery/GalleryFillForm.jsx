@@ -45,7 +45,7 @@ function GalleryFillForm() {
    event_name: '',
    type: '',
    active: '',
-   gallery: [{ image: null, title: '', year: '', status: '' }],
+   gallery: [{ image: null, }],
   },
  })
 
@@ -56,7 +56,9 @@ function GalleryFillForm() {
 
 
  function onSubmit(values) {
-  console.log(values)
+  console.log(values);
+
+  let onlyImageCollection
  }
 
  return (
@@ -158,11 +160,11 @@ function GalleryFillForm() {
            <TableCell>
             <Input
              type="file"
-             id={`items.${index}.image`}
+             id={`gallery.${index}.image`}
              {...form.register(`items.${index}.image`)}
              onChange={(e) =>
               form.setValue(
-               `items.${index}.image`,
+               `gallery.${index}.image`,
                e.target.files ? e.target.files[0] : null,
               )
              }

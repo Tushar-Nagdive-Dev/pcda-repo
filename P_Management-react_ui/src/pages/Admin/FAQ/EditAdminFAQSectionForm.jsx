@@ -10,7 +10,7 @@ function EditAdminFaqSectionForm() {
   <div className="flex flex-col gap-2">
    <AdminBreadcrumbs
     title="Website Manager > FAQ Manage"
-    subtitle="Add Section"
+    subtitle="Edit Section"
    >
     <Link
      to="/admin/faq/add-section"

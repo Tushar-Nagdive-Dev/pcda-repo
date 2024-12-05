@@ -67,9 +67,9 @@ function LandingTestimonial() {
     <div className="w-full h-full px-custom my-24">
       <div className="flex flex-col space-y-6">
         <LeftBorderWithTitle
-          textSize="text-base"
+          textSize="text-lg"
           title="Golden Words"
-          className="text-mainprimarycolor"
+          className="text-newprimaryColor font-semibold"
         />
         <h4 className="text-titleColor text-3xl font-bold">Testimonial</h4>
         {/* <div className="flex flex-row gap-14">
@@ -124,7 +124,7 @@ function LandingTestimonial() {
             </p>
           </div>
         </div> */}
-        <div className="w-full relative rounded-lg overflow-hidden">
+        <div className="w-full relative rounded-xl overflow-hidden">
           {/* Image */}
           <img
             src={testimionalImage}
@@ -153,7 +153,7 @@ function LandingTestimonial() {
                     className={landingTestminionalCss["my-slide"]}
                   >
                     <div className="h-full flex flex-col justify-between px-10">
-                      <p className="max-h-44 overflow-y-auto scrollbar-thin text-justify text-titleColor font-semibold w-3/4">{slide.comment}</p>
+                      <p className="max-h-44 overflow-y-auto scrollbar-thin text-justify text-titleColor  w-3/4">{slide.comment}</p>
 
                       <div className="flex gap-3 w-fit">
                         <img src={slide.person_picture} alt={`${slide.person_name}'s picture`} className="rounded-full w-14 h-14 border-2 border-statebluecolor" />

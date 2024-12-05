@@ -10,7 +10,7 @@ function LandingAppreciations() {
       <LeftBorderWithTitle
         textSize="text-base"
         title="Honored"
-        className="text-mainprimarycolor"
+        className="text-newprimaryColor text-lg font-semibold"
       />
       <div className="w-full h-full flex justify-between ">
         <div className="w-1/2 h-full flex flex-col justify-between">

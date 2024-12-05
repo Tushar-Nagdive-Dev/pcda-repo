@@ -4,9 +4,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inn.pcda.pcdamanages.dto.FAQDetailsDTO;
+import com.inn.pcda.pcdamanages.dto.FAQWithQuestionsDTO;
+import com.inn.pcda.pcdamanages.dto.SectionDTO;
 import com.inn.pcda.pcdamanages.entity.FAQ;
+import com.inn.pcda.pcdamanages.entity.Section;
 import com.inn.pcda.pcdamanages.services.IFAQDetailsService;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -29,53 +33,16 @@ public class FAOController {
     @Autowired
     private IFAQDetailsService ifaqDetailsService;
     
-    @PostMapping()
-    public FAQ addFAQDetails(@RequestBody FAQDetailsDTO FAQdto) {
-        return this.ifaqDetailsService.addFAQDetails(FAQdto);
-    }
-
-    @GetMapping()
-    public List<FAQ> getAllFAQs() {
-        return this.ifaqDetailsService.getAllFAQs();
+    @PostMapping("/addSection")
+    public ResponseEntity<Section> addSection(@RequestBody SectionDTO sectionRequestDTO) {
+        Section section = ifaqDetailsService.addSection(sectionRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(section);
     }
     
-    /**
-     * Updates FAQ details by ID.
-     *
-     * @param id the ID of the FAQ to update
-     * @param faqDetailsDTO the DTO containing updated details
-     * @return ResponseEntity with success or failure status
-     */
-    @PutMapping("/{id}")
-    public ResponseEntity<Boolean> updateFAQDetails(
-            @PathVariable("id") Long id,
-            @RequestBody FAQDetailsDTO faqDetailsDTO) {
-        log.info("Updating FAQ details for id: {}", id);
-        Boolean isUpdated = ifaqDetailsService.updateFAQDetails(id, faqDetailsDTO);
-        if (isUpdated) {
-            return ResponseEntity.ok(true);
-        } else {
-            log.error("FAQ with id: {} not found or update failed", id);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
-        }
-    }
-
-    /**
-     * Deletes an FAQ by ID.
-     *
-     * @param id the ID of the FAQ to delete
-     * @return ResponseEntity with success or failure status
-     */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deleteFAQbyId(@PathVariable("id") Long id) {
-        log.info("Deleting FAQ for id: {}", id);
-        Boolean isDeleted = ifaqDetailsService.deleteFAQbyId(id);
-        if (isDeleted) {
-            return ResponseEntity.ok(true);
-        } else {
-            log.error("FAQ with id: {} not found or deletion failed", id);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
-        }
+    @PostMapping("/addWithQuestions")
+    public ResponseEntity<FAQ> addFAQWithQuestionsAndAnswers(@Valid @RequestBody FAQWithQuestionsDTO faqWithQuestionsDTO) {
+        FAQ createdFAQ = ifaqDetailsService.addFAQWithQuestionsAndAnswers(faqWithQuestionsDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdFAQ);
     }
     
 }

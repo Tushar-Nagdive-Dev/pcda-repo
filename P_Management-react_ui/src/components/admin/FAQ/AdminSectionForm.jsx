@@ -13,6 +13,14 @@ import {
  FormLabel,
  FormMessage,
 } from '@/components/ui/form'
+
+import {
+ Select,
+ SelectContent,
+ SelectItem,
+ SelectTrigger,
+ SelectValue,
+} from "@/components/ui/select";
 import { faqformValidation } from './FAQSectionFormValidation.js'
 
 function AdminSectionForm() {
@@ -21,12 +29,14 @@ function AdminSectionForm() {
   defaultValues: {
    /* It dont need to store in useForm, use Customized as per your standard */
    section_name: '',
+   wing: '',
    active: '',
   },
  })
 
  function onSubmit(values) {
-  console.log(values)
+  console.log(values);
+
  }
 
  return (
@@ -51,6 +61,36 @@ function AdminSectionForm() {
          </FormItem>
         )}
        />
+
+       <FormField
+        control={form.control}
+        name="wing"
+        render={({ field }) => (
+         <FormItem>
+          <FormLabel className="text-titleColor text-base font-raleway">Wing</FormLabel>
+          <FormControl>
+           <Select
+            onValueChange={(value) => field.onChange(value)} // Update form value
+            // defaultValue={field.value} // Set the default value
+           >
+            <SelectTrigger className="w-full">
+             <SelectValue placeholder="Select Wing" />
+            </SelectTrigger>
+            <SelectContent>
+             {/* These are static data */}
+             <SelectItem value="LEDGER_WING">
+              Ledger
+             </SelectItem>
+             <SelectItem value="TRANSPORT_WING">Transportation</SelectItem>
+             <SelectItem value="CENTRAL_WING">Central</SelectItem>
+            </SelectContent>
+           </Select>
+          </FormControl>
+          <FormMessage />
+         </FormItem>
+        )}
+       />
+
        <FormField
         control={form.control}
         name="active"

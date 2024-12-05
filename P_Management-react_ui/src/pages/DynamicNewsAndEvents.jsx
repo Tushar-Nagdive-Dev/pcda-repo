@@ -7,6 +7,14 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import Breadcrumbs from "../components/common/Breadcrumbs";
 import LeftBorderWithTitle from "../components/LeftBorderWithTitle";
 import GalleryCard from "../components/common/News&Events/GalleryCard";

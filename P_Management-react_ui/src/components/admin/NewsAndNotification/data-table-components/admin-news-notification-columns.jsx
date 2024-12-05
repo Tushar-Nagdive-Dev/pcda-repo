@@ -114,20 +114,7 @@ export const newsAndNotificationColumns = [
     cell: ({ row }) => {
       return (
         <div className="flex items-center">
-          <Select value={row.getValue("order")}>
-            <SelectTrigger className="w-fit">
-              <SelectValue
-                placeholder="Select Order"
-              />
-            </SelectTrigger>
-            <SelectContent side="bottom" className="h-64">
-              <SelectGroup>
-                {Array.from(Array(50).keys()).map((item) => (
-                  <SelectItem value={item}>{item + 1}</SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          {row.getValue("order")}
         </div>
       );
     },

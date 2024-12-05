@@ -26,8 +26,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { FAQValidation } from './FAQFormValidation.js'
 import AdminFormTable from '../AdminFormTable.jsx'
 import { PlusIcon } from 'lucide-react'
+import apiClient from '../../../auth/ApiClient.jsx'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 function AdminFAQFillForm() {
+ const navigate = useNavigate()
  const form = useForm({
   resolver: zodResolver(FAQValidation),
   defaultValues: {
@@ -41,8 +45,36 @@ function AdminFAQFillForm() {
  });
 
 
- function onSubmit(values) {
+ async function onSubmit(values) {
   console.log(values);
+
+  // Determine status
+  const wing =
+   values.section === 'Ledger'
+    ? 'LEDGER_WING'
+    : values.section === 'Transportation'
+     ? 'TRANSPORT_WING'
+     : 'CENTRAL_WING'
+
+  const newFAQ = {
+   wings: wing,
+   sections: values.section,
+   question: values.question,
+   answers: values.answer,
+   isActive: values.active,
+  }
+
+  try {
+   // Make the API call
+   const response = await apiClient.post('faqdetails', newFAQ)
+   // console.log('Response from API:', response)
+   toast.success('FAQ created successfully!')
+   navigate('/admin/faq')
+  } catch (error) {
+   console.error('Error creating FAQ:', error)
+   // alert('Failed to create News and Notification. Please try again.')
+   toast.error('Failed to create FAQ Form. Please try again.')
+  }
  }
  return (
   <div className="bg-adminBreadCrumbsBg flex flex-col p-10 rounded-lg">
@@ -71,7 +103,7 @@ function AdminFAQFillForm() {
          name="answer"
          render={({ field }) => (
           <FormItem>
-           <FormLabel className="text-titleColor text-base font-raleway">Name</FormLabel>
+           <FormLabel className="text-titleColor text-base font-raleway">Answer</FormLabel>
            <FormControl>
             <Textarea placeholder="Type here" {...field} />
            </FormControl>
@@ -101,6 +133,7 @@ function AdminFAQFillForm() {
                 Ledger
                </SelectItem>
                <SelectItem value="Transportation">Transportation</SelectItem>
+               <SelectItem value="Central">Central</SelectItem>
               </SelectContent>
              </Select>
             </FormControl>
@@ -110,7 +143,7 @@ function AdminFAQFillForm() {
          />
          <FormField
           control={form.control}
-          name="Section"
+          name="section"
           render={({ field }) => (
            <FormItem>
             <FormLabel className="text-titleColor text-base font-raleway">
@@ -125,7 +158,7 @@ function AdminFAQFillForm() {
                <SelectValue placeholder="Select Section" />
               </SelectTrigger>
               <SelectContent>
-               <SelectItem value="general">General</SelectItem>
+               <SelectItem value="General">General</SelectItem>
                {/* Add more option here*/}
               </SelectContent>
              </Select>

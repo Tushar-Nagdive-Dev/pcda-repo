@@ -44,6 +44,7 @@
     "react-hook-form": "^7.53.2",
     "react-medium-image-zoom": "^5.2.11",
     "react-router-dom": "^6.28.0",
+    "react-toastify": "^10.0.6",
     "react-transition-group": "^4.4.5",
     "swiper": "^11.1.14",
     "tailwind-merge": "^2.5.4",

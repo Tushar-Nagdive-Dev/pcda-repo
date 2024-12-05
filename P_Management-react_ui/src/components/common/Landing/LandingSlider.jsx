@@ -1,12 +1,14 @@
 import React, { useRef } from "react";
 import landingSliderCss from "./LandingSlider.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation, Pagination, Autoplay  } from "swiper/modules";
 import "swiper/css";
 // import "swiper/css/navigation"; // Optional, if using navigation buttons
 import "swiper/css/pagination"; // Optional, if using pagination
-import armyGroup from "@/assets/images/army.png";
+import kilkari_opening from "@/assets/images/pcdao_kilkari_opening.jpg";
 import pcdao_staff from "@/assets/images/pcdao_staff.jpg";
+import pcdao_award from "@/assets/images/pcdao_award.jpg"
+import pcdao_meeting from "@/assets/images/pcdao_meeting.jpg"
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 
 const slides = [
@@ -17,12 +19,17 @@ const slides = [
   },
   {
     id: 2,
-    image: armyGroup,
+    image: pcdao_award,
     text: "Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin. Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin.",
   },
   {
     id: 3,
-    image: armyGroup,
+    image: pcdao_meeting,
+    text: "Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin. Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin.",
+  },
+  {
+    id: 4,
+    image: kilkari_opening,
     text: "Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin. Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin.",
   },
 ];
@@ -44,14 +51,14 @@ function LandingSlider() {
   return (
     <div className={landingSliderCss["custom-swiper-container"]}>
       <Swiper
-        modules={[Navigation, Pagination]} // Add required modules
+        modules={[Navigation, Pagination, Autoplay]} // Add required modules
         navigation={true} // Enable navigation arrows
         pagination={{ clickable: true }} // Enable clickable pagination dots
         loop={true} // Enable infinite loop
-        autoplay={{ delay: 1000 }} // Autoplay every 3 seconds
+        autoplay={{ delay: 5000, pauseOnInteraction: false  }} // Autoplay every 3 seconds
         className={landingSliderCss["my-swiper"]}
         onSwiper={(swiper) => (swiperRef.current = swiper)}
-        lazy="true"
+        lazy={{ loadPrevNext: true }}
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id} className={landingSliderCss["my-slide"]}>
