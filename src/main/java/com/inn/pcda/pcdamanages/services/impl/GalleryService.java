@@ -150,5 +150,20 @@ public class GalleryService implements IGalleryService {
             return null; // Gallery not found
         }
     }
+
+    @Override
+    public Gallery saveAndUploadGallery(Gallery galleryData, MultipartFile[] files) {
+        log.info("Inside saveAndUploadGallery");
+
+        // Store files and get their IDs
+        List<Integer> fileIds = fileStorageService.storeFiles(files);
+
+        // Set file IDs in the gallery object
+        galleryData.setUploadFileIds(fileIds);
+
+        // Save the gallery entity in the database
+        return galleryRepo.save(galleryData);
+    }
+
     
 }

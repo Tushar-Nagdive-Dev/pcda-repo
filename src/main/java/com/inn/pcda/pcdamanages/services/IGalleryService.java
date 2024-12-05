@@ -21,4 +21,6 @@ public interface IGalleryService {
     public Testimonial updateTestimonial();
 
     public List<Integer> uploadFiles(Long id, MultipartFile[] files);
+
+    public Gallery saveAndUploadGallery(Gallery galleryData, MultipartFile[] files);
 }

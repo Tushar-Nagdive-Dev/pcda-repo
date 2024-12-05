@@ -93,16 +93,15 @@ public class GalleryController {
         }
     }
 
-    @PostMapping("/{id}/upload")
-    public ResponseEntity<List<Integer>> uploadGalleryFiles(
-            @PathVariable Long id,
-            @RequestParam("files") MultipartFile[] files) {
-        List<Integer> fileIds = iGalleryService.uploadFiles(id, files);
-        if (fileIds != null) {
-            return ResponseEntity.ok(fileIds);
+    @PostMapping("/upload")
+    public ResponseEntity<Gallery> saveAndUploadGallery(@RequestPart("gallery") Gallery galleryData, @RequestPart("files") MultipartFile[] files) {
+        log.info("Inside saveAndUploadGallery");
+        Gallery savedGallery = iGalleryService.saveAndUploadGallery(galleryData, files);
+
+        if (savedGallery != null) {
+            return ResponseEntity.ok(savedGallery);
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 }
