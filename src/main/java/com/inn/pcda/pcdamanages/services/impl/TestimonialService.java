@@ -129,4 +129,32 @@ public class TestimonialService implements ITestimonialService {
         }
     }
 
+    @Override
+    public Testimonial uploadTestimonialWithImage(Testimonial testimonialData, MultipartFile file) {
+        log.info("Inside @class TestimonialService @method uploadTestimonialWithImage");
+
+        if (file == null || testimonialData == null) {
+            log.error("File or Testimonial data is null");
+            return null;
+        }
+
+        try {
+            // Save the file and get the image ID
+            Integer imageId = fileUploadService.saveFile(file);
+
+            // Set the image ID on the testimonial object
+            testimonialData.setImageId(imageId);
+
+            // Save the testimonial to the database
+            Testimonial savedTestimonial = testimonialRepo.save(testimonialData);
+
+            log.info("Testimonial and image saved successfully with id: {}", savedTestimonial.getId());
+            return savedTestimonial;
+        } catch (IOException e) {
+            log.error("Error while uploading file: {}", e.getMessage());
+            return null;
+        }
+    }
+
+
 }

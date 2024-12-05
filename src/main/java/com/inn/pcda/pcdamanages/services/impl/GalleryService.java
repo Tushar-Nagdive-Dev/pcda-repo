@@ -150,4 +150,5 @@ public class GalleryService implements IGalleryService {
             return null; // Gallery not found
         }
     }
+    
 }

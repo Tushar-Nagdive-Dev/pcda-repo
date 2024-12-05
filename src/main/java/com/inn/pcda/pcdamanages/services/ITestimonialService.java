@@ -18,4 +18,6 @@ public interface ITestimonialService {
     public Testimonial updateTestimonial(TestimonialDTO testimonialDTO, Long id);
 
     public Boolean deleteTestimonialById(Long id);
+
+    public Testimonial uploadTestimonialWithImage(Testimonial testimonialData, MultipartFile file);
 }

@@ -52,17 +52,31 @@ public class TestimonialController {
         return ResponseEntity.ok(updatedTestimonial);
     }
 
-    @PostMapping("/{id}/upload")
-    public ResponseEntity<Integer> uploadProfileImage(
-            @PathVariable Long id, 
-            @RequestParam("file") MultipartFile file) {
-        log.info("Inside @class TestimonialController @method uploadProfileImage for id: {}", id);
-        Integer imageId = iTestimonialService.uploadProfileImage(id, file);
-        if (imageId == null) {
+    // @PostMapping("/{id}/upload")
+    // public ResponseEntity<Integer> uploadProfileImage(
+    //         @PathVariable Long id, 
+    //         @RequestParam("file") MultipartFile file) {
+    //     log.info("Inside @class TestimonialController @method uploadProfileImage for id: {}", id);
+    //     Integer imageId = iTestimonialService.uploadProfileImage(id, file);
+    //     if (imageId == null) {
+    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    //     }
+    //     return ResponseEntity.ok(imageId);
+    // }
+
+    @PostMapping("/upload")
+    public ResponseEntity<Testimonial> uploadTestimonialWithImage(
+            @RequestPart("data") Testimonial testimonialData, 
+            @RequestPart("file") MultipartFile file) {
+        log.info("Inside @class TestimonialController @method uploadTestimonialWithImage");
+        Testimonial savedTestimonial = iTestimonialService.uploadTestimonialWithImage(testimonialData, file);
+
+        if (savedTestimonial == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        return ResponseEntity.ok(imageId);
+        return ResponseEntity.ok(savedTestimonial);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteTestimonialById(@PathVariable("id") Long id) {
