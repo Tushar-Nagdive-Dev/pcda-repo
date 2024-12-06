@@ -3,9 +3,10 @@ package com.inn.pcda.pcdamanages.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inn.pcda.pcdamanages.dto.FAQTableDataResponseDTO;
 import com.inn.pcda.pcdamanages.dto.FAQWithQuestionsDTO;
 import com.inn.pcda.pcdamanages.dto.SectionDTO;
+import com.inn.pcda.pcdamanages.dto.tableDTO.FAQTableDataResponseDTO;
+import com.inn.pcda.pcdamanages.dto.tableDTO.SectionTableDataResponseDTO;
 import com.inn.pcda.pcdamanages.entity.FAQ;
 import com.inn.pcda.pcdamanages.entity.Section;
 import com.inn.pcda.pcdamanages.services.IFAQDetailsService;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Slf4j
@@ -54,4 +57,11 @@ public class FAOController {
         List<FAQTableDataResponseDTO> faqDetails = ifaqDetailsService.getFAQTableData();
         return ResponseEntity.ok(faqDetails);
     }
+
+    @GetMapping("/getSectionTable")
+    public ResponseEntity<List<SectionTableDataResponseDTO>> getAllSections() {
+        List<SectionTableDataResponseDTO> sections = ifaqDetailsService.getSectionForTable();
+        return ResponseEntity.ok(sections);
+    }
+    
 }

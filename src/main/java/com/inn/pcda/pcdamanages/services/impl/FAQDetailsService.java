@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.inn.pcda.pcdamanages.dto.FAQResponseDTO;
-import com.inn.pcda.pcdamanages.dto.FAQTableDataResponseDTO;
 import com.inn.pcda.pcdamanages.dto.FAQWithQuestionsDTO;
 import com.inn.pcda.pcdamanages.dto.SectionDTO;
+import com.inn.pcda.pcdamanages.dto.tableDTO.FAQTableDataResponseDTO;
+import com.inn.pcda.pcdamanages.dto.tableDTO.SectionTableDataResponseDTO;
 import com.inn.pcda.pcdamanages.entity.FAQ;
 import com.inn.pcda.pcdamanages.entity.QuestionAnswer;
 import com.inn.pcda.pcdamanages.entity.Section;
@@ -170,6 +171,25 @@ public class FAQDetailsService implements IFAQDetailsService{
         sectionDTO.setName(section.getTitle());
         dto.setSection(sectionDTO);
 
+        return dto;
+    }
+
+    @Override
+    public List<SectionTableDataResponseDTO> getSectionForTable() {
+        // Fetch all sections
+        List<Section> sections = sectionRepository.findAll();
+
+        // Map Section entities to SectionDetailsDTO
+        return sections.stream().map(this::mapToSectionDetailsDTO).toList();
+    }
+
+    private SectionTableDataResponseDTO mapToSectionDetailsDTO(Section section) {
+        SectionTableDataResponseDTO dto = new SectionTableDataResponseDTO();
+        dto.setId(section.getId());
+        dto.setTitle(section.getTitle());
+        dto.setIsActive(section.getIsActive());
+        dto.setCreatedDate(section.getCreatedDate());
+        dto.setUpdatedDate(section.getUpdatedDate());
         return dto;
     }
 }

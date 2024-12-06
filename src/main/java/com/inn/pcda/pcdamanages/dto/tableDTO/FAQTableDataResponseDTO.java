@@ -1,4 +1,4 @@
-package com.inn.pcda.pcdamanages.dto;
+package com.inn.pcda.pcdamanages.dto.tableDTO;
 
 import lombok.Data;
 import java.time.LocalDateTime;

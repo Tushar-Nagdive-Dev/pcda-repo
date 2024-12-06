@@ -1,39 +1,61 @@
-import React from 'react'
-import {DataTableToolbar} from "../TableComponents/admin-data-table-toolbar.jsx";
-import {AdminCommonDataTable} from "../TableComponents/admin-data-table.jsx";
-import { faqSectionColumns } from './section-table-components/admin-faq-section-columns.jsx'
-
-const data = [
- {
-  id: "section1",
-  section_name: "General",
-  order: 23,
-  status: "Active",
-  created_by: "J N Tulekar",
-  created_date: "26 Oct 2024",
-  updated_by: "J N Tulekar",
-  updated_date: "26 Oct 2024",
- },
- {
-  id: "section2",
-  section_name: "Rent Wing",
-  order: 25,
-  status: "In-Active",
-  created_by: "J N Tulekar",
-  created_date: "26 Oct 2024",
-  updated_by: "J N Tulekar",
-  updated_date: "26 Oct 2024",
- },
-];
+import React, { useEffect, useState } from 'react';
+import { DataTableToolbar } from "../TableComponents/admin-data-table-toolbar.jsx";
+import { AdminCommonDataTable } from "../TableComponents/admin-data-table.jsx";
+import { faqSectionColumns } from './section-table-components/admin-faq-section-columns.jsx';
+import apiClient from '../../../auth/ApiClient.jsx'; // Ensure this is correctly configured for your API client
 
 function AdminFAQTable() {
- return (
-  <div>
-   <AdminCommonDataTable data={data} columns={faqSectionColumns} searchInputField={"question"}>
-    <DataTableToolbar/>
-   </AdminCommonDataTable>
-  </div>
- )
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Function to fetch data from the API
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const response = await apiClient.get('/faqdetails/getSectionTable');
+      // Use response.data if apiClient is Axios
+      const result = response.data;
+      console.log("API Response:", result);
+
+      // Map API response to match the table's expected data structure
+      const formattedData = result.map((item, index) => ({
+        id: item.id,
+        section_name: item.title,
+        order: index + 1, // Replace with `item.order` if provided
+        status: item.isActive ? "Active" : "In-Active",
+        created_by: item.createdBy || "API User", // Update if the API provides `createdBy`
+        created_date: new Date(item.createdDate).toLocaleDateString(),
+        updated_by: item.updatedBy || "API User", // Update if the API provides `updatedBy`
+        updated_date: new Date(item.updatedDate).toLocaleDateString(),
+      }));
+      console.log("Formatted Data:", formattedData);
+      setData(formattedData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <AdminCommonDataTable
+          data={data}
+          columns={faqSectionColumns}
+          searchInputField={"section_name"}
+        >
+          <DataTableToolbar />
+        </AdminCommonDataTable>
+      )}
+    </div>
+  );
 }
 
-export default AdminFAQTable
+export default AdminFAQTable;
