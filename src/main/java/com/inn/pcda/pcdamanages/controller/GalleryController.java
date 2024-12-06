@@ -1,146 +1,85 @@
 package com.inn.pcda.pcdamanages.controller;
 
-import com.inn.pcda.pcdamanages.dto.GalleryDTO;
-import com.inn.pcda.pcdamanages.entity.Gallery;
-import com.inn.pcda.pcdamanages.services.IGalleryService;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import com.inn.pcda.pcdamanages.entity.Gallery;
+import com.inn.pcda.pcdamanages.services.GalleryService;
 
-@Slf4j
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
-@RequestMapping("/api/gallery") // Corrected the base URL
+@RequestMapping("/api/gallery")
+@Slf4j
 public class GalleryController {
 
     @Autowired
-    private IGalleryService iGalleryService;
+    private GalleryService galleryService;
 
-    @PostMapping
-    public ResponseEntity<Gallery> addGallery(@RequestBody GalleryDTO galleryDTO) {
-        log.info("Inside @class GalleryController @method addGallery");
-        if (galleryDTO == null) {
-            log.warn("GalleryDTO is null");
-            return ResponseEntity.badRequest().build(); // 400 Bad Request
-        }
-
+    @PostMapping("/upload")
+    public ResponseEntity<?> saveGalleryWithFiles(
+            @RequestPart("gallery") Gallery gallery,
+            @RequestPart("files") MultipartFile[] files) {
         try {
-            Gallery savedGallery = iGalleryService.addGallery(galleryDTO);
-            return ResponseEntity.ok(savedGallery); // 200 OK with the saved entity
+            Gallery savedGallery = galleryService.saveGalleryWithFiles(gallery, files);
+            return ResponseEntity.ok(savedGallery);
         } catch (Exception e) {
-            log.error("Error while adding gallery", e);
-            return ResponseEntity.internalServerError().build(); // 500 Internal Server Error
+            log.error("Error saving gallery", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error saving gallery: " + e.getMessage());
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<Gallery>> getAllGallery() {
-        log.info("Inside @class GalleryController @method getAllGallery");
-        try {
-            List<Gallery> galleries = iGalleryService.getAllGalleries();
-            if (galleries == null || galleries.isEmpty()) {
-                log.info("No galleries found");
-                return ResponseEntity.noContent().build(); // 204 No Content
-            }
-            return ResponseEntity.ok(galleries); // 200 OK with the list of galleries
-        } catch (Exception e) {
-            log.error("Error while fetching all galleries", e);
-            return ResponseEntity.internalServerError().build(); // 500 Internal Server Error
-        }
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Boolean> updateGalleryById(@RequestBody GalleryDTO galleryDTO, @PathVariable("id") Long id) {
-        log.info("Inside @class GalleryController @method updateGalleryById : id {}", id);
-
-        if (galleryDTO == null) {
-            log.warn("GalleryDTO is null for update operation");
-            return ResponseEntity.badRequest().build(); // 400 Bad Request
-        }
-
-        try {
-            boolean isUpdated = iGalleryService.updateGalleryById(galleryDTO, id);
-            if (!isUpdated) {
-                log.warn("Gallery with id {} not found for update", id);
-                return ResponseEntity.notFound().build(); // 404 Not Found
-            }
-            return ResponseEntity.ok(true); // 200 OK with success status
-        } catch (Exception e) {
-            log.error("Error while updating gallery with id {}", id, e);
-            return ResponseEntity.internalServerError().build(); // 500 Internal Server Error
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deleteGalleryById(@PathVariable("id") Long id) {
-        log.info("Inside @class GalleryController @method deleteGalleryById : id {}", id);
-
-        try {
-            boolean isDeleted = iGalleryService.deleteGalleryById(id);
-            if (!isDeleted) {
-                log.warn("Gallery with id {} not found for deletion", id);
-                return ResponseEntity.notFound().build(); // 404 Not Found
-            }
-            return ResponseEntity.ok(true); // 200 OK with success status
-        } catch (Exception e) {
-            log.error("Error while deleting gallery with id {}", id, e);
-            return ResponseEntity.internalServerError().build(); // 500 Internal Server Error
-        }
-    }
-
-    /* @PostMapping("/upload")
-    public ResponseEntity<Gallery> saveAndUploadGallery(@RequestPart("gallery") Gallery galleryData, @RequestPart("files") MultipartFile[] files) {
-        log.info("Inside saveAndUploadGallery");
-        Gallery savedGallery = iGalleryService.saveAndUploadGallery(galleryData, files);
-
-        if (savedGallery != null) {
-            return ResponseEntity.ok(savedGallery);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-    } */
-
-    @PostMapping("/upload")
-    public ResponseEntity<?> saveAndUploadGallery(@RequestPart("gallery") Gallery galleryData, @RequestPart("files") MultipartFile[] files) {
-        log.info("Inside saveAndUploadGallery");
-
-        log.info("Received Gallery Data: {}", galleryData);
-
-        if (galleryData.getYear() == null) {
-            log.error("Year is missing in the request payload");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Year field is required and cannot be null.");
-        }
-
-        Gallery savedGallery = iGalleryService.saveAndUploadGallery(galleryData, files);
-        return ResponseEntity.ok(savedGallery);
+    public ResponseEntity<List<Gallery>> getAllGalleries() {
+        return ResponseEntity.ok(galleryService.getAllGalleries());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getGalleryById(@PathVariable Long id) {
-        log.info("Inside @method getGalleryById, fetching gallery with ID: {}", id);
+        Gallery gallery = galleryService.getGalleryById(id);
+        if (gallery == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(gallery);
+    }
 
+    @GetMapping("/{id}/files")
+    public ResponseEntity<?> getFilesForGallery(@PathVariable Long id) {
         try {
-            Gallery gallery = iGalleryService.getGalleryById(id);
-
-            if (gallery == null) {
-                log.info("Gallery with ID {} not found", id);
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("Gallery with ID " + id + " not found.");
-            }
-
-            return ResponseEntity.ok(gallery);
+            List<String> filePaths = galleryService.getFilePaths(id);
+            return ResponseEntity.ok(filePaths);
         } catch (Exception e) {
-            log.error("Error while fetching gallery with ID: {}", id, e);
+            log.error("Error fetching files for gallery", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error fetching gallery with ID " + id);
+                    .body("Error fetching files: " + e.getMessage());
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateGallery(@PathVariable Long id, @RequestBody Gallery updatedGallery) {
+        boolean updated = galleryService.updateGallery(id, updatedGallery);
+        return updated ? ResponseEntity.ok("Gallery updated successfully.")
+                : ResponseEntity.notFound().build();
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteGallery(@PathVariable Long id) {
+        boolean deleted = galleryService.deleteGallery(id);
+        return deleted ? ResponseEntity.ok("Gallery deleted successfully.")
+                : ResponseEntity.notFound().build();
+    }
 }

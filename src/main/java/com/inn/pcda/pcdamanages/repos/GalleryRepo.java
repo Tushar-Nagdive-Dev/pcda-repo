@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.inn.pcda.pcdamanages.entity.Gallery;
 
 @Repository
-public interface GalleryRepo extends JpaRepository<Gallery, Long>{
-    
+public interface GalleryRepo extends JpaRepository<Gallery, Long> {
 }

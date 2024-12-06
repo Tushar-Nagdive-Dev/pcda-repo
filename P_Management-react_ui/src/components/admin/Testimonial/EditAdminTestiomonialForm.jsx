@@ -32,7 +32,7 @@ function EditAdminTestimonialForm() {
   const [imagePreview, setImagePreview] = useState(""); // To preview current image
 
   const form = useForm({
-    resolver: zodResolver(), // Add your schema validation here
+    // resolver: zodResolver(), // Add your schema validation here
     defaultValues: {
       profile_picture: null,
       name: "",
@@ -80,8 +80,8 @@ function EditAdminTestimonialForm() {
 
   const onSubmit = async (values) => {
     const formData = new FormData();
-
-    // Append form data for fields
+  
+    // Append JSON data
     formData.append(
       "data",
       JSON.stringify({
@@ -92,27 +92,28 @@ function EditAdminTestimonialForm() {
         isNew: values.new,
       })
     );
-
-    // Append the file if selected
+  
+    // Append file (optional)
     const file = watch("profile_picture");
     if (file && file.length > 0) {
       formData.append("file", file[0]);
     }
-
+  
     try {
       const response = await apiClient.put(`/testimonial/update/${id}`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "multipart/form-data", // Correct header
         },
       });
-
+  
       toast.success("Testimonial updated successfully!");
-      navigate("/admin/testimonials"); // Redirect to the testimonials list page
+      navigate("/admin/testimonials");
     } catch (err) {
       console.error("Error updating testimonial:", err);
       toast.error("Failed to update testimonial.");
     }
   };
+  
 
   if (loading) {
     return <div>Loading testimonial...</div>;

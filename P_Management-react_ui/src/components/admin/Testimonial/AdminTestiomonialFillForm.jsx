@@ -31,7 +31,7 @@ import { useNavigate } from 'react-router-dom';
 function AdminTestimonialFillForm() {
   const navigate = useNavigate();
   const form = useForm({
-    resolver: zodResolver(TestimonialValidation),
+    // resolver: zodResolver(TestimonialValidation),
     defaultValues: {
       id: null,
       name: '',

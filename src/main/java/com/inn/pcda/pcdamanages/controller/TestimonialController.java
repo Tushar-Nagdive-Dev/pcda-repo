@@ -6,6 +6,7 @@ import com.inn.pcda.pcdamanages.dto.TestimonialDTO;
 import com.inn.pcda.pcdamanages.entity.Testimonial;
 import com.inn.pcda.pcdamanages.services.ITestimonialService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -84,22 +85,24 @@ public class TestimonialController {
     public ResponseEntity<Testimonial> updateTestimonialWithImage(
             @PathVariable Long id,
             @RequestPart("data") TestimonialDTO testimonialDTO,
-            @RequestPart(value = "file", required = false) MultipartFile file) {
-        log.info("Inside @class TestimonialController @method updateTestimonialWithImage for id: {}", id);
+            @RequestPart(value = "file", required = false) MultipartFile file,
+            HttpServletRequest request) { // Add HttpServletRequest to log headers
+        log.info("Request Content-Type: {}", request.getContentType());
+        log.info("Inside @method updateTestimonialWithImage for id: {}", id);
 
         try {
-            // Update testimonial details and image if provided
             Testimonial updatedTestimonial = iTestimonialService.updateTestimonialWithImage(id, testimonialDTO, file);
             if (updatedTestimonial != null) {
-                return ResponseEntity.ok(updatedTestimonial); // 200 OK
+                return ResponseEntity.ok(updatedTestimonial);
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404 Not Found
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
         } catch (Exception e) {
             log.error("Error updating testimonial with id {}: {}", id, e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<TestimonialDTO> getTestimonialById(@PathVariable Long id) {
