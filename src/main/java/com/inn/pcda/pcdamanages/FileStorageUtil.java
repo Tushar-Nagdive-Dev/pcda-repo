@@ -75,13 +75,14 @@ public class FileStorageUtil {
             return Files.list(Paths.get(folderPath))
                     .filter(Files::isRegularFile)
                     .map(Path::getFileName)
-                    .map(Path::toString)
+                    .map(Path::toString) // Only file names
                     .collect(Collectors.toList());
         } catch (IOException e) {
             logger.error("Failed to list files in folder: {}", folderPath, e);
             throw new RuntimeException("Failed to list files in folder: " + folderPath, e);
         }
     }
+    
 
     /**
      * Delete a folder and its contents.

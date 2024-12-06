@@ -18,9 +18,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GalleryController {
 
-    @Autowired
-    private IGalleryService galleryService;
+    private final IGalleryService galleryService;
 
+    @Autowired
+    public GalleryController(IGalleryService galleryService) {
+        this.galleryService = galleryService;
+    }
+
+    /**
+     * Save a gallery with associated files.
+     *
+     * @param gallery The gallery data.
+     * @param files   The associated files.
+     * @return Response entity containing the saved gallery or an error message.
+     */
     @PostMapping("/upload")
     public ResponseEntity<?> saveGalleryWithFiles(
             @RequestPart("gallery") Gallery gallery,
@@ -34,17 +45,35 @@ public class GalleryController {
         }
     }
 
+    /**
+     * Get all galleries.
+     *
+     * @return List of all galleries.
+     */
     @GetMapping
     public ResponseEntity<List<Gallery>> getAllGalleries() {
-        return ResponseEntity.ok(galleryService.getAllGalleries());
+        List<Gallery> galleries = galleryService.getAllGalleries();
+        return ResponseEntity.ok(galleries);
     }
 
+    /**
+     * Get a gallery by ID.
+     *
+     * @param id The gallery ID.
+     * @return The gallery data if found, or a 404 status otherwise.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Gallery> getGalleryById(@PathVariable Long id) {
         Gallery gallery = galleryService.getGalleryById(id);
         return gallery != null ? ResponseEntity.ok(gallery) : ResponseEntity.notFound().build();
     }
 
+    /**
+     * Get file paths for a specific gallery.
+     *
+     * @param id The gallery ID.
+     * @return List of file paths or an error message.
+     */
     @GetMapping("/{id}/files")
     public ResponseEntity<List<String>> getFilesForGallery(@PathVariable Long id) {
         try {
@@ -55,7 +84,15 @@ public class GalleryController {
             return ResponseEntity.internalServerError().body(null);
         }
     }
+    
 
+    /**
+     * Update a gallery by ID.
+     *
+     * @param id             The gallery ID.
+     * @param updatedGallery The updated gallery data.
+     * @return Success or not found response.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<String> updateGallery(@PathVariable Long id, @RequestBody Gallery updatedGallery) {
         boolean updated = galleryService.updateGallery(id, updatedGallery);
@@ -63,6 +100,12 @@ public class GalleryController {
                        : ResponseEntity.notFound().build();
     }
 
+    /**
+     * Delete a gallery by ID.
+     *
+     * @param id The gallery ID.
+     * @return Success or not found response.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteGallery(@PathVariable Long id) {
         boolean deleted = galleryService.deleteGallery(id);
@@ -70,6 +113,11 @@ public class GalleryController {
                        : ResponseEntity.notFound().build();
     }
 
+    /**
+     * Get all galleries for view.
+     *
+     * @return List of gallery view DTOs.
+     */
     @GetMapping("/forView")
     public ResponseEntity<List<GallerShowDto>> getAllGalleriesForView() {
         List<GallerShowDto> galleries = galleryService.getAllGalleriesForView();

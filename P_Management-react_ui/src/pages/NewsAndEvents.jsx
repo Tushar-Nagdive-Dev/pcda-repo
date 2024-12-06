@@ -8,6 +8,7 @@ function NewsAndEvents() {
   const [galleryItems, setGalleryItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch gallery items from API
   const fetchGalleryItems = async () => {
     try {
       const response = await apiClient.get("/gallery/forView");
@@ -23,10 +24,12 @@ function NewsAndEvents() {
     fetchGalleryItems();
   }, []);
 
+  // Loading state
   if (loading) {
     return <div className="text-center py-10">Loading gallery...</div>;
   }
 
+  // Render gallery items
   return (
     <div className="space-y-10 pb-20">
       <Breadcrumbs title="News & Events" />
@@ -38,15 +41,16 @@ function NewsAndEvents() {
         />
         <h4 className="text-3xl text-mainprimarycolor font-bold">Gallery</h4>
 
+        {/* Grid of gallery cards */}
         <div className="grid grid-cols-4 gap-6 relative">
           {galleryItems.map((item) => (
             <GalleryCard
               key={item.id}
-              imgs={item.firstImage} // Use first image for card
+              imgs={item.firstImage} // Pass first image URL
               year={item.year}
               title={item.eventName}
-              link={`/news-and-events/${item.id}`}
-              imagePaths={item.imagePaths} // Pass all image paths for detailed view
+              link={`/news-and-events/${item.id}`} // Dynamic link
+              imagePaths={item.imagePaths} // Pass all image paths for detailed use
             />
           ))}
         </div>
