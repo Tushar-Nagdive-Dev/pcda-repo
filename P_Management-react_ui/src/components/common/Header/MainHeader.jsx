@@ -101,7 +101,7 @@ function MainHeader() {
       alt="PCDA(O)'s logo"
       src={pcdaoLogo}
       height="70"
-      className="inline-block lg:w-36 xl:w-52 hd_screen:w-60 full_hd_screen:w-80"
+      className="inline-block lg:w-36 xl:w-56 hd_screen:w-60 full_hd_screen:w-80"
      />{' '}
      <div className="flex gap-5 items-center">
       <div className="flex items-center h-full">

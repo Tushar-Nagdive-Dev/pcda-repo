@@ -25,9 +25,9 @@ import {
 } from '@/components/ui/select'
 
 import { Textarea } from '@/components/ui/textarea'
+import { Input } from '@/components/ui/input'
 import { NewsandNotificationValidation } from './NewsAndNotificationFormValidation'
 import apiClient from '../../../auth/ApiClient.jsx'
-
 
 function NewsAndNotificationFillForm() {
  const navigate = useNavigate()
@@ -36,10 +36,11 @@ function NewsAndNotificationFillForm() {
   defaultValues: {
    title: '',
    title_hindi: '',
+   url: '',
    type: '',
    status: '',
    isNew: '',
-   order: 0,
+   order: 1,
   },
  })
 
@@ -51,21 +52,22 @@ function NewsAndNotificationFillForm() {
    values.type === 'News & Notification'
     ? 'NEWS_AND_NOTIFICATION'
     : values.type === 'News'
-     ? 'NEWS'
-     : ''
+    ? 'NEWS'
+    : ''
 
   // Determine status
   const status =
    values.status === 'Active'
     ? 'ACTIVE'
     : values.status === 'In-Active'
-     ? 'INACTIVE'
-     : ''
+    ? 'INACTIVE'
+    : ''
 
   // Construct newAndNotification object
   const newAndNotification = {
    titleEnglish: values.title,
    titleHindi: values.title_hindi,
+   url: values.url,
    type: type,
    status: status,
    isNew: values.isNew,
@@ -125,6 +127,22 @@ function NewsAndNotificationFillForm() {
         )}
        />
 
+       <FormField
+        control={form.control}
+        name="url"
+        render={({ field }) => (
+         <FormItem>
+          <FormLabel className="text-titleColor text-base font-raleway">
+           Url
+          </FormLabel>
+          <FormControl>
+           <Input placeholder="Enter Url" {...field} />
+          </FormControl>
+          <FormMessage />
+         </FormItem>
+        )}
+       />
+
        <div className="w-full grid grid-cols-2 gap-2">
         <FormField
          control={form.control}
@@ -136,7 +154,6 @@ function NewsAndNotificationFillForm() {
            </FormLabel>
            <FormControl>
             <Select
-
              onValueChange={(value) => field.onChange(value)} // Update form value
              // defaultValue={field.value} // Set the default value
             >
@@ -192,16 +209,22 @@ function NewsAndNotificationFillForm() {
           </FormLabel>
           <FormControl>
            <>
-            <Select value={field.value} onValueChange={(value) => field.onChange(value)}>
+            <Select
+             value={field.value}
+             onValueChange={(value) => field.onChange(value)}
+            >
              <SelectTrigger className="w-full">
               <SelectValue>
-               {field.value || "Select Order"} {/* Display selected value or placeholder */}
+               {field.value || 'Select Order'}{' '}
+               {/* Display selected value or placeholder */}
               </SelectValue>
              </SelectTrigger>
              <SelectContent side="bottom" className="h-64">
               <SelectGroup>
                {Array.from(Array(50).keys()).map((item) => (
-                <SelectItem key={item} value={item}>{item + 1}</SelectItem>
+                <SelectItem key={item} value={item}>
+                 {item + 1}
+                </SelectItem>
                ))}
               </SelectGroup>
              </SelectContent>
@@ -220,10 +243,7 @@ function NewsAndNotificationFillForm() {
          <FormItem className="flex gap-2 items-center">
           <FormControl>
            <>
-            <Checkbox
-             checked={field.value}
-             onCheckedChange={field.onChange}
-            />
+            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
            </>
           </FormControl>
           <FormLabel className="text-titleColor text-base font-raleway">

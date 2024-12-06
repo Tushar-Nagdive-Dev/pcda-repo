@@ -78,7 +78,7 @@ function AdminTestimonialFillForm() {
 
       if (response.status === 201) {
         toast.success('Testimonial uploaded successfully!');
-        navigate('/success');
+        navigate('/admin/testimonial');
       } else {
         toast.error('Failed to upload testimonial. Please try again.');
       }

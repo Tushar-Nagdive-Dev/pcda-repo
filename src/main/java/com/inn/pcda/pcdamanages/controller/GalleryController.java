@@ -3,21 +3,13 @@ package com.inn.pcda.pcdamanages.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.inn.pcda.pcdamanages.dto.GalleryDTOdir.GallerShowDto;
 import com.inn.pcda.pcdamanages.entity.Gallery;
-import com.inn.pcda.pcdamanages.services.GalleryService;
+import com.inn.pcda.pcdamanages.services.IGalleryService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class GalleryController {
 
     @Autowired
-    private GalleryService galleryService;
+    private IGalleryService galleryService;
 
     @PostMapping("/upload")
     public ResponseEntity<?> saveGalleryWithFiles(
@@ -38,8 +30,7 @@ public class GalleryController {
             return ResponseEntity.ok(savedGallery);
         } catch (Exception e) {
             log.error("Error saving gallery", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error saving gallery: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("Error saving gallery: " + e.getMessage());
         }
     }
 
@@ -49,37 +40,39 @@ public class GalleryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getGalleryById(@PathVariable Long id) {
+    public ResponseEntity<Gallery> getGalleryById(@PathVariable Long id) {
         Gallery gallery = galleryService.getGalleryById(id);
-        if (gallery == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(gallery);
+        return gallery != null ? ResponseEntity.ok(gallery) : ResponseEntity.notFound().build();
     }
 
     @GetMapping("/{id}/files")
-    public ResponseEntity<?> getFilesForGallery(@PathVariable Long id) {
+    public ResponseEntity<List<String>> getFilesForGallery(@PathVariable Long id) {
         try {
             List<String> filePaths = galleryService.getFilePaths(id);
             return ResponseEntity.ok(filePaths);
         } catch (Exception e) {
             log.error("Error fetching files for gallery", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error fetching files: " + e.getMessage());
+            return ResponseEntity.internalServerError().body(null);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateGallery(@PathVariable Long id, @RequestBody Gallery updatedGallery) {
+    public ResponseEntity<String> updateGallery(@PathVariable Long id, @RequestBody Gallery updatedGallery) {
         boolean updated = galleryService.updateGallery(id, updatedGallery);
         return updated ? ResponseEntity.ok("Gallery updated successfully.")
-                : ResponseEntity.notFound().build();
+                       : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteGallery(@PathVariable Long id) {
+    public ResponseEntity<String> deleteGallery(@PathVariable Long id) {
         boolean deleted = galleryService.deleteGallery(id);
         return deleted ? ResponseEntity.ok("Gallery deleted successfully.")
-                : ResponseEntity.notFound().build();
+                       : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/forView")
+    public ResponseEntity<List<GallerShowDto>> getAllGalleriesForView() {
+        List<GallerShowDto> galleries = galleryService.getAllGalleriesForView();
+        return ResponseEntity.ok(galleries);
     }
 }

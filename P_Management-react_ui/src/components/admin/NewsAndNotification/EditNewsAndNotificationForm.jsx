@@ -27,11 +27,12 @@ import { NewsandNotificationValidation } from './NewsAndNotificationFormValidati
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import apiClient from '../../../auth/ApiClient.jsx'
+import { Input } from '@/components/ui/input'
 
 function EditNewsAndNotificationForm() {
  /* To current selected Id from params */
- const { id } = useParams();
- const navigate = useNavigate();
+ const { id } = useParams()
+ const navigate = useNavigate()
 
  const [uiorder, setUIorder] = useState(null)
  const form = useForm({
@@ -40,6 +41,7 @@ function EditNewsAndNotificationForm() {
   defaultValues: {
    title: '',
    title_hindi: '',
+   url: '',
    type: '',
    status: '',
    isNew: '',
@@ -59,24 +61,25 @@ function EditNewsAndNotificationForm() {
    if (data.length > 0) {
     form.setValue('title', data[0].titleEnglish)
     form.setValue('title_hindi', data[0].titleHindi)
+    form.setValue('url', data[0].url)
     // Determine type
     const type =
      data[0].type === 'NEWS_AND_NOTIFICATION'
       ? 'News & Notification'
       : data[0].type === 'NEWS'
-       ? 'News'
-       : ''
+      ? 'News'
+      : ''
     // Determine status
     const status =
      data[0].status === 'ACTIVE'
       ? 'Active'
       : data[0].status === 'INACTIVE'
-       ? 'In-Active'
-       : ''
+      ? 'In-Active'
+      : ''
     form.setValue('type', type)
     form.setValue('status', status)
     form.setValue('isNew', data[0].isNew)
-    form.setValue("order", data[0].uiOrder.toString())
+    form.setValue('order', data[0].uiOrder.toString())
    }
   } catch (error) {
    console.error('Failed to get data', error)
@@ -86,27 +89,28 @@ function EditNewsAndNotificationForm() {
 
  // Publish Edit Form
  async function onSubmit(values) {
-  console.log(values);
+  console.log(values)
 
   // Determine type
   const type =
    values.type === 'News & Notification'
     ? 'NEWS_AND_NOTIFICATION'
     : values.type === 'News'
-     ? 'NEWS'
-     : ''
+    ? 'NEWS'
+    : ''
 
   const status =
    values.status === 'Active'
     ? 'ACTIVE'
     : values.status === 'In-Active'
-     ? 'INACTIVE'
-     : ''
+    ? 'INACTIVE'
+    : ''
 
   // Construct newAndNotification object
   const newAndNotification = {
    titleEnglish: values.title,
    titleHindi: values.title_hindi,
+   url: values.url,
    type: type,
    status: status,
    isNew: values.isNew,
@@ -140,7 +144,7 @@ function EditNewsAndNotificationForm() {
         name="title"
         render={({ field }) => (
          <FormItem>
-          <FormLabel>Title</FormLabel>
+          <FormLabel className="text-titleColor text-base font-raleway">Title</FormLabel>
           <FormControl>
            <Textarea placeholder="Enter title" {...field} />
           </FormControl>
@@ -153,9 +157,25 @@ function EditNewsAndNotificationForm() {
         name="title_hindi"
         render={({ field }) => (
          <FormItem>
-          <FormLabel>Title in Hindi</FormLabel>
+          <FormLabel className="text-titleColor text-base font-raleway">Title in Hindi</FormLabel>
           <FormControl>
            <Textarea placeholder="Enter title in Hindi" {...field} />
+          </FormControl>
+          <FormMessage />
+         </FormItem>
+        )}
+       />
+
+       <FormField
+        control={form.control}
+        name="url"
+        render={({ field }) => (
+         <FormItem>
+          <FormLabel className="text-titleColor text-base font-raleway">
+           Url
+          </FormLabel>
+          <FormControl>
+           <Input placeholder="Enter Url" {...field} />
           </FormControl>
           <FormMessage />
          </FormItem>
@@ -178,7 +198,8 @@ function EditNewsAndNotificationForm() {
             >
              <SelectTrigger className="w-full">
               <SelectValue>
-               {field.value || "Select Type"} {/* Display selected value or placeholder */}
+               {field.value || 'Select Type'}{' '}
+               {/* Display selected value or placeholder */}
               </SelectValue>
              </SelectTrigger>
              <SelectContent>
@@ -208,7 +229,8 @@ function EditNewsAndNotificationForm() {
             >
              <SelectTrigger className="w-full">
               <SelectValue>
-               {field.value || "Select Status"} {/* Display selected value or placeholder */}
+               {field.value || 'Select Status'}{' '}
+               {/* Display selected value or placeholder */}
               </SelectValue>
              </SelectTrigger>
              <SelectContent>
@@ -232,16 +254,22 @@ function EditNewsAndNotificationForm() {
           </FormLabel>
           <FormControl>
            <>
-            <Select value={field.value} onValueChange={(value) => field.onChange(value)}>
+            <Select
+             value={field.value}
+             onValueChange={(value) => field.onChange(value)}
+            >
              <SelectTrigger className="w-full">
               <SelectValue>
-               {field.value || "Select Order"} {/* Display selected value or placeholder */}
+               {field.value || 'Select Order'}{' '}
+               {/* Display selected value or placeholder */}
               </SelectValue>
              </SelectTrigger>
              <SelectContent side="bottom" className="h-64">
               <SelectGroup>
                {Array.from(Array(50).keys()).map((item) => (
-                <SelectItem key={item} value={item}>{item}</SelectItem>
+                <SelectItem key={item} value={item}>
+                 {item}
+                </SelectItem>
                ))}
               </SelectGroup>
              </SelectContent>
@@ -260,10 +288,7 @@ function EditNewsAndNotificationForm() {
          <FormItem className="flex gap-2 items-center">
           <FormControl>
            <>
-            <Checkbox
-             checked={field.value}
-             onCheckedChange={field.onChange}
-            />
+            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
            </>
           </FormControl>
           <FormLabel>New</FormLabel>

@@ -86,7 +86,7 @@ function LandingSections() {
       <div className={landingSectionCss["custom-swiper-container"]}>
         <Swiper
           slidesPerView={4}
-
+          spaceBetween={20}
           navigation={true}
           freeMode={true}
           modules={[FreeMode, Navigation]}

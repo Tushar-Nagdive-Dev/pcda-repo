@@ -38,15 +38,6 @@ function AdminTestimonialTable() {
     fetchTestimonials();
   }, []);
 
-  // Render loading and error states
-  if (loading) {
-    return <div>Loading testimonials...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   // Render the data table
   return (
     <div>

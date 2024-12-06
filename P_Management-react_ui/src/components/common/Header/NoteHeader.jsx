@@ -13,36 +13,38 @@ const dummydata = [
  },
  {
   id: '2',
-  titleEnglish: ' Statement of Account for the month of October 2024 has been uploaded.',
+  titleEnglish:
+   ' Statement of Account for the month of October 2024 has been uploaded.',
   isNew: true,
  },
  {
   id: '3',
-  titleEnglish: 'Form 16 for the Financial Year 2023-24 (Assessment Year 2024-25) has been uploaded.',
+  titleEnglish:
+   'Form 16 for the Financial Year 2023-24 (Assessment Year 2024-25) has been uploaded.',
   isNew: true,
  },
 ]
-
 
 function NoteHeader() {
  const marqueeRef = useRef(null)
  const [newsData, setNewsData] = useState(dummydata)
 
  useEffect(() => {
-  fetchNoteApi();
+  fetchNoteApi()
  }, [])
 
  async function fetchNoteApi() {
   try {
    const response = await apiClient.get('news')
-   const data = response.data.filter((item) => item.type === 'NEWS' || item.type === 'NEWS_AND_NOTIFICATION')
+   const data = response.data.filter(
+    (item) => item.type === 'NEWS_AND_NOTIFICATION'
+   )
    if (data.length === 0) {
     setNewsData(dummydata)
    } else {
     setNewsData(data)
    }
-  } catch
-   (error) {
+  } catch (error) {
    console.error('Failed to fetch news')
    // toast.error("")
   }
@@ -72,9 +74,10 @@ function NoteHeader() {
      onMouseOut={handleMouseOut}
     >
      <ul className="flex gap-5 w-full list-disc space-x-4">
-      {newsData.map(news => (
-       <li key={news.id} className="flex gap-2">{news.isNew &&
-        <img src={newicon} alt="New Message" />} {news.titleEnglish}
+      {newsData.map((news) => (
+       <li key={news.id} className="flex gap-2">
+        {news.isNew && <img src={newicon} alt="New Message" />}{' '}
+        {news.titleEnglish}
        </li>
       ))}
      </ul>

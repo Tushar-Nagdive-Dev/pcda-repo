@@ -101,52 +101,94 @@ import apiClient from '../../../auth/ApiClient.jsx'
 import { faqData } from './FAQData'
 
 
-function transformFAQData(apiData) {
- // Step 1: Group by wings
- const groupedByWings = {}
+// function transformFAQData(apiData) {
+//  // Step 1: Group by wings
+//  const groupedByWings = {}
 
- apiData.forEach((item) => {
-  const { wings, sections, question, answers, id } = item
+//  apiData.forEach((item) => {
+//   const { wings, sections, question, answers, id } = item
 
-  // Initialize the wing if it doesn't exist
-  if (!groupedByWings[wings]) {
-   groupedByWings[wings] = {
-    name: formatWingName(wings), // Format wing names (e.g., CENTRAL_WING -> Central Wing)
-    lists: [],
-   }
-  }
+//   // Initialize the wing if it doesn't exist
+//   if (!groupedByWings[wings]) {
+//    groupedByWings[wings] = {
+//     name: formatWingName(wings), // Format wing names (e.g., CENTRAL_WING -> Central Wing)
+//     lists: [],
+//    }
+//   }
 
-  // Find or create the section in the current wing
-  let section = groupedByWings[wings].lists.find(
-   (section) => section.title === sections,
-  )
-  if (!section) {
-   section = {
-    title: sections,
-    questions_lists: [],
-   }
-   groupedByWings[wings].lists.push(section)
-  }
+//   // Find or create the section in the current wing
+//   let section = groupedByWings[wings].lists.find(
+//    (section) => section.title === sections,
+//   )
+//   if (!section) {
+//    section = {
+//     title: sections,
+//     questions_lists: [],
+//    }
+//    groupedByWings[wings].lists.push(section)
+//   }
 
-  // Add the question to the section's questions list
-  section.questions_lists.push({
-   id: `q${id}`, // Use the existing ID or generate a unique ID
-   question: question,
-   content: answers,
-  })
- })
+//   // Add the question to the section's questions list
+//   section.questions_lists.push({
+//    id: `q${id}`, // Use the existing ID or generate a unique ID
+//    question: question,
+//    content: answers,
+//   })
+//  })
 
- // Step 2: Convert grouped data into an array
- return Object.values(groupedByWings)
-}
+//  // Step 2: Convert grouped data into an array
+//  return Object.values(groupedByWings)
+// }
+
+
 
 // Helper function to format wing names
-function formatWingName(wing) {
- return wing
-  .replace(/_/g, ' ') // Replace underscores with spaces
-  .toLowerCase() // Convert to lowercase
-  .replace(/(^|\s)\S/g, (char) => char.toUpperCase()) // Capitalize first letters
-}
+// function formatWingName(wing) {
+//  return wing
+//   .replace(/_/g, ' ') // Replace underscores with spaces
+//   .toLowerCase() // Convert to lowercase
+//   .replace(/(^|\s)\S/g, (char) => char.toUpperCase()) // Capitalize first letters
+// }
+
+const wingNamesMap = {
+  LEDGER_WING: "Ledger Wing",
+  TRANSPORT_WING: "Transportation Wing",
+  CENTRAL_WING: "Central Wing",
+};
+
+const processFAQData = (data) => {
+  return Object.values(
+    data.reduce((acc, item) => {
+      const wingName = wingNamesMap[item.wing.name] || item.wing.name;
+      const sectionTitle = item.section.name;
+
+      if (!acc[wingName]) {
+        acc[wingName] = {
+          name: wingName,
+          lists: []
+        };
+      }
+
+      let section = acc[wingName].lists.find((list) => list.title === sectionTitle);
+
+      if (!section) {
+        section = {
+          title: sectionTitle,
+          questions_lists: []
+        };
+        acc[wingName].lists.push(section);
+      }
+
+      section.questions_lists.push({
+        id: `${wingName.toLowerCase().replace(/\s+/g, "")}_${section.questions_lists.length + 1}`,
+        question: item.question,
+        content: item.answer
+      });
+
+      return acc;
+    }, {})
+  );
+};
 
 
 function FAQSection({ currentTab }) {
@@ -156,9 +198,9 @@ function FAQSection({ currentTab }) {
  // Fetch FAQ details from the backend API
  async function fetchFAQDetails() {
   try {
-   const response = await apiClient.get('faqdetails') // Make the API call
+   const response = await apiClient.get('faqdetails/getFaqTableData') // Make the API call
    const data = await response.data;
-   const filterData = data.filter(item => item.isActive)
+   const filterData = data.filter(item => item.faqStatus)
    // console.log('Fetched FAQ Data:', data)
    setFaqDetails(filterData) // Update the FAQ details state
   } catch (error) {
@@ -169,7 +211,7 @@ function FAQSection({ currentTab }) {
  // Filter data for the selected tab
  const getSingleSectionDetails = useCallback(() => {
   if (faqDetails.length > 0) {
-   const transformedData = transformFAQData(faqDetails)
+   const transformedData = processFAQData(faqDetails)
    setSingleFaqDetails(() =>
     transformedData.filter((item) => item.name === currentTab),
    )
@@ -177,7 +219,7 @@ function FAQSection({ currentTab }) {
  }, [currentTab, faqDetails])
 
  // const groupedFAQData = getSingleSectionDetails()
- console.log(singleFaqDetails[0])
+ console.log(faqDetails)
 
  // Fetch data on component mount
  useEffect(() => {

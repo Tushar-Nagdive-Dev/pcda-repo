@@ -73,7 +73,7 @@ function LatestLandingUpdateLists() {
  async function fetchNoteApi() {
   try {
    const response = await apiClient.get('news')
-   const data = response.data.filter((item) => item.type === 'NEWS')
+   const data = response.data.filter((item) => item.type === 'NEWS' || item.type === 'NEWS_AND_NOTIFICATION')
    if (data.length === 0) {
     setNewsData(updateLists)
    } else {

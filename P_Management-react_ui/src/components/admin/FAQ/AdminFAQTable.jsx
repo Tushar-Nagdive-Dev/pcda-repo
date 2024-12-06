@@ -31,7 +31,7 @@ function AdminFAQTable() {
         ? "Ledger Wing"
         : "Transportation Wing",
     section: item.section.name || "N/A", // Handle missing or null values
-    status: item.isActive ? "Active" : "Inactive",
+    status: item.faqStatus ? "Active" : "Inactive",
     created_by: item.createdBy || "N/A",
     created_date: formatDate(item.createdDate),
     updated_by: item.updatedBy || "N/A",

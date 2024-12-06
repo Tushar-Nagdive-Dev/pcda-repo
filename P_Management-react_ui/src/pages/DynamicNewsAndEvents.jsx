@@ -20,8 +20,10 @@ import LeftBorderWithTitle from "../components/LeftBorderWithTitle";
 import GalleryCard from "../components/common/News&Events/GalleryCard";
 import ceremonyImage from "../assets/images/gallery/ceremony.jpeg"
 import ZoomPicCard from "../components/common/News&Events/ZoomPicCard";
+import { useParams } from "react-router-dom";
 
 function DynamicNewsAndEvents() {
+  const { id } = useParams();
   return (
     <div className="space-y-10 pb-20">
       <Breadcrumbs title="News & Events">

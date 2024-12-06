@@ -1,5 +1,7 @@
 package com.inn.pcda.pcdamanages.services.impl;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,15 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.inn.pcda.pcdamanages.FileStorageUtil;
+import com.inn.pcda.pcdamanages.dto.GalleryDTOdir.GallerShowDto;
 import com.inn.pcda.pcdamanages.entity.Gallery;
 import com.inn.pcda.pcdamanages.repos.GalleryRepo;
-import com.inn.pcda.pcdamanages.services.GalleryService;
-
-import lombok.extern.slf4j.Slf4j;
+import com.inn.pcda.pcdamanages.services.IGalleryService;
 
 @Service
-@Slf4j
-public class GalleryServiceImpl implements GalleryService {
+public class GalleryServiceImpl implements IGalleryService {
 
     @Autowired
     private GalleryRepo galleryRepo;
@@ -24,19 +24,16 @@ public class GalleryServiceImpl implements GalleryService {
     @Autowired
     private FileStorageUtil fileStorageUtil;
 
+    private final String baseUrl = "http://localhost:8888";
+
     @Override
     public Gallery saveGalleryWithFiles(Gallery gallery, MultipartFile[] files) {
-        // Save gallery metadata
         Gallery savedGallery = galleryRepo.save(gallery);
 
-        // Create folder path using gallery ID
         String folderPath = "gallery-files/" + savedGallery.getId();
         fileStorageUtil.createFolder(folderPath);
-
-        // Store files in the folder
         fileStorageUtil.storeFilesInFolder(folderPath, files);
 
-        // Update gallery with folder path
         savedGallery.setFolderPath(folderPath);
         return galleryRepo.save(savedGallery);
     }
@@ -71,11 +68,7 @@ public class GalleryServiceImpl implements GalleryService {
         Optional<Gallery> optionalGallery = galleryRepo.findById(id);
         if (optionalGallery.isPresent()) {
             Gallery gallery = optionalGallery.get();
-
-            // Delete folder and files
             fileStorageUtil.deleteFolder(gallery.getFolderPath());
-
-            // Delete gallery record
             galleryRepo.deleteById(id);
             return true;
         }
@@ -87,5 +80,37 @@ public class GalleryServiceImpl implements GalleryService {
         Gallery gallery = galleryRepo.findById(galleryId)
                 .orElseThrow(() -> new RuntimeException("Gallery not found"));
         return fileStorageUtil.getFilesInFolder(gallery.getFolderPath());
+    }
+
+    @Override
+    public List<GallerShowDto> getAllGalleriesForView() {
+        List<Gallery> galleries = galleryRepo.findAll();
+        List<GallerShowDto> galleryDTOs = new ArrayList<>();
+
+        for (Gallery gallery : galleries) {
+            GallerShowDto dto = new GallerShowDto();
+            dto.setId(gallery.getId());
+            dto.setEventName(gallery.getEventName());
+            dto.setType(gallery.getType().toString());
+            dto.setYear(gallery.getYear());
+            dto.setIsActive(gallery.getIsActive());
+
+            File folder = new File(gallery.getFolderPath());
+            if (folder.exists() && folder.isDirectory()) {
+                File[] files = folder.listFiles((dir, name) -> name.toLowerCase().matches(".*\\.(jpg|jpeg|png|gif)$"));
+                if (files != null && files.length > 0) {
+                    dto.setFirstImage(baseUrl + "/" + folder.getPath() + "/" + files[0].getName());
+                    List<String> imagePaths = new ArrayList<>();
+                    for (File file : files) {
+                        imagePaths.add(baseUrl + "/" + folder.getPath() + "/" + file.getName());
+                    }
+                    dto.setImagePaths(imagePaths);
+                }
+            }
+
+            galleryDTOs.add(dto);
+        }
+
+        return galleryDTOs;
     }
 }

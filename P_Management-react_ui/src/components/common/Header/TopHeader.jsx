@@ -19,8 +19,8 @@ function TopHeader() {
         <div className="flex">
           Office Timing: Monday to Friday (09:30h to 18:00h)
         </div>
-        <div className="h-full flex gap-8 ">
-          <div className="flex gap-8 h-full items-center">
+        <div className="h-full flex gap-4 hd_screen:gap-8 ">
+          <div className="flex gap-4 hd_screen:gap-8 h-full items-center">
             <p className="m-0">Skip to main content</p>
             <div className="flex gap-2 items-center">
               <p className="inline m-0">Text Size</p>

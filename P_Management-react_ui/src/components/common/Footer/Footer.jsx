@@ -37,10 +37,10 @@ function Footer() {
   <>
    <footer>
     <div className="h-full bg-newprimaryColor text-white px-custom py-8">
-     <div className="flex flex-row space-x-14">
+     <div className="flex flex-row hd_screen:space-x-10 full_hd_screen:space-x-14">
       <div className="flex flex-col space-y-4">
 
-       <div className="flex gap-2">
+       <div className="flex gap-2 items-center">
         <img
          src={pcdaoLogo}
          alt="PCDAO\'s logo"
@@ -131,7 +131,7 @@ function Footer() {
       {/*    </div>*/}
       {/*  </div>*/}
       {/*</div>*/}
-      <div className="min-w-[350px] xl:min-w-[500px] flex flex-col items-end space-y-2 text-wrap">
+      <div className="min-w-[350px] lg:min-w-[400px] full_hd_screen::min-w-[500px] flex flex-col items-end space-y-2 text-wrap">
        <div className="h-full flex flex-row gap-20">
         <ul className="flex flex-col space-y-3">
          {menuListOne.map((item) => (

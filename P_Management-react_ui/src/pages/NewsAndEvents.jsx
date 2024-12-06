@@ -1,12 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Breadcrumbs from "../components/common/Breadcrumbs";
 import LeftBorderWithTitle from "../components/LeftBorderWithTitle";
 import GalleryCard from "../components/common/News&Events/GalleryCard";
-import ceremonyImage from "../assets/images/gallery/ceremony.jpeg"
-import bloodDonationImage from "../assets/images/gallery/blood_donation_2.jpeg"
-import handbookReleaseImage from "../assets/images/gallery/handbook_release.jpeg"
+import apiClient from "../auth/ApiClient";
 
 function NewsAndEvents() {
+  const [galleryItems, setGalleryItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchGalleryItems = async () => {
+    try {
+      const response = await apiClient.get("/gallery/forView");
+      setGalleryItems(response.data);
+    } catch (error) {
+      console.error("Error fetching gallery items:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchGalleryItems();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center py-10">Loading gallery...</div>;
+  }
+
   return (
     <div className="space-y-10 pb-20">
       <Breadcrumbs title="News & Events" />
@@ -16,15 +36,19 @@ function NewsAndEvents() {
           title="Glimpse of PCDA(O)"
           className="text-mainprimarycolor"
         />
-        <h4 className={`text-3xl text-mainprimarycolor font-bold`}>
-          Gallery
-        </h4>
+        <h4 className="text-3xl text-mainprimarycolor font-bold">Gallery</h4>
 
         <div className="grid grid-cols-4 gap-6 relative">
-          <GalleryCard imgs={ceremonyImage} year="2023" title="Glimpses of the release ceremony of the house magazine Kaustubh 2023" link="/news-and-events/1"/>
-          <GalleryCard imgs={bloodDonationImage} year="2023" title="Blood Donation Camp 12 May 2023" link="/news-and-events/2"/>
-          <GalleryCard imgs={handbookReleaseImage} year="2023" title="Release of Handbook on Pay and Allowances and Travelling Allowances by COAS Gen Manoj Pande and PCDA (O) Shri. S K Singh IDAS" link="/news-and-events/3"/>
-          <GalleryCard imgs={ceremonyImage} year="2023" title="Glimpses of the release ceremony of the house magazine Kaustubh 2023"/>
+          {galleryItems.map((item) => (
+            <GalleryCard
+              key={item.id}
+              imgs={item.firstImage} // Use first image for card
+              year={item.year}
+              title={item.eventName}
+              link={`/news-and-events/${item.id}`}
+              imagePaths={item.imagePaths} // Pass all image paths for detailed view
+            />
+          ))}
         </div>
       </div>
     </div>

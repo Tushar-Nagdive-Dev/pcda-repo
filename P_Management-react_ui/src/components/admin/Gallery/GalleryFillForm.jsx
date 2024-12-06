@@ -18,6 +18,7 @@ import { PlusIcon, Trash2 } from 'lucide-react';
 import AdminDeleteDialog from '../AdminDeleteDialog.jsx';
 import { GalleryFormValidation } from './GalleryFormValidation.js';
 import apiClient from '../../../auth/ApiClient.jsx';
+import { toast } from 'react-toastify';
 
 const formColumns = ['Sr. No.', 'Upload File', 'Action'];
 
@@ -72,12 +73,14 @@ function GalleryFillForm() {
       });
 
       // Handle successful response
-      alert('Gallery saved successfully!');
+      // alert('Gallery saved successfully!');
+      toast.success("Gallery Record Save Sucessfully!")
       form.reset();
     } catch (error) {
       // Handle errors
       console.error(error);
-      alert(error.response?.data || 'Failed to save gallery. Please try again.');
+      // alert(error.response?.data || 'Failed to save gallery. Please try again.');
+      toast.error(error.response?.data || 'Failed to save gallery. Please try again.')
     }
   };
 
@@ -114,7 +117,6 @@ function GalleryFillForm() {
                       <select className="w-full border rounded p-2" {...field}>
                         <option value="">Select Type</option>
                         <option value="IMAGE">Image</option>
-                        <option value="VIDEO">Video</option>
                       </select>
                     </FormControl>
                     <FormMessage />

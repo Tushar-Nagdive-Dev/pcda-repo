@@ -20,12 +20,13 @@ import {
  SelectItem,
  SelectTrigger,
  SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select'
 
 import { faqformValidation } from './FAQSectionFormValidation.js'
 import apiClient from '../../../auth/ApiClient.jsx'
+import { toast } from 'react-toastify'
 
-function AdminSectionForm() {
+function AdminSectionForm({callFun}) {
  const form = useForm({
   resolver: zodResolver(faqformValidation),
   defaultValues: {
@@ -41,16 +42,19 @@ function AdminSectionForm() {
     wingType: values.wing, // Match DTO field name
     sectionName: values.section_name, // Match DTO field name
     isActive: values.active, // Match DTO field name
-   };
+   }
 
-   const response = await apiClient.post('/faqdetails/addSection', payload);
+   const response = await apiClient.post('/faqdetails/addSection', payload)
    if (response.status === 201) {
-    alert('Section added successfully!');
-    form.reset(); // Reset form after successful submission
+    // alert('Section added successfully!');
+    toast.success('FAQ Section added successfully!');
+    callFun();
+    form.reset() // Reset form after successful submission
    }
   } catch (error) {
-   console.error('Error adding section:', error);
-   alert('Failed to add section. Please try again.');
+   console.error('Error adding section:', error)
+   //    alert('Failed to add section. Please try again.');
+   toast.error('Failed to add FAQ section');
   }
  }
 
@@ -68,7 +72,9 @@ function AdminSectionForm() {
         name="section_name"
         render={({ field }) => (
          <FormItem>
-          <FormLabel className="text-titleColor text-base font-raleway">Section Name:</FormLabel>
+          <FormLabel className="text-titleColor text-base font-raleway">
+           Section Name:
+          </FormLabel>
           <FormControl>
            <Input placeholder={'Enter section name'} {...field} />
           </FormControl>
@@ -82,7 +88,9 @@ function AdminSectionForm() {
         name="wing"
         render={({ field }) => (
          <FormItem>
-          <FormLabel className="text-titleColor text-base font-raleway">Wing</FormLabel>
+          <FormLabel className="text-titleColor text-base font-raleway">
+           Wing
+          </FormLabel>
           <FormControl>
            <Select
             onValueChange={(value) => field.onChange(value)} // Update form value
@@ -91,9 +99,7 @@ function AdminSectionForm() {
              <SelectValue placeholder="Select Wing" />
             </SelectTrigger>
             <SelectContent>
-             <SelectItem value="LEDGER_WING">
-              Ledger
-             </SelectItem>
+             <SelectItem value="LEDGER_WING">Ledger</SelectItem>
              <SelectItem value="TRANSPORT_WING">Transportation</SelectItem>
              <SelectItem value="CENTRAL_WING">Central</SelectItem>
             </SelectContent>
@@ -111,13 +117,12 @@ function AdminSectionForm() {
          <FormItem className="flex gap-2 items-center">
           <FormControl>
            <>
-            <Checkbox
-             checked={field.value}
-             onCheckedChange={field.onChange}
-            />
+            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
            </>
           </FormControl>
-          <FormLabel className="text-titleColor text-base font-raleway">Active</FormLabel>
+          <FormLabel className="text-titleColor text-base font-raleway">
+           Active
+          </FormLabel>
           <FormMessage />
          </FormItem>
         )}
