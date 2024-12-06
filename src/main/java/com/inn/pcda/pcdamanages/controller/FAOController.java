@@ -5,11 +5,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inn.pcda.pcdamanages.dto.FAQWithQuestionsDTO;
 import com.inn.pcda.pcdamanages.dto.SectionDTO;
+import com.inn.pcda.pcdamanages.dto.FAQColllectionDtos.CFAQDTO;
 import com.inn.pcda.pcdamanages.dto.tableDTO.FAQTableDataResponseDTO;
 import com.inn.pcda.pcdamanages.dto.tableDTO.SectionTableDataResponseDTO;
 import com.inn.pcda.pcdamanages.entity.FAQ;
 import com.inn.pcda.pcdamanages.entity.Section;
 import com.inn.pcda.pcdamanages.services.IFAQDetailsService;
+import com.inn.pcda.pcdamanages.services.impl.FAQCollectionService;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +38,9 @@ public class FAOController {
 
     @Autowired
     private IFAQDetailsService ifaqDetailsService;
+
+    @Autowired
+    private FAQCollectionService faqCollectionService;
     
     @PostMapping("/addSection")
     public ResponseEntity<Section> addSection(@RequestBody SectionDTO sectionRequestDTO) {
@@ -76,6 +81,12 @@ public class FAOController {
     public ResponseEntity<String> deleteSectionById(@PathVariable Long id) {
         ifaqDetailsService.deleteSectionById(id);
         return ResponseEntity.ok("Section with ID " + id + " has been deleted successfully.");
+    }
+
+    @GetMapping("/collections-with-points")
+    public ResponseEntity<List<CFAQDTO>> getFAQCollectionsWithPoints() {
+        List<CFAQDTO> faqCollections = faqCollectionService.getFAQCollectionsWithPoints();
+        return ResponseEntity.ok(faqCollections);
     }
     
 }

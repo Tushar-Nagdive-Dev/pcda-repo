@@ -220,4 +220,6 @@ public class FAQDetailsService implements IFAQDetailsService{
         // Perform the delete operation
         sectionRepository.deleteById(id);
     }
+
+    
 }

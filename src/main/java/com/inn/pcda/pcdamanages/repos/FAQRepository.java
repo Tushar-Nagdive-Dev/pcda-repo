@@ -20,4 +20,15 @@ public interface FAQRepository extends JpaRepository<FAQ, Long>{
         LEFT JOIN FETCH s.questionAnswers q
         """)
     List<FAQ> findAllWithDetails();
+
+    @Query("""
+        SELECT DISTINCT f 
+        FROM FAQ f
+        LEFT JOIN FETCH f.wings w
+        LEFT JOIN FETCH w.sections s
+        LEFT JOIN FETCH s.questionAnswers 
+        WHERE f.isActive = true OR f.isActive=false
+        """)
+    List<FAQ> findFAQWithHierarchy();
+
 }
