@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 @Data
 public class FAQTableDataResponseDTO {
     private String question;
+    private String answer;
     private Boolean faqStatus;
     private WingDTO wing;
     private SectionDTO section;
