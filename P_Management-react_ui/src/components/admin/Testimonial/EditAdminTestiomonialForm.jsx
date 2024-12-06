@@ -1,47 +1,90 @@
-import React from 'react'
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { useParams } from 'react-router-dom';
+import apiClient from '../../../auth/ApiClient'; // Adjust path as needed
+import { toast } from 'react-toastify';
 
-import { Textarea } from "@/components/ui/textarea";
-// import { NewsandNotificationValidation } from "./NewsAndNotificationFormValidation";
+function EditAdminTestimonialForm() {
+  const { id } = useParams(); // Get testimonial ID from the URL
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-function EditAdminTestiomonialForm() {
   const form = useForm({
-    resolver: zodResolver(),
+    resolver: zodResolver(), // Add your schema validation here
     defaultValues: {
-      profile_picture:
-        "" /* It dont need to store in useForm, use Customized as per your standard */,
-      name: "",
-      position: "",
-      testimonial_brief: "",
-      status: "",
-      new: "",
+      profile_picture: '',
+      name: '',
+      position: '',
+      testimonial_brief: '',
+      status: '',
+      new: false,
     },
   });
 
-  function onSubmit(values) {
-    console.log(values);
+  const { reset } = form;
+
+  // Fetch testimonial data by ID
+  useEffect(() => {
+    const fetchTestimonial = async () => {
+      try {
+        setLoading(true);
+        const response = await apiClient.get(`/testimonial/${id}`);
+        const testimonial = response.data;
+
+        // Map API data to form fields
+        reset({
+          name: testimonial.name,
+          position: testimonial.position,
+          testimonial_brief: testimonial.testimonialBrief,
+          status: testimonial.status === 'ACTIVE' ? 'Active' : 'In-Active',
+          new: testimonial.isNew,
+        });
+
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching testimonial:', err);
+        setError('Failed to load testimonial data.');
+        setLoading(false);
+      }
+    };
+
+    fetchTestimonial();
+  }, [id, reset]);
+
+  const onSubmit = (values) => {
+    console.log('Form submitted:', values);
+    // Add API call to update the testimonial here
+  };
+
+  if (loading) {
+    return <div>Loading testimonial...</div>;
   }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <div className="bg-adminBreadCrumbsBg flex flex-col p-10 rounded-lg">
       <h3 className="font-raleway text-2xl text-center font-bold">
@@ -98,7 +141,7 @@ function EditAdminTestiomonialForm() {
                 name="testimonial_brief"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-titleColor text-base font-raleway">Testiomonial Brief</FormLabel>
+                    <FormLabel className="text-titleColor text-base font-raleway">Testimonial Brief</FormLabel>
                     <FormControl>
                       <Textarea placeholder="Type here" {...field} />
                     </FormControl>
@@ -115,8 +158,7 @@ function EditAdminTestiomonialForm() {
                     <FormLabel className="text-titleColor text-base font-raleway">Status</FormLabel>
                     <FormControl>
                       <Select
-                        onValueChange={(value) => field.onChange(value)} // Update form value
-                        // defaultValue={field.value} // Set the default value
+                        onValueChange={(value) => field.onChange(value)}
                       >
                         <SelectTrigger className="w-[180px]">
                           <SelectValue placeholder="Select Status" />
@@ -154,7 +196,7 @@ function EditAdminTestiomonialForm() {
             <div className="w-full flex justify-center">
               <Button
                 type="submit"
-                className="w-fit text-white  bg-newprimaryColor"
+                className="w-fit text-white bg-newprimaryColor"
                 size="lg"
               >
                 Save
@@ -167,4 +209,4 @@ function EditAdminTestiomonialForm() {
   );
 }
 
-export default EditAdminTestiomonialForm;
+export default EditAdminTestimonialForm;

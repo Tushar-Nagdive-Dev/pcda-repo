@@ -129,4 +129,10 @@ public class FAQDetailsService implements IFAQDetailsService{
         faqResponseDTO.setWings(wingDTOs);
         return faqResponseDTO;
     }
+
+    @Override
+    public List<Section> getSectionByWing(Long id) {
+        Wing wing = wingRepository.findById(id).get();
+        return sectionRepository.findByWing(wing);
+    }
 }

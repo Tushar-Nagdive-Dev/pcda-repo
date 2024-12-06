@@ -3,6 +3,7 @@ package com.inn.pcda.pcdamanages.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inn.pcda.configs.baseImplementation.BaseEntity;
 
 import jakarta.persistence.CascadeType;
@@ -32,6 +33,7 @@ public class Section extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wing_id", nullable = false)
+    @JsonIgnore
     private Wing wing;
 
     @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -20,4 +20,6 @@ public interface ITestimonialService {
     public Boolean deleteTestimonialById(Long id);
 
     public Testimonial uploadTestimonialWithImage(Testimonial testimonialData, MultipartFile file);
+
+    public Testimonial getTestimonialById(Long id);
 }

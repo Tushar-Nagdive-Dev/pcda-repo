@@ -3,6 +3,7 @@ package com.inn.pcda.pcdamanages.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inn.pcda.pcdamanages.enums.WingsTypes;
 
 import jakarta.persistence.CascadeType;
@@ -31,6 +32,7 @@ public class Wing {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "faq_id", nullable = false)
+    @JsonIgnore
     private FAQ faq;
 
     @Enumerated(EnumType.STRING)
@@ -38,5 +40,6 @@ public class Wing {
     private WingsTypes wingsType;
 
     @OneToMany(mappedBy = "wing", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Section> sections = new ArrayList<>(); // Add this relationship
 }

@@ -21,22 +21,37 @@ import {
  SelectTrigger,
  SelectValue,
 } from "@/components/ui/select";
+
 import { faqformValidation } from './FAQSectionFormValidation.js'
+import apiClient from '../../../auth/ApiClient.jsx'
 
 function AdminSectionForm() {
  const form = useForm({
   resolver: zodResolver(faqformValidation),
   defaultValues: {
-   /* It dont need to store in useForm, use Customized as per your standard */
    section_name: '',
    wing: '',
-   active: '',
+   active: false,
   },
  })
 
- function onSubmit(values) {
-  console.log(values);
+ async function onSubmit(values) {
+  try {
+   const payload = {
+    wingType: values.wing, // Match DTO field name
+    sectionName: values.section_name, // Match DTO field name
+    isActive: values.active, // Match DTO field name
+   };
 
+   const response = await apiClient.post('/faqdetails/addSection', payload);
+   if (response.status === 201) {
+    alert('Section added successfully!');
+    form.reset(); // Reset form after successful submission
+   }
+  } catch (error) {
+   console.error('Error adding section:', error);
+   alert('Failed to add section. Please try again.');
+  }
  }
 
  return (
@@ -71,13 +86,11 @@ function AdminSectionForm() {
           <FormControl>
            <Select
             onValueChange={(value) => field.onChange(value)} // Update form value
-            // defaultValue={field.value} // Set the default value
            >
             <SelectTrigger className="w-full">
              <SelectValue placeholder="Select Wing" />
             </SelectTrigger>
             <SelectContent>
-             {/* These are static data */}
              <SelectItem value="LEDGER_WING">
               Ledger
              </SelectItem>
@@ -113,7 +126,7 @@ function AdminSectionForm() {
       <div className="w-full flex justify-center">
        <Button
         type="submit"
-        className="w-fit text-white  bg-newprimaryColor"
+        className="w-fit text-white bg-newprimaryColor"
         size="lg"
        >
         Submit

@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @Slf4j
 @RestController
 @RequestMapping("/api/testimonial")
@@ -40,7 +41,7 @@ public class TestimonialController {
         return ResponseEntity.ok(testimonials);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Testimonial> updateTestimonial(
             @RequestBody TestimonialDTO testimonialDTO, 
             @PathVariable("id") Long id) {
@@ -89,5 +90,30 @@ public class TestimonialController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Testimonial> getTestimonialById(@PathVariable("id") Long id) {
+        log.info("Fetching testimonial with id: {}", id);
+
+        try {
+            // Fetch testimonial by ID with validation
+            Testimonial testimonial = iTestimonialService.getTestimonialById(id);
+
+            if (testimonial == null) {
+                log.warn("Testimonial not found with id: {}", id);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            return ResponseEntity.ok(testimonial);
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid ID provided: {}", id, e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        } catch (Exception e) {
+            log.error("An error occurred while fetching the testimonial with id: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    
 
 }

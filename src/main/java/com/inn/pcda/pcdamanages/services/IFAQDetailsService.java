@@ -1,5 +1,7 @@
 package com.inn.pcda.pcdamanages.services;
 
+import java.util.List;
+
 import com.inn.pcda.pcdamanages.dto.FAQWithQuestionsDTO;
 import com.inn.pcda.pcdamanages.dto.SectionDTO;
 import com.inn.pcda.pcdamanages.entity.FAQ;
@@ -10,4 +12,6 @@ public interface IFAQDetailsService {
     public Section addSection(SectionDTO sectionDTO);
 
     public FAQ addFAQWithQuestionsAndAnswers(FAQWithQuestionsDTO faqWithQuestionsDTO);
+
+    public List<Section> getSectionByWing(Long id);
 }

@@ -7,8 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import com.inn.pcda.pcdamanages.entity.Section;
 import com.inn.pcda.pcdamanages.entity.Wing;
+import java.util.List;
+
 
 @Repository
 public interface SectionRepository extends JpaRepository<Section, Long>{
     Optional<Section> findByIdAndWing(Long id, Wing wing);
+    
+    List<Section> findByWing(Wing wing);
 }

@@ -11,11 +11,6 @@ import lombok.Data;
 @Data
 public class FAQWithQuestionsDTO {
 
-    @NotBlank(message = "FAQ title is required")
-    private String faqTitle;
-
-    private String faqDescription;
-
     @NotNull(message = "FAQ active status is required")
     private Boolean isActive;
 

@@ -14,6 +14,7 @@ import com.inn.pcda.pcdamanages.entity.Testimonial;
 import com.inn.pcda.pcdamanages.repos.TestimonialRepo;
 import com.inn.pcda.pcdamanages.services.ITestimonialService;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -156,5 +157,18 @@ public class TestimonialService implements ITestimonialService {
         }
     }
 
+    @Override
+    public Testimonial getTestimonialById(Long id) {
+        if (id == null || id <= 0) {
+            log.error("Invalid ID provided: {}", id);
+            throw new IllegalArgumentException("The provided ID must be a positive non-zero value.");
+        }
+
+        return testimonialRepo.findById(id)
+                .orElseThrow(() -> {
+                    log.warn("Testimonial not found with id: {}", id);
+                    return new EntityNotFoundException("Testimonial not found with id: " + id);
+                });
+    }
 
 }
