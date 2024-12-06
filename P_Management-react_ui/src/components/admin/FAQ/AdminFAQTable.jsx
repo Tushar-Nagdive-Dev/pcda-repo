@@ -1,78 +1,64 @@
-import React, { useEffect, useState } from 'react'
-import {DataTableToolbar} from "../TableComponents/admin-data-table-toolbar.jsx";
-import {AdminCommonDataTable} from "../TableComponents/admin-data-table.jsx";
-import {faqColumns} from "./data-table-components/admin-faq-columns.jsx";
-import apiClient from '../../../auth/ApiClient.jsx'
-
-const data = [
-    {
-      id: "faq1",
-      question: "What are the non-monetary benefits admission..",
-      status: "Active",
-      wing: "Ledger",
-      section: "General",
-      created_by: "J N Tulekar",
-      created_date: "26 Oct 2024",
-      updated_by: "J N Tulekar",
-      updated_date: "26 Oct 2024",
-    },
-    {
-        id: "faq1",
-        question: "What are the non-monetary benefits admission..",
-        status: "Active",
-        wing: "Transportation",
-        section: "Air Travel",
-        created_by: "J N Tulekar",
-        created_date: "26 Oct 2024",
-        updated_by: "J N Tulekar",
-        updated_date: "26 Oct 2024",
-      },
-  ];
+import React, { useEffect, useState } from 'react';
+import { DataTableToolbar } from "../TableComponents/admin-data-table-toolbar.jsx";
+import { AdminCommonDataTable } from "../TableComponents/admin-data-table.jsx";
+import { faqColumns } from "./data-table-components/admin-faq-columns.jsx";
+import apiClient from '../../../auth/ApiClient.jsx';
 
 function AdminFAQTable() {
- const [mappedData, setMappedData] = useState([]); // State to hold the mapped data
+  const [mappedData, setMappedData] = useState([]); // State to hold the mapped data
 
- useEffect(() => {
-  getAllFAQ();
- }, []);
+  useEffect(() => {
+    fetchAllFAQs(); // Fetch data when component mounts
+  }, []);
 
- const getAllFAQ = async () => {
-  try {
-   const response = await apiClient.get("faqdetails");
-   const data = response.data.map((item) => ({
+  const fetchAllFAQs = async () => {
+    try {
+      const response = await apiClient.get("faqdetails/getFaqTableData"); // Adjusted endpoint
+      const data = response.data.map(mapFAQData); // Map response data to table format
+      setMappedData(data); // Update state with mapped data
+    } catch (error) {
+      console.error("Error fetching FAQ table data:", error);
+    }
+  };
+
+  const mapFAQData = (item) => ({
     id: String(item.id),
-    question: item.question,
-    wing: item.wings === "CENTRAL_WING" ? "Central Wing" : item.wings === "LEDGER_WING" ? "Ledger Wing" : "Transportation Wing",
-    section: item.sections,
+    question: item.question || "N/A",
+    wing:
+      item.wing.name === "CENTRAL_WING"
+        ? "Central Wing"
+        : item.wing.name === "LEDGER_WING"
+        ? "Ledger Wing"
+        : "Transportation Wing",
+    section: item.section.name || "N/A", // Handle missing or null values
     status: item.isActive ? "Active" : "Inactive",
-    created_by: item.createdBy,
+    created_by: item.createdBy || "N/A",
     created_date: formatDate(item.createdDate),
-    updated_by: item.updatedBy,
+    updated_by: item.updatedBy || "N/A",
     updated_date: formatDate(item.updatedDate),
-   }));
-   setMappedData(data); // Update state
-  } catch (error) {
-   console.error("Error fetching news and notifications:", error);
-  }
- };
+  });
 
- function formatDate(dateString) {
-  if (!dateString) return ""; // Handle null or undefined dates
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
-   year: "numeric",
-   month: "short",
-   day: "2-digit",
-  }); // Example: "Dec 03, 2024"
- }
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A"; // Handle null or undefined dates
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+    }); // Example: "Dec 03, 2024"
+  };
 
   return (
     <div>
-        <AdminCommonDataTable data={mappedData} columns={faqColumns(getAllFAQ)} searchInputField={"question"} >
-            <DataTableToolbar/>
-        </AdminCommonDataTable>
+      <AdminCommonDataTable
+        data={mappedData}
+        columns={faqColumns(fetchAllFAQs)} // Pass refetch function for actions
+        searchInputField="question" // Searchable field
+      >
+        <DataTableToolbar />
+      </AdminCommonDataTable>
     </div>
-  )
+  );
 }
 
-export default AdminFAQTable
+export default AdminFAQTable;

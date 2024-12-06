@@ -70,22 +70,22 @@ export const faqColumns = (refreshFAQ) => [
       );
     },
   },
-  {
-    accessorKey: "created_by",
-    header: ({ column }) => <p className>Created By</p>,
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[200px] line-clamp-3 font-medium capitalize">
-            {row.getValue("created_by") || "-"}
-          </span>
-        </div>
-      );
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
-  },
+  // {
+  //   accessorKey: "created_by",
+  //   header: ({ column }) => <p className>Created By</p>,
+  //   cell: ({ row }) => {
+  //     return (
+  //       <div className="flex space-x-2">
+  //         <span className="max-w-[200px] line-clamp-3 font-medium capitalize">
+  //           {row.getValue("created_by") || "-"}
+  //         </span>
+  //       </div>
+  //     );
+  //   },
+  //   filterFn: (row, id, value) => {
+  //     return value.includes(row.getValue(id));
+  //   },
+  // },
   {
     accessorKey: "created_date",
     header: ({ column }) => (
@@ -105,22 +105,22 @@ export const faqColumns = (refreshFAQ) => [
       return rowDate >= startDate && rowDate <= endDate;
     },
   },
-  {
-    accessorKey: "updated_by",
-    header: ({ column }) => <p className>Updated By</p>,
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[200px] line-clamp-3 font-medium capitalize">
-            {row.getValue("updated_by") || "-"}
-          </span>
-        </div>
-      );
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
-  },
+  // {
+  //   accessorKey: "updated_by",
+  //   header: ({ column }) => <p className>Updated By</p>,
+  //   cell: ({ row }) => {
+  //     return (
+  //       <div className="flex space-x-2">
+  //         <span className="max-w-[200px] line-clamp-3 font-medium capitalize">
+  //           {row.getValue("updated_by") || "-"}
+  //         </span>
+  //       </div>
+  //     );
+  //   },
+  //   filterFn: (row, id, value) => {
+  //     return value.includes(row.getValue(id));
+  //   },
+  // },
   {
     accessorKey: "updated_date",
     header: ({ column }) => <p className>Updated Date</p>,

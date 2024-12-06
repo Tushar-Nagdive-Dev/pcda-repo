@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.inn.pcda.pcdamanages.dto.FAQResponseDTO;
+import com.inn.pcda.pcdamanages.dto.FAQTableDataResponseDTO;
 import com.inn.pcda.pcdamanages.dto.FAQWithQuestionsDTO;
 import com.inn.pcda.pcdamanages.dto.SectionDTO;
 import com.inn.pcda.pcdamanages.entity.FAQ;
@@ -134,5 +135,41 @@ public class FAQDetailsService implements IFAQDetailsService{
     public List<Section> getSectionByWing(Long id) {
         Wing wing = wingRepository.findById(id).get();
         return sectionRepository.findByWing(wing);
+    }
+
+    @Override
+    public List<FAQTableDataResponseDTO> getFAQTableData() {
+        // Fetch all QuestionAnswer entities with their associated data
+        List<QuestionAnswer> questionAnswers = questionAnswerRepository.findAll();
+        return questionAnswers.stream().map(this::mapToFAQDetailsDTO).toList();
+    }
+
+    private FAQTableDataResponseDTO mapToFAQDetailsDTO(QuestionAnswer questionAnswer) {
+        FAQTableDataResponseDTO dto = new FAQTableDataResponseDTO();
+
+        // Map question
+        dto.setQuestion(questionAnswer.getQuestion());
+
+        // Map FAQ status, createdDate, and updatedDate from FAQ
+        FAQ faq = questionAnswer.getSection().getWing().getFaq();
+        dto.setFaqStatus(faq.getIsActive());
+        dto.setCreatedDate(faq.getCreatedDate());
+        dto.setUpdatedDate(faq.getUpdatedDate());
+
+        // Map Wing details
+        Wing wing = questionAnswer.getSection().getWing();
+        FAQTableDataResponseDTO.WingDTO wingDTO = new FAQTableDataResponseDTO.WingDTO();
+        wingDTO.setId(wing.getId());
+        wingDTO.setName(wing.getWingsType().name());
+        dto.setWing(wingDTO);
+
+        // Map Section details
+        Section section = questionAnswer.getSection();
+        FAQTableDataResponseDTO.SectionDTO sectionDTO = new FAQTableDataResponseDTO.SectionDTO();
+        sectionDTO.setId(section.getId());
+        sectionDTO.setName(section.getTitle());
+        dto.setSection(sectionDTO);
+
+        return dto;
     }
 }

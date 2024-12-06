@@ -3,6 +3,7 @@ package com.inn.pcda.pcdamanages.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.inn.pcda.pcdamanages.dto.FAQTableDataResponseDTO;
 import com.inn.pcda.pcdamanages.dto.FAQWithQuestionsDTO;
 import com.inn.pcda.pcdamanages.dto.SectionDTO;
 import com.inn.pcda.pcdamanages.entity.FAQ;
@@ -48,5 +49,9 @@ public class FAOController {
         return ifaqDetailsService.getSectionByWing(id);
     }
     
-    
+    @GetMapping("/getFaqTableData")
+    public ResponseEntity<List<FAQTableDataResponseDTO>> getAllFAQDetails() {
+        List<FAQTableDataResponseDTO> faqDetails = ifaqDetailsService.getFAQTableData();
+        return ResponseEntity.ok(faqDetails);
+    }
 }
