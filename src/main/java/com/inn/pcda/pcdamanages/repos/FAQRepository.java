@@ -12,6 +12,12 @@ import com.inn.pcda.pcdamanages.entity.FAQ;
 @Repository
 public interface FAQRepository extends JpaRepository<FAQ, Long>{
     
-    @Query("SELECT DISTINCT f FROM FAQ f JOIN FETCH f.wings w JOIN FETCH w.sections s JOIN FETCH s.questionAnswers q")
-    public List<FAQ> findAllWithDetails();
+    @Query("""
+        SELECT DISTINCT f 
+        FROM FAQ f
+        LEFT JOIN FETCH f.wings w
+        LEFT JOIN FETCH w.sections s
+        LEFT JOIN FETCH s.questionAnswers q
+        """)
+    List<FAQ> findAllWithDetails();
 }

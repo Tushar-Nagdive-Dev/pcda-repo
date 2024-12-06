@@ -1,7 +1,9 @@
 package com.inn.pcda.pcdamanages.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inn.pcda.configs.baseImplementation.BaseEntity;
@@ -18,9 +20,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table(name = "sections")
+@ToString(exclude = {"wing", "questionAnswers"})
 @Data
 public class Section extends BaseEntity {
 
@@ -37,7 +41,7 @@ public class Section extends BaseEntity {
     private Wing wing;
 
     @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<QuestionAnswer> questionAnswers = new ArrayList<>();
+    private Set<QuestionAnswer> questionAnswers = new HashSet<>();
 
     @Column(name = "is_active")
     private Boolean isActive;

@@ -4,15 +4,15 @@ import { Button } from "@/components/ui/button";
 
 const navbarMenuList = [
   {
-    id: "m1",
+    id: "1",
     title: "Ledger Wing",
   },
   {
-    id: "m2",
+    id: "2",
     title: "Transportation Wing",
   },
   {
-    id: "m3",
+    id: "3",
     title: "Central Wing",
   },
 ];

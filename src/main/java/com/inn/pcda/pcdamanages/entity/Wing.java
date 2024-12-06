@@ -1,7 +1,7 @@
 package com.inn.pcda.pcdamanages.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inn.pcda.pcdamanages.enums.WingsTypes;
@@ -20,9 +20,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table(name = "wings")
+@ToString(exclude = {"faq", "sections"})
 @Data
 public class Wing {
 
@@ -41,5 +43,5 @@ public class Wing {
 
     @OneToMany(mappedBy = "wing", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Section> sections = new ArrayList<>(); // Add this relationship
+    private Set<Section> sections = new HashSet<>(); // Add this relationship
 }
