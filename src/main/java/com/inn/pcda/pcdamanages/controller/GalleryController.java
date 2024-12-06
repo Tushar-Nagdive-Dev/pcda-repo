@@ -93,7 +93,7 @@ public class GalleryController {
         }
     }
 
-    @PostMapping("/upload")
+    /* @PostMapping("/upload")
     public ResponseEntity<Gallery> saveAndUploadGallery(@RequestPart("gallery") Gallery galleryData, @RequestPart("files") MultipartFile[] files) {
         log.info("Inside saveAndUploadGallery");
         Gallery savedGallery = iGalleryService.saveAndUploadGallery(galleryData, files);
@@ -103,5 +103,44 @@ public class GalleryController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
+    } */
+
+    @PostMapping("/upload")
+    public ResponseEntity<?> saveAndUploadGallery(@RequestPart("gallery") Gallery galleryData, @RequestPart("files") MultipartFile[] files) {
+        log.info("Inside saveAndUploadGallery");
+
+        log.info("Received Gallery Data: {}", galleryData);
+
+        if (galleryData.getYear() == null) {
+            log.error("Year is missing in the request payload");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Year field is required and cannot be null.");
+        }
+
+        Gallery savedGallery = iGalleryService.saveAndUploadGallery(galleryData, files);
+        return ResponseEntity.ok(savedGallery);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getGalleryById(@PathVariable Long id) {
+        log.info("Inside @method getGalleryById, fetching gallery with ID: {}", id);
+
+        try {
+            Gallery gallery = iGalleryService.getGalleryById(id);
+
+            if (gallery == null) {
+                log.info("Gallery with ID {} not found", id);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Gallery with ID " + id + " not found.");
+            }
+
+            return ResponseEntity.ok(gallery);
+        } catch (Exception e) {
+            log.error("Error while fetching gallery with ID: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error fetching gallery with ID " + id);
+        }
+    }
+
+
 }

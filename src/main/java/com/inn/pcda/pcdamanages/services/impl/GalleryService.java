@@ -165,5 +165,11 @@ public class GalleryService implements IGalleryService {
         return galleryRepo.save(galleryData);
     }
 
-    
+    @Override
+    public Gallery getGalleryById(Long id) {
+        log.info("Inside @method getGalleryById in GalleryService, ID: {}", id);
+
+        return galleryRepo.findById(id).orElse(null);
+    }
+
 }

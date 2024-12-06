@@ -180,7 +180,7 @@ function AdminFAQFillForm() {
                             <SelectValue placeholder="Select Section" />
                           </SelectTrigger>
                           <SelectContent>
-                            {sections.map((section) => (
+                            {sections?.map((section) => (
                               <SelectItem key={section.id} value={section.id}>
                                 {section.title}
                               </SelectItem>

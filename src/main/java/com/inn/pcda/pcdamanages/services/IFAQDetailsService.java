@@ -20,4 +20,8 @@ public interface IFAQDetailsService {
     public List<FAQTableDataResponseDTO> getFAQTableData();
 
     public List<SectionTableDataResponseDTO> getSectionForTable();
+
+    public Section updateSectionTitle(String title, Long id, Boolean isActive);
+
+    public void deleteSectionById(Long id);
 }

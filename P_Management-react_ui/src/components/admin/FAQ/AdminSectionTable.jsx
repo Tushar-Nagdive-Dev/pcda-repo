@@ -19,7 +19,7 @@ function AdminFAQTable() {
 
       // Map API response to match the table's expected data structure
       const formattedData = result.map((item, index) => ({
-        id: item.id,
+        id: String(item.id),
         section_name: item.title,
         order: index + 1, // Replace with `item.order` if provided
         status: item.isActive ? "Active" : "In-Active",

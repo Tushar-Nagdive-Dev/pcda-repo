@@ -35,5 +35,6 @@ public class Testimonial extends BaseEntity {
     @Column(name = "is_new")
     private Boolean isNew;
 
-    private Integer imageId;
+    @Column(name = "image_path") // Add column to store image path
+    private String imagePath;
 }

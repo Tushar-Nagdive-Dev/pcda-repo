@@ -9,4 +9,5 @@ export const GalleryFormValidation = z.object({
    image: z.any().nullable(), // Allows `null` for image
   }),
  ).nonempty('Gallery must have at least one item'), // Ensures the array is not empty
+ year: z.number()
 })

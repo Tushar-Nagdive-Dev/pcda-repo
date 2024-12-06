@@ -94,7 +94,7 @@ public class SecurityConfig {
                     "/js/**", 
                     "/images/**",
                     "/api/news/**",
-                    "/api/gellery/**",
+                    "/api/gallery/**",
                     "/api/testimonial/**",
                     "/api/faqdetails/**"
                 ).permitAll()

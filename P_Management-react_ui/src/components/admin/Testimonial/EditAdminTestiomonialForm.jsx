@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -12,37 +11,39 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
+} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { useParams } from 'react-router-dom';
-import apiClient from '../../../auth/ApiClient'; // Adjust path as needed
-import { toast } from 'react-toastify';
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { useParams, useNavigate } from "react-router-dom";
+import apiClient from "../../../auth/ApiClient"; // Adjust the path as needed
+import { toast } from "react-toastify";
 
 function EditAdminTestimonialForm() {
   const { id } = useParams(); // Get testimonial ID from the URL
+  const navigate = useNavigate(); // For redirecting after saving
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [imagePreview, setImagePreview] = useState(""); // To preview current image
 
   const form = useForm({
     resolver: zodResolver(), // Add your schema validation here
     defaultValues: {
-      profile_picture: '',
-      name: '',
-      position: '',
-      testimonial_brief: '',
-      status: '',
+      profile_picture: null,
+      name: "",
+      position: "",
+      testimonial_brief: "",
+      status: "",
       new: false,
     },
   });
 
-  const { reset } = form;
+  const { reset, setValue, watch } = form;
 
   // Fetch testimonial data by ID
   useEffect(() => {
@@ -57,14 +58,19 @@ function EditAdminTestimonialForm() {
           name: testimonial.name,
           position: testimonial.position,
           testimonial_brief: testimonial.testimonialBrief,
-          status: testimonial.status === 'ACTIVE' ? 'Active' : 'In-Active',
+          status: testimonial.status === "ACTIVE" ? "Active" : "In-Active",
           new: testimonial.isNew,
         });
 
+        // Set the current image for preview
+        if (testimonial.imagePath) {
+          setImagePreview(`/api/testimonial/image/${testimonial.imagePath}`);
+        }
+
         setLoading(false);
       } catch (err) {
-        console.error('Error fetching testimonial:', err);
-        setError('Failed to load testimonial data.');
+        console.error("Error fetching testimonial:", err);
+        setError("Failed to load testimonial data.");
         setLoading(false);
       }
     };
@@ -72,9 +78,40 @@ function EditAdminTestimonialForm() {
     fetchTestimonial();
   }, [id, reset]);
 
-  const onSubmit = (values) => {
-    console.log('Form submitted:', values);
-    // Add API call to update the testimonial here
+  const onSubmit = async (values) => {
+    const formData = new FormData();
+
+    // Append form data for fields
+    formData.append(
+      "data",
+      JSON.stringify({
+        name: values.name,
+        position: values.position,
+        testimonialBrief: values.testimonial_brief,
+        status: values.status === "Active" ? "ACTIVE" : "INACTIVE",
+        isNew: values.new,
+      })
+    );
+
+    // Append the file if selected
+    const file = watch("profile_picture");
+    if (file && file.length > 0) {
+      formData.append("file", file[0]);
+    }
+
+    try {
+      const response = await apiClient.put(`/testimonial/update/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      toast.success("Testimonial updated successfully!");
+      navigate("/admin/testimonials"); // Redirect to the testimonials list page
+    } catch (err) {
+      console.error("Error updating testimonial:", err);
+      toast.error("Failed to update testimonial.");
+    }
   };
 
   if (loading) {
@@ -87,9 +124,7 @@ function EditAdminTestimonialForm() {
 
   return (
     <div className="bg-adminBreadCrumbsBg flex flex-col p-10 rounded-lg">
-      <h3 className="font-raleway text-2xl text-center font-bold">
-        Edit Testimonial
-      </h3>
+      <h3 className="font-raleway text-2xl text-center font-bold">Edit Testimonial</h3>
       <div className="flex flex-col space-y-3">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -99,14 +134,40 @@ function EditAdminTestimonialForm() {
                 name="profile_picture"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-titleColor text-base font-raleway">Profile Picture:</FormLabel>
+                    <FormLabel className="text-titleColor text-base font-raleway">
+                      Profile Picture:
+                    </FormLabel>
                     <FormControl>
-                      <Input id="picture" type="file" {...field} />
+                      <Input
+                        id="picture"
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            field.onChange(e.target.files); // Pass file(s) to react-hook-form
+                            const fileReader = new FileReader();
+                            fileReader.onload = (event) => {
+                              setImagePreview(event.target.result); // Update the preview
+                            };
+                            fileReader.readAsDataURL(file);
+                          }
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+              {imagePreview && (
+                <div className="mt-4">
+                  <img
+                    src={imagePreview}
+                    alt="Current Profile"
+                    className="max-w-xs max-h-40 rounded-md"
+                  />
+                </div>
+              )}
               <div className="grid grid-cols-2 gap-2 w-full">
                 <FormField
                   control={form.control}
@@ -141,7 +202,9 @@ function EditAdminTestimonialForm() {
                 name="testimonial_brief"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-titleColor text-base font-raleway">Testimonial Brief</FormLabel>
+                    <FormLabel className="text-titleColor text-base font-raleway">
+                      Testimonial Brief
+                    </FormLabel>
                     <FormControl>
                       <Textarea placeholder="Type here" {...field} />
                     </FormControl>
@@ -157,9 +220,7 @@ function EditAdminTestimonialForm() {
                   <FormItem>
                     <FormLabel className="text-titleColor text-base font-raleway">Status</FormLabel>
                     <FormControl>
-                      <Select
-                        onValueChange={(value) => field.onChange(value)}
-                      >
+                      <Select onValueChange={(value) => field.onChange(value)} value={field.value}>
                         <SelectTrigger className="w-[180px]">
                           <SelectValue placeholder="Select Status" />
                         </SelectTrigger>
@@ -180,12 +241,7 @@ function EditAdminTestimonialForm() {
                 render={({ field }) => (
                   <FormItem className="flex gap-2 items-center">
                     <FormControl>
-                      <>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </>
+                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                     </FormControl>
                     <FormLabel className="text-titleColor text-base font-raleway">New</FormLabel>
                     <FormMessage />
@@ -194,11 +250,7 @@ function EditAdminTestimonialForm() {
               />
             </div>
             <div className="w-full flex justify-center">
-              <Button
-                type="submit"
-                className="w-fit text-white bg-newprimaryColor"
-                size="lg"
-              >
+              <Button type="submit" className="w-fit text-white bg-newprimaryColor" size="lg">
                 Save
               </Button>
             </div>

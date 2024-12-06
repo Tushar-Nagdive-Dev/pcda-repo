@@ -23,4 +23,6 @@ public interface IGalleryService {
     public List<Integer> uploadFiles(Long id, MultipartFile[] files);
 
     public Gallery saveAndUploadGallery(Gallery galleryData, MultipartFile[] files);
+
+    public Gallery getGalleryById(Long id);
 }

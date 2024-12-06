@@ -11,15 +11,18 @@ public interface ITestimonialService {
     
     public Testimonial addTestimonial(TestimonialDTO testimonialDTO);
 
-    public List<Testimonial> getAllTestimonials();
-
-    public Integer uploadProfileImage(Long id, MultipartFile file);
-
-    public Testimonial updateTestimonial(TestimonialDTO testimonialDTO, Long id);
-
     public Boolean deleteTestimonialById(Long id);
 
     public Testimonial uploadTestimonialWithImage(Testimonial testimonialData, MultipartFile file);
 
-    public Testimonial getTestimonialById(Long id);
+    public Testimonial createTestimonialWithImage(TestimonialDTO testimonialDTO, MultipartFile file);
+
+    List<TestimonialDTO> getAllTestimonials();
+
+    Testimonial updateTestimonialWithImage(Long id, TestimonialDTO testimonialDTO, MultipartFile file);
+
+    TestimonialDTO getTestimonialById(Long id);
+
+
+
 }

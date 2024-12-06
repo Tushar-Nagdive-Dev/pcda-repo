@@ -31,54 +31,23 @@ public class TestimonialController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTestimonial);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Testimonial>> getAllTestimonials() {
+    @GetMapping()
+    public ResponseEntity<List<TestimonialDTO>> getAllTestimonials() {
         log.info("Inside @class TestimonialController @method getAllTestimonials");
-        List<Testimonial> testimonials = iTestimonialService.getAllTestimonials();
-        if (testimonials.isEmpty()) {
-            return ResponseEntity.noContent().build();
+
+        try {
+            // Fetch all testimonials
+            List<TestimonialDTO> testimonials = iTestimonialService.getAllTestimonials();
+            if (testimonials.isEmpty()) {
+                log.info("No testimonials found.");
+                return ResponseEntity.noContent().build(); // 204 No Content
+            }
+            return ResponseEntity.ok(testimonials); // 200 OK
+        } catch (Exception e) {
+            log.error("Error fetching testimonials: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 Internal Server Error
         }
-        return ResponseEntity.ok(testimonials);
     }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Testimonial> updateTestimonial(
-            @RequestBody TestimonialDTO testimonialDTO, 
-            @PathVariable("id") Long id) {
-        log.info("Inside @class TestimonialController @method updateTestimonial for id: {}", id);
-        Testimonial updatedTestimonial = iTestimonialService.updateTestimonial(testimonialDTO, id);
-        if (updatedTestimonial == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(updatedTestimonial);
-    }
-
-    // @PostMapping("/{id}/upload")
-    // public ResponseEntity<Integer> uploadProfileImage(
-    //         @PathVariable Long id, 
-    //         @RequestParam("file") MultipartFile file) {
-    //     log.info("Inside @class TestimonialController @method uploadProfileImage for id: {}", id);
-    //     Integer imageId = iTestimonialService.uploadProfileImage(id, file);
-    //     if (imageId == null) {
-    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    //     }
-    //     return ResponseEntity.ok(imageId);
-    // }
-
-    @PostMapping("/upload")
-    public ResponseEntity<Testimonial> uploadTestimonialWithImage(
-            @RequestPart("data") Testimonial testimonialData, 
-            @RequestPart("file") MultipartFile file) {
-        log.info("Inside @class TestimonialController @method uploadTestimonialWithImage");
-        Testimonial savedTestimonial = iTestimonialService.uploadTestimonialWithImage(testimonialData, file);
-
-        if (savedTestimonial == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-        return ResponseEntity.ok(savedTestimonial);
-    }
-
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteTestimonialById(@PathVariable("id") Long id) {
         log.info("Inside @class TestimonialController @method deleteTestimonialById for id: {}", id);
@@ -91,29 +60,69 @@ public class TestimonialController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Testimonial> getTestimonialById(@PathVariable("id") Long id) {
-        log.info("Fetching testimonial with id: {}", id);
+    @PostMapping("/create")
+    public ResponseEntity<Testimonial> createTestimonialWithImage(
+            @RequestPart("data") TestimonialDTO testimonialDTO,
+            @RequestPart("file") MultipartFile file) {
+        log.info("Inside @class TestimonialController @method createTestimonialWithImage");
 
         try {
-            // Fetch testimonial by ID with validation
-            Testimonial testimonial = iTestimonialService.getTestimonialById(id);
-
-            if (testimonial == null) {
-                log.warn("Testimonial not found with id: {}", id);
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            // Create testimonial and save image
+            Testimonial createdTestimonial = iTestimonialService.createTestimonialWithImage(testimonialDTO, file);
+            if (createdTestimonial != null) {
+                return ResponseEntity.status(HttpStatus.CREATED).body(createdTestimonial);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             }
-
-            return ResponseEntity.ok(testimonial);
-        } catch (IllegalArgumentException e) {
-            log.error("Invalid ID provided: {}", id, e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         } catch (Exception e) {
-            log.error("An error occurred while fetching the testimonial with id: {}", id, e);
+            log.error("Error creating testimonial with image: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
-    
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Testimonial> updateTestimonialWithImage(
+            @PathVariable Long id,
+            @RequestPart("data") TestimonialDTO testimonialDTO,
+            @RequestPart(value = "file", required = false) MultipartFile file) {
+        log.info("Inside @class TestimonialController @method updateTestimonialWithImage for id: {}", id);
+
+        try {
+            // Update testimonial details and image if provided
+            Testimonial updatedTestimonial = iTestimonialService.updateTestimonialWithImage(id, testimonialDTO, file);
+            if (updatedTestimonial != null) {
+                return ResponseEntity.ok(updatedTestimonial); // 200 OK
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404 Not Found
+            }
+        } catch (Exception e) {
+            log.error("Error updating testimonial with id {}: {}", id, e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // 500 Internal Server Error
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TestimonialDTO> getTestimonialById(@PathVariable Long id) {
+        log.info("Fetching testimonial with id: {}", id);
+
+        try {
+            // Fetch the testimonial
+            TestimonialDTO testimonialDTO = iTestimonialService.getTestimonialById(id);
+            if (testimonialDTO == null) {
+                log.warn("Testimonial not found with id: {}", id);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404 Not Found
+            }
+            return ResponseEntity.ok(testimonialDTO); // 200 OK
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid ID provided: {}", id, e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // 400 Bad Request
+        } catch (Exception e) {
+            log.error("An error occurred while fetching the testimonial with id: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // 500 Internal Server Error
+        }
+    }
+
+
+
 
 }

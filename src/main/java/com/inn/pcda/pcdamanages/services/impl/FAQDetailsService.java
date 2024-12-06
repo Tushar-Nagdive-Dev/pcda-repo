@@ -3,6 +3,7 @@ package com.inn.pcda.pcdamanages.services.impl;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -191,5 +192,31 @@ public class FAQDetailsService implements IFAQDetailsService{
         dto.setCreatedDate(section.getCreatedDate());
         dto.setUpdatedDate(section.getUpdatedDate());
         return dto;
+    }
+
+    @Override
+    public Section updateSectionTitle(String title, Long id, Boolean isActive) {
+        // Find the section by ID
+        Optional<Section> optionalSection = sectionRepository.findById(id);
+        if (optionalSection.isEmpty()) {
+            throw new IllegalArgumentException("Section with ID " + id + " not found.");
+        }
+
+        // Update the title
+        Section section = optionalSection.get();
+        section.setTitle(title);
+        section.setIsActive(isActive);
+        // Save the updated section
+        return sectionRepository.save(section);
+    }
+
+    @Override
+    public void deleteSectionById(Long id) {
+        // Check if the section exists
+        if (!sectionRepository.existsById(id)) {
+            throw new IllegalArgumentException("Section with ID " + id + " does not exist.");
+        }
+        // Perform the delete operation
+        sectionRepository.deleteById(id);
     }
 }
