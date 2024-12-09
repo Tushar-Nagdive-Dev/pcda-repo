@@ -12,7 +12,7 @@ function AdminGalleryForm(props) {
     subtitle="New"
    >
     <Link
-     to="/admin/gallery"
+     to="/pcdao/gallery"
      className="flex gap-2 lg:p-2 2xl:p-3 bg-statebluecolor text-white font-raleway no-underline rounded-md"
     >
      <ChevronLeft size={24} />

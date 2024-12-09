@@ -9,7 +9,7 @@ function AdminGalleryTableList() {
     <div className="flex flex-col gap-2">
       <AdminBreadcrumbs title="Website Manager > " subtitle="Manage Gallery">
         <Link
-          to={`/admin/gallery/new`}
+          to={`/pcdao/gallery/new`}
           className="flex gap-2 lg:p-2 2xl:p-3 bg-statebluecolor text-white font-raleway no-underline rounded-md"
         >
           <Plus size={24} />

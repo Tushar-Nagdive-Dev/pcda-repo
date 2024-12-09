@@ -13,7 +13,7 @@ function EditAdminFaqSectionForm() {
     subtitle="Edit Section"
    >
     <Link
-     to="/admin/faq/add-section"
+     to="/pcdao/faq/add-section"
      className="flex gap-2 lg:p-2 2xl:p-3 bg-statebluecolor text-white font-raleway no-underline rounded-md"
     >
      <ChevronLeft size={24} />

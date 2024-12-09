@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class FAQTableDataResponseDTO {
+    private Long id;
     private String question;
     private String answer;
     private Boolean faqStatus;

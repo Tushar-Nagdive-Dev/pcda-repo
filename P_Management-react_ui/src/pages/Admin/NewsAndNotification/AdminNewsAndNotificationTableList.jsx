@@ -12,7 +12,7 @@ function AdminNewsAndNotificationTableList() {
         subtitle="News & Notification"
       >
         <Link
-          to={`/admin/news-and-notification/new`}
+          to={`/pcdao/news-and-notification/new`}
           className="flex gap-2 lg:p-2 2xl:p-3 bg-statebluecolor text-white font-raleway no-underline rounded-md"
         >
             <Plus size={24} />

@@ -13,7 +13,7 @@ function AdminTestimonialTableList() {
       subtitle="Testimonial"
     >
       <Link
-        to={`/admin/testimonial/new`}
+        to={`/pcdao/testimonial/new`}
         className="flex gap-2 lg:p-2 2xl:p-3 bg-statebluecolor text-white font-raleway no-underline rounded-md"
       >
           <Plus size={24} />

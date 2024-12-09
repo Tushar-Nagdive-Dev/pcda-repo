@@ -119,7 +119,7 @@ function ContactUsSection() {
      </React.Fragment>
     ))}
    </div>
-   {/* Content Wing */}
+   {/* First Section */}
    <div className="relative w-full">
     <TransitionGroup component={'div'}>
      <CSSTransition key={currentStage} timeout={300}>
@@ -146,7 +146,7 @@ function ContactUsSection() {
            ...transitionStyles[state],
           }}>
            <div className="flex flex-col gap-2">
-            <p className="text-mainprimarycolor font-bold text-2xl" >
+            <p className="text-mainprimarycolor font-bold text-2xl">
              Office Of The Principal Controller Of Defence Accounts
              (Officers)
             </p>
@@ -157,12 +157,12 @@ function ContactUsSection() {
 
            <div className="flex flex-col gap-2">
             <ContactUsInlineTitleAndContent
-             title="Fax"
-             info="(020) 2645-3446"
+                title="Fax"
+                info="(020) 2645-3446"
             />
             <ContactUsInlineTitleAndContent
-             title="Website"
-             info="https://pcdaopune.gov.in"
+                title="Website"
+                info="https://pcdaopune.gov.in"
             />
            </div>
 
@@ -172,12 +172,12 @@ function ContactUsSection() {
 
            <div className="flex flex-col gap-2">
             <ContactUsInlineTitleAndContent
-             title="Pro Civil"
-             info="(020) 2640-1100"
+                title="Pro Civil"
+                info="(020) 2640-1100"
             />
             <ContactUsInlineTitleAndContent
-             title="Army"
-             info="https://pcdaopune.gov.in"
+                title="Army"
+                info="https://pcdaopune.gov.in"
             />
            </div>
 
@@ -187,13 +187,32 @@ function ContactUsSection() {
 
            <div className="flex flex-col gap-2">
             <ContactUsInlineTitleAndContent
-             bigtitle="Timings"
-             title="PRO Timing"
-             info="Monday To Friday (08:30hr to 16:00Hr)"
+                bigtitle="Timings"
+                title="PRO Timing"
+                info="Monday To Friday (08:30hr to 16:00Hr)"
             />
             <ContactUsInlineTitleAndContent
-             title="Office Timing"
-             info="(09:30hr to 18:00Hr)"
+                title="Office Timing"
+                info="(09:30hr to 18:00Hr)"
+            />
+           </div>
+
+           <div className="flex flex-col gap-2">
+            <ContactUsInlineTitleAndContent
+                title="For Retired Officers and rank pay arrears related matter"
+                info="rankpay-pcdaopune[at]nic[dot]in"
+            />
+            <ContactUsInlineTitleAndContent
+                title="For TA/DA related matter"
+                info="tada-pcdaopune[at]nic[dot]in"
+            />
+            <ContactUsInlineTitleAndContent
+                title="For Ledger Section matter"
+                info="ledger-pcdaopune[at]nic[dot]in"
+            />
+            <ContactUsInlineTitleAndContent
+                title="For grievances pertaining to other matter"
+                info="generalquery-pcdaopune[at]nic[dot]in"
             />
            </div>
           </div>
@@ -202,14 +221,14 @@ function ContactUsSection() {
 
         {/* Details of Chief Vigilance Officer (CVO) in DAD*/}
         {currentStage === 1 && (
-         <div
-          style={{
-           ...transitionStyles[state],
-           position: 'absolute',
-           top: 0,
-           left: 0,
-           width: '100%',
-           height: '100%',
+            <div
+                style={{
+                 ...transitionStyles[state],
+                 position: 'absolute',
+                 top: 0,
+                 left: 0,
+                 width: '100%',
+                 height: '100%',
           }}
           className={`h-full p-10 ${
            currentStage === 1

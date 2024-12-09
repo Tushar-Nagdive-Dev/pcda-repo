@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Link } from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import { ChevronRight, Radar } from 'lucide-react'
 import './adminAppSidebar.css'
 import {
@@ -31,11 +31,12 @@ import {
 } from '@phosphor-icons/react'
 import { ClipboardText, Files } from '@phosphor-icons/react'
 import { NavLink } from 'react-router-dom'
+import {clearToken} from "../../auth/TokenExp.jsx";
 
 const data = [
  {
   title: 'Dashboard',
-  url: '/admin',
+  url: '/pcdao',
   icon: Radar,
  },
  {
@@ -155,17 +156,19 @@ const data = [
  },
  {
   title: 'Logout',
-  url: 'logout',
+  url: '#',
   icon: SignOut,
  },
 ]
 
 export function AppSidebar({ ...props }) {
+ const navigate = useNavigate();
+
  return (
   <Sidebar {...props}>
    <SidebarHeader
     className="h-[110px] border-b border-sidebar-border px-6 py-8 bg-white flex justify-center items-center">
-    <Link to={'/admin'}><img src={pcdaoLogo} alt="PCDAO's Logo" className="h-[80px] w-auto" /></Link>
+    <Link to={'/pcdao'}><img src={pcdaoLogo} alt="PCDAO's Logo" className="h-[80px] w-auto" /></Link>
    </SidebarHeader>
    <SidebarContent className="bg-white hover:bg-transparent">
     {data.map((item) => (
@@ -181,11 +184,26 @@ export function AppSidebar({ ...props }) {
          url={item.url}
          defaultPage={item.title === 'Dashboard' ? 'Dashboard' : null}
         >
-         <item.icon
-          className="w-6 h-6 group-hover/label:text-statebluecolor group-data-[state=open]/collapsible:text-white" />
-         <p>{item.title}</p>
-         {item?.items?.length > 0 && (
-          <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90 " />
+         {item.title === 'Logout' ? (
+             <div onClick={() => {
+              clearToken();
+              navigate("/pcdao-login")
+             }}
+             className="w-full flex gap-2">
+              <item.icon
+                  className="w-6 h-6 group-hover/label:text-statebluecolor group-data-[state=open]/collapsible:text-white"/>
+              <p>{item.title}</p>
+             </div>
+         ) : (
+             <>
+              <item.icon
+                  className="w-6 h-6 group-hover/label:text-statebluecolor group-data-[state=open]/collapsible:text-white"/>
+              <p>{item.title}</p>
+              {item?.items?.length > 0 && (
+                  <ChevronRight
+                      className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90 "/>
+              )}
+             </>
          )}
         </ButtonSideBar>
        </CollapsibleTrigger>

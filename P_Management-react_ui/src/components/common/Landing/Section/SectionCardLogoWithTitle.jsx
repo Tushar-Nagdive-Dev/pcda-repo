@@ -43,8 +43,7 @@ function SectionCardLogoWithTitle({ title, icon, description }) {
             ? title.split(" Wing").map((part, index) => (
                 <span key={index} className="block">
                   {part}
-                  <br />
-                  {index === 0 && " Wing"}
+                  {index === 1 && " Wing"}
                 </span>
               ))
             : "No text available"}
@@ -54,7 +53,7 @@ function SectionCardLogoWithTitle({ title, icon, description }) {
       <div className="absolute top-0 w-full h-full flex flex-col  items-center justify-between space-y-2 bg-mainprimarycolor py-6 px-6 rounded-xl transition-opacity duration-500 opacity-0 group-hover/sectioncard:opacity-100 z-20">
         <div>
           <h5 className="text-base text-statebluecolor font-bold inline-block">
-            {title} Section
+            {title}
           </h5>
           <p className="text-white text-base">
             {description}

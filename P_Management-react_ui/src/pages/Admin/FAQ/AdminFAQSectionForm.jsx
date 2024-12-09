@@ -50,7 +50,7 @@ function AdminFAQSectionForm() {
     subtitle="Add Section"
    >
     <Link
-     to="/admin/faq"
+     to="/pcdao/faq"
      className="flex gap-2 lg:p-2 2xl:p-3 bg-statebluecolor text-white font-raleway no-underline rounded-md"
     >
      <ChevronLeft size={24} />
@@ -59,7 +59,7 @@ function AdminFAQSectionForm() {
    </AdminBreadcrumbs>
    <div className="p-10 space-y-6">
     <AdminSectionForm callFun={fetchData}/>
-    <AdminSectionTable data={data}/>
+    <AdminSectionTable data={data} fetchData={fetchData}/>
    </div>
   </div>
  )

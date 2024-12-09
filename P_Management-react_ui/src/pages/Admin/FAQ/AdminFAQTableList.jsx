@@ -9,14 +9,14 @@ function AdminFAQTableList() {
     <div className="flex flex-col gap-2">
       <AdminBreadcrumbs title="Website Manager > " subtitle="FAQ">
         <Link
-          to={`/admin/faq/add-section`}
+          to={`/pcdao/faq/add-section`}
           className="flex gap-2 lg:p-2 2xl:p-3 bg-statebluecolor text-white font-raleway no-underline rounded-md"
         >
           <ListPlus size={24} />
           <p className="text-white font-raleway">Add Section</p>
         </Link>
         <Link
-          to={`/admin/faq/new`}
+          to={`/pcdao/faq/new`}
           className="flex gap-2 lg:p-2 2xl:p-3 bg-statebluecolor text-white font-raleway no-underline rounded-md"
         >
           <Plus size={24} />

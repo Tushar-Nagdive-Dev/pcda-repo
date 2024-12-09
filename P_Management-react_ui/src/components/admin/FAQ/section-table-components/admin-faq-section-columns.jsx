@@ -10,7 +10,7 @@ import {
  SelectValue,
 } from '@/components/ui/select'
 
-export const faqSectionColumns = [
+export const faqSectionColumns = (fetchData) => [
  {
   id: 'sr_no',
   header: ({ table }) => <p className>Sr. No.</p>,
@@ -146,6 +146,6 @@ export const faqSectionColumns = [
  {
   id: 'actions',
   header: ({ column }) => <p className>Actions</p>,
-  cell: ({ row }) => <FAQSectionDataTableRowActions row={row} />,
+  cell: ({ row }) => <FAQSectionDataTableRowActions row={row} fetchData={fetchData} />,
  },
 ]

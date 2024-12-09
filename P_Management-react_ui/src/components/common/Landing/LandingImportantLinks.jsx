@@ -156,7 +156,7 @@ function LandingImportantLinks() {
     {/*    <CaretRight size={32} />*/}
     {/*  </button>*/}
     {/*</div>*/}
-    <div className="grid grid-cols-3 hd_screen:grid-cols-4 gap-6 h-[650px]">
+    <div className="grid grid-cols-3 hd_screen:grid-cols-4 gap-6 h-[750px] max-h-[950px]">
      {slides.map((slide) => (
       <Link key={slide.id} to={slide.link} target="_blank" rel="noopener noreferrer">
        <LogoWithLinkCard

@@ -71,7 +71,7 @@ public class Captcha implements ICaptchaService {
     @Override
     public String generateRandomText(Integer length) {
         log.debug("Generating random CAPTCHA text of length: {}", length);
-        String chars = "0123456789";
+        String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder captchaText = new StringBuilder();
         for (int i = 0; i < length; i++) {
             captchaText.append(chars.charAt(random.nextInt(chars.length())));

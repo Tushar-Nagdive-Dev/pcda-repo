@@ -34,3 +34,5 @@ build/
 logs
 node
 *.zip
+uploads
+gallery-files/

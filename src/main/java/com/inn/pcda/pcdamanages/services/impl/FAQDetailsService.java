@@ -152,6 +152,7 @@ public class FAQDetailsService implements IFAQDetailsService{
         // Map question
         dto.setQuestion(questionAnswer.getQuestion());
         dto.setAnswer(questionAnswer.getAnswer());
+        dto.setId(questionAnswer.getId());
 
         // Map FAQ status, createdDate, and updatedDate from FAQ
         FAQ faq = questionAnswer.getSection().getWing().getFaq();

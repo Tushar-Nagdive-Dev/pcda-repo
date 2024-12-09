@@ -15,13 +15,13 @@ function AdminDashboardCardSection() {
        alt="Welcome"
        className="w-full h-full object-cover rounded-t-md"
       />
-      <p className="text-white font-semibold absolute top-4 left-4 font-raleway">
+      <p className="text-white text-xl font-semibold absolute top-10 left-10 font-raleway">
        Welcome Back!
       </p>
      </div>
 
      <div className="h-full w-full bg-adminCard rounded-b-md">
-      <div className="h-full flex justify-between px-5 py-5">
+      <div className="h-full flex justify-between px-10 py-5">
        <div className="w-full flex flex-col justify-between gap-3">
         <img
          src={solider}
@@ -38,7 +38,7 @@ function AdminDashboardCardSection() {
            Admin
           </p>
          </div>
-         <button type={'button'} className="w-fit h-fit px-3 py-1 font-raleway bg-statebluecolor rounded-sm text-white">
+         <button type={'button'} className="w-fit h-fit px-3 py-1 font-raleway bg-statebluecolor rounded-sm text-white text-xl">
           View Profile
          </button>
         </div>

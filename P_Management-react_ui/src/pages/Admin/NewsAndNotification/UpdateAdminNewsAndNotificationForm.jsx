@@ -13,7 +13,7 @@ function UpdateAdminNewsAndNotificationForm() {
         subtitle="Edit "
       >
         <Link
-          to={`/admin/news-and-notification`}
+          to={`/pcdao/news-and-notification`}
           className="flex gap-2 lg:p-2 2xl:p-3 bg-statebluecolor text-white font-raleway no-underline rounded-md cursor-pointer"
         >
           <CaretLeft size={24} />
