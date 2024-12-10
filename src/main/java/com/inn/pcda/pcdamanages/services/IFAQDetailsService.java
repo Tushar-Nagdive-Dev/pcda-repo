@@ -24,4 +24,6 @@ public interface IFAQDetailsService {
     public Section updateSectionTitle(String title, Long id, Boolean isActive);
 
     public void deleteSectionById(Long id);
+
+    public Boolean deleteQuestionById(Long id);
 }

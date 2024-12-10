@@ -222,5 +222,16 @@ public class FAQDetailsService implements IFAQDetailsService{
         sectionRepository.deleteById(id);
     }
 
+    @Override
+    public Boolean deleteQuestionById(Long id) {
+        return questionAnswerRepository.findById(id)
+            .map(question -> {
+                questionAnswerRepository.delete(question);
+                return true;
+            })
+            .orElse(false); // Return false if the question was not found
+    }
+
+
     
 }

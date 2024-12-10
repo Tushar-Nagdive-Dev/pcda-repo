@@ -87,5 +87,14 @@ public class FAOController {
         List<CFAQDTO> faqCollections = faqCollectionService.getFAQCollectionsWithPoints();
         return ResponseEntity.ok(faqCollections);
     }
+
+    @DeleteMapping("/deleteById/{id}")
+    public ResponseEntity<String> deleteQuestionsById(@PathVariable Long id) {
+        boolean isDeleted = ifaqDetailsService.deleteQuestionById(id);
+        return isDeleted 
+            ? ResponseEntity.ok("Question deleted successfully.")
+            : ResponseEntity.status(HttpStatus.NOT_FOUND).body("Question not found.");
+    }
+
     
 }
