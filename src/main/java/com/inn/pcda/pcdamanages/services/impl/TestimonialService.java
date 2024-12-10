@@ -203,7 +203,14 @@ public class TestimonialService implements ITestimonialService {
         dto.setTestimonialBrief(entity.getTestimonialBrief());
         dto.setStatus(entity.getStatus());
         dto.setIsNew(entity.getIsNew());
-        dto.setImagePath(entity.getImagePath()); // Include the image path
+    
+        // Append base URL to the imagePath
+        String baseUrl = "http://localhost:8888/testimonials/";
+        if (entity.getImagePath() != null && !entity.getImagePath().isEmpty()) {
+            dto.setImagePath(baseUrl + entity.getImagePath());
+        } else {
+            dto.setImagePath(baseUrl + "default-profile.png"); // Fallback to default image
+        }
         return dto;
     }
     

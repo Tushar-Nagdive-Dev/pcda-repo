@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 
 import landingTestminionalCss from "./LandingTestimonial.module.css";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
-import apiClient from "../../../auth/ApiClient.jsx"; // Replace with actual API client import
+import apiClient from "../../../auth/ApiClient.jsx"; // Replace with your actual API client
 import testimionalImage from "../../../assets/images/testimional.jpeg"; // Background image
 
 function LandingTestimonial() {
@@ -18,14 +18,19 @@ function LandingTestimonial() {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const { data } = await apiClient.get("/testimonial"); // Adjust endpoint if necessary
+        const { data } = await apiClient.get("/testimonial"); // Fetch testimonials
+        const baseUrl = ""; // Replace with your actual base URL
+
         const mappedSlides = data.map((testimonial) => ({
           id: testimonial.id,
-          comment: testimonial.testimonialBrief, // Map comment
-          person_picture: testimonial.imagePath || "", // Optional: Fallback to default if no image
-          person_name: testimonial.name, // Map name
-          person_role: testimonial.position, // Map position
+          comment: testimonial.testimonialBrief, // Testimonial comment
+          person_picture: testimonial.imagePath
+            ? baseUrl + testimonial.imagePath
+            : baseUrl + "default-profile.png", // Fallback to default image
+          person_name: testimonial.name, // Testimonial giver's name
+          person_role: testimonial.position, // Their position (e.g., Manager)
         }));
+
         setSlides(mappedSlides);
       } catch (error) {
         console.error("Error fetching testimonials:", error);
@@ -35,6 +40,7 @@ function LandingTestimonial() {
     fetchTestimonials();
   }, []);
 
+  // Swiper Navigation Handlers
   const handleNext = () => {
     if (swiperRef.current) {
       swiperRef.current.slideNext();
@@ -72,6 +78,7 @@ function LandingTestimonial() {
                 className={landingTestminionalCss["my-swiper"]}
                 onSwiper={(swiper) => (swiperRef.current = swiper)}
               >
+                {/* Render Slides */}
                 {slides.map((slide) => (
                   <SwiperSlide
                     key={slide.id}
@@ -82,17 +89,11 @@ function LandingTestimonial() {
                         {slide.comment}
                       </p>
                       <div className="flex gap-3 w-fit">
-                        {slide.person_picture ? (
-                          <img
-                            src={slide.person_picture}
-                            alt={`${slide.person_name}'s picture`}
-                            className="rounded-full w-14 h-14 border-2 border-statebluecolor"
-                          />
-                        ) : (
-                          <div className="rounded-full w-14 h-14 bg-gray-300 flex items-center justify-center">
-                            <span className="text-titleColor">No Image</span>
-                          </div>
-                        )}
+                        <img
+                          src={slide.person_picture}
+                          alt={`${slide.person_name}'s picture`}
+                          className="rounded-full w-14 h-14 border-2 border-statebluecolor"
+                        />
                         <div className="flex flex-col space-y-2">
                           <p className="text-lg font-bold text-statebluecolor">
                             {slide.person_name}

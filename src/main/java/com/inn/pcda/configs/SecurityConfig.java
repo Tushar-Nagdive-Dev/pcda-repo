@@ -36,50 +36,16 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    /* @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .cors(cors -> cors.configurationSource(request -> {
-                new org.springframework.web.cors.CorsConfiguration().applyPermitDefaultValues();
-
-            }).csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/", 
-                    "/auth/**", 
-                    "/index.html", 
-                    "/static/**", 
-                    "/favicon.ico", 
-                    "/css/**", 
-                    "/js/**", 
-                    "/images/**",
-                    "/api/news/**",
-                    "/api/gellery/**",
-                    "/api/testimonial/**",
-                    "/api/faqdetails/**"
-                ).permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                .requestMatchers("/api/officer/**").hasRole("OFFICER")
-                .anyRequest().authenticated())
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-            .formLogin(form -> form.disable())
-            .logout(logout -> logout
-                .logoutUrl("/auth/logout")
-                .logoutSuccessUrl("/auth/login")
-                .permitAll());
-        return http.build();
-    } */
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .cors(cors -> cors.configurationSource(request -> {
                 org.springframework.web.cors.CorsConfiguration config = new org.springframework.web.cors.CorsConfiguration();
-                config.addAllowedOrigin("http://localhost:5173"); // Frontend origin
-                config.addAllowedOrigin("http://localhost:3000"); // Alternative frontend origin
-                config.addAllowedMethod("*"); // Allow all HTTP methods
-                config.addAllowedHeader("*"); // Allow all headers
-                config.setAllowCredentials(true); // Allow credentials like cookies or Authorization headers
+                config.addAllowedOrigin("http://localhost:5173");
+                config.addAllowedOrigin("http://localhost:3000");
+                config.addAllowedMethod("*");
+                config.addAllowedHeader("*");
+                config.setAllowCredentials(true);
                 return config;
             }))
             .csrf(csrf -> csrf.disable())
@@ -97,10 +63,9 @@ public class SecurityConfig {
                     "/api/gallery/**",
                     "/api/testimonial/**",
                     "/api/faqdetails/**",
-                    "/gallery-files/**" 
+                    "/gallery-files/**",
+                    "/testimonials/**"
                 ).permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                .requestMatchers("/api/officer/**").hasRole("OFFICER")
                 .anyRequest().authenticated())
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
             .formLogin(form -> form.disable())
@@ -110,6 +75,7 @@ public class SecurityConfig {
                 .permitAll());
         return http.build();
     }
+
 
 
     @Bean
