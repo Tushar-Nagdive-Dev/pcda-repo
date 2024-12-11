@@ -1,33 +1,87 @@
-import { DownloadSimple, Eye } from "@phosphor-icons/react";
-import React from "react";
+import { DownloadSimple, Eye } from '@phosphor-icons/react'
+import React, { useEffect, useRef, useState } from 'react'
+import { Document, Page, pdfjs } from 'react-pdf'
+import 'react-pdf/dist/Page/AnnotationLayer.css'
+import 'react-pdf/dist/Page/TextLayer.css'
+import {
+ Dialog,
+ DialogTrigger,
+ DialogContent,
+ DialogHeader,
+ DialogFooter,
+ DialogClose,
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+ 'pdfjs-dist/legacy/build/pdf.worker.min.mjs',
+ import.meta.url
+).toString()
 
 function LinkWithTitleCard({ title, link, view_link }) {
-  return (
+ const [numPages, setNumPages] = useState()
+ const [containerWidth, setContainerWidth] = useState(null)
+ const pdfContainerRef = useRef(null)
+
+ useEffect(() => {
+  if (pdfContainerRef.current) {
+   setContainerWidth(pdfContainerRef.current.offsetWidth)
+  }
+ }, [pdfContainerRef])
+
+ function onDocumentLoadSuccess({ numPages }) {
+  setNumPages(numPages)
+ }
+
+ return (
+  <>
+   <Dialog>
     <div className="flex justify-between p-3 bg-white text-paragraphcolor">
-      <a
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-secondaryGrey underline underline-offset-2"
+     <DialogTrigger>
+      <p className="text-secondaryGrey underline underline-offset-2">
+       <li className="relative px-4 ">{title}</li>
+      </p>
+     </DialogTrigger>
+     <DialogContent className="p-0 bg-transparent !max-w-2xl">
+      <div
+       ref={pdfContainerRef}
+       className="pdf-preview-container overflow-y-auto"
+       style={{ maxHeight: '85vh', padding: '10px' }}
       >
-        <li className="relative px-4 ">
-          {title}
-        </li>
-      </a>
-      <div className="flex gap-2 items-center">
-        {/*<a href={view_link} target="_blank" rel="noopener noreferrer">*/}
-        {/*  <Eye size={24} color="#0D6EFD" className="cursor-pointer" />*/}
-        {/*</a>*/}
-        <a href={link} target="_blank" rel="noopener noreferrer">
-          <DownloadSimple
-            size={24}
-            color="#0D6EFD"
-            className="cursor-pointer"
-          />
-        </a>
+       <Document
+        file={link} // Path to your PDF file
+        onLoadSuccess={onDocumentLoadSuccess}
+       >
+        {/* Render all pages */}
+        {Array.from(new Array(numPages || 0), (el, index) => (
+         <Page
+          key={`page_${index + 1}`}
+          pageNumber={index + 1}
+          className="pdf-page mb-4"
+         />
+        ))}
+       </Document>
       </div>
+     </DialogContent>
+     <DialogFooter>
+      <DialogClose asChild>
+       <Button type="button" variant="secondary">
+        Close
+       </Button>
+      </DialogClose>
+     </DialogFooter>
+     <div className="flex gap-2 items-center">
+      {/*<a href={view_link} target="_blank" rel="noopener noreferrer">*/}
+      {/*  <Eye size={24} color="#0D6EFD" className="cursor-pointer" />*/}
+      {/*</a>*/}
+      <a href={link} download={link}>
+       <DownloadSimple size={24} color="#0D6EFD" className="cursor-pointer" />
+      </a>
+     </div>
     </div>
-  );
+   </Dialog>
+  </>
+ )
 }
 
-export default LinkWithTitleCard;
+export default LinkWithTitleCard

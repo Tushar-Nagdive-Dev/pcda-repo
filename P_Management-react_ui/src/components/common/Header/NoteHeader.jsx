@@ -53,7 +53,7 @@ function NoteHeader() {
 
     return (<div className={`${headerStyle.note_header_section} px-custom py-2`}>
         <div className="flex gap-4">
-            <p>
+            <p className='text-lg font-semibold'>
                 <b>Key Updates:</b>
             </p>
             <marquee
@@ -63,7 +63,7 @@ function NoteHeader() {
             >
                 <ul className="flex gap-5 w-full space-x-4">
                     {newsData.map((news) => (<li key={news.id}>
-                        <a href={news.link || "#"} target="_blank" rel="noopener noreferrer" className="flex gap-2">
+                        <a href={news.link || "#"} target="_blank" rel="noopener noreferrer" className="flex gap-2 text-lg font-semibold">
                             {news.isNew && <img src={newicon} alt="New Message"/>}{' '}
                             {news.titleEnglish}
                         </a>

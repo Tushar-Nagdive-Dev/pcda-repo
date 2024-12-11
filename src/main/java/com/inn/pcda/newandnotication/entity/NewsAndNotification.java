@@ -40,5 +40,4 @@ public class NewsAndNotification extends BaseEntity{
     @Column(name = "document_url", columnDefinition = "TEXT")
     private String documentUrl;
 
-    
 }

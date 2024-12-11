@@ -46,8 +46,8 @@ const data = [
         icon: Radar,
     },
     {
-        title: 'Register Grievance',
-        url: 'register-grievance',
+        title: 'Register Complaint',
+        url: 'register-complaint',
         icon: ClipboardText,
     },
     {

@@ -8,6 +8,7 @@ import {Button} from "@/components/ui/button";
 import {Input} from '../components/ui/input.jsx'
 import LinkWithTitleCard from '../components/common/LinkWithTitleCard'
 
+
 import {
     checklistsDownloadLinkLists,
     circularsDownloadLinkLists,
@@ -21,6 +22,7 @@ import {
 import ContactDetailsCard from '../components/common/ContactDetailsCard'
 import Breadcrumbs from '../components/common/Breadcrumbs'
 import {MagnifyingGlass} from '@phosphor-icons/react'
+
 
 /* Search Bar Functionality and their helper function */
 const debounce = (func, delay) => {
@@ -149,7 +151,7 @@ function Downloads() {
                                 </ul>
                             </TitleWithLinkCard>
                             <TitleWithLinkCard title="Contact Details">
-                                <ul className="list-disc space-y-2 list-inside overflow-y-auto">
+                                <ul className="h-full list-disc space-y-2 list-inside overflow-y-auto">
                                     {transportationContactDetails.map((item) => (<ContactDetailsCard
                                         key={item.id}
                                         person_name={item.person_name}
@@ -157,7 +159,7 @@ function Downloads() {
                                         role={item.rank}
                                     />))}
                                 </ul>
-                                <ul className="list-disc list-inside">
+                                <ul className="list-disc list-inside my-4">
                                     <li className="text-orangeIndiaPrimaryColor font-bold">
                                         Note: To Contact SAO/AO of the concerned Section,kindly visit RTI
                                         page.

@@ -137,7 +137,9 @@ public class NewsNotificationsService implements INewsNotificationService {
             existingNews.setStatus(newsNotificationDTO.getStatus());
             existingNews.setType(newsNotificationDTO.getType());
             existingNews.setUiOrder(newsNotificationDTO.getUiOrder());
-            existingNews.setDocumentUrl(documentUrl);
+            if(!documentUrl.isEmpty())
+                existingNews.setDocumentUrl(documentUrl);
+                
             return newsNotificationRepo.save(existingNews);
         } catch (IOException e) {
             log.error("Error occured inside @class NewsNotificationService", e);

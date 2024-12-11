@@ -142,7 +142,7 @@ function MainHeader() {
             <DropdownMenu>
              <DropdownMenuTrigger className={`nav-link flex gap-1 items-center ${
               isActiveSubmenu ? '!bg-newprimaryColor !text-white' : ''
-             }`}>
+             } font-semibold `}>
               {item.title} <CaretDown size={20} className={`${isActiveSubmenu ? 'text-white' : ''}`} />
              </DropdownMenuTrigger>
              <DropdownMenuContent>
@@ -154,7 +154,7 @@ function MainHeader() {
                 <NavLink
                  to={subItem.link}
                  className={({ isActive }) =>
-                  `dropdown-link ${
+                  `dropdown-link font-semibold ${
                    location.pathname === subItem.link ? '!bg-newprimaryColor !text-white' : ''
                   }`
                  }
@@ -179,7 +179,7 @@ function MainHeader() {
             <NavLink
              to={item.link}
              className={({ isActive }) =>
-              `nav-link ${isActive ? '!bg-newprimaryColor  !text-white' : ''}`
+              `nav-link font-semibold ${isActive ? '!bg-newprimaryColor  !text-white' : ''}`
              }
              end={item.title === 'Home'}
             >
@@ -196,7 +196,7 @@ function MainHeader() {
      <div className="flex gap-8 h-fit items-center">
       <button
        onClick={() => navigate('/login')}
-       className="flex gap-2 md:px-4 xl:text-sm hd_screen:text-base xl:px-6 py-3 bg-loginButtonPrimary hover:bg-loginButtonHover text-white rounded-3xl h-fit"
+       className="flex gap-2 md:px-4 xl:text-sm hd_screen:text-base full_hd_screen:text-lg  xl:px-6 py-3 bg-loginButtonPrimary hover:bg-loginButtonHover text-white rounded-3xl h-fit font-semibold"
       >
        {' '}
        Login <SignIn size={22} color="#ffffff" />

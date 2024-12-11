@@ -33,16 +33,14 @@ import apiClient from '../../../auth/ApiClient.jsx'
 function NewsAndNotificationFillForm() {
  const navigate = useNavigate()
  const form = useForm({
-  resolver: zodResolver(NewsandNotificationValidation),
+  // resolver: zodResolver(NewsandNotificationValidation),
   defaultValues: {
-   id: null,
-   title: '',
-   title_hindi: '',
-   //  url: '',
+   titleEnglish: '',
+   titleHindi: '',
    type: '',
    status: '',
-   isNew: '',
-   order: 1,
+   isNew: false,
+   uiOrder: 1,
   },
  })
 
@@ -55,42 +53,37 @@ function NewsAndNotificationFillForm() {
  async function onSubmit(values) {
   console.log(values)
 
-  // Determine type
-  const type =
-   values.type === 'News & Notification'
-    ? 'NEWS_AND_NOTIFICATION'
-    : values.type === 'News'
-    ? 'NEWS'
-    : ''
-
-  // Determine status
-  const status =
-   values.status === 'Active'
-    ? 'ACTIVE'
-    : values.status === 'In-Active'
-    ? 'INACTIVE'
-    : ''
-
-  // Construct newAndNotification object
+  // Map form values to the API payload
   const newAndNotification = {
-   titleEnglish: values.title,
-   titleHindi: values.title_hindi,
-   //  url: values.url,
-   type: type,
-   status: status,
+   titleEnglish: values.titleEnglish,
+   titleHindi: values.titleHindi,
+   type: values.type === 'News & Notification' ? 'NEWS_AND_NOTIFICATION' : 'NEWS',
+   status: values.status === 'Active' ? 'ACTIVE' : 'INACTIVE',
    isNew: values.isNew,
-   uiOrder: values.order, // Default value - 0
+   uiOrder: values.uiOrder,
+  }
+
+  // Create FormData for multipart file upload
+  const formData = new FormData()
+  formData.append(
+   'news',
+   new Blob([JSON.stringify(newAndNotification)], { type: 'application/json' })
+  )
+  if (selectedFile) {
+   formData.append('file', selectedFile)
   }
 
   try {
    // Make the API call
-   const response = await apiClient.post('news', newAndNotification)
-   // console.log('Response from API:', response)
+   const response = await apiClient.post('/news/withDocs', formData, {
+    headers: {
+     'Content-Type': 'multipart/form-data',
+    },
+   })
    toast.success('News and Notification created successfully!')
    navigate('/pcdao/news-and-notification')
   } catch (error) {
    console.error('Error creating News and Notification:', error)
-   // alert('Failed to create News and Notification. Please try again.')
    toast.error('Failed to create News and Notification. Please try again.')
   }
  }
@@ -103,17 +96,17 @@ function NewsAndNotificationFillForm() {
    <div className="flex flex-col space-y-3">
     <Form {...form}>
      <form onSubmit={form.handleSubmit(onSubmit)}>
-      <div className="md:max-lg:space-y-1 space-y-6 mb-7">
+      <div className="space-y-6 mb-7">
        <FormField
         control={form.control}
-        name="title"
+        name="titleEnglish"
         render={({ field }) => (
          <FormItem>
           <FormLabel className="text-titleColor text-base font-raleway">
-           Title
+           Title (English)
           </FormLabel>
           <FormControl>
-           <Textarea placeholder="Enter title" {...field} />
+           <Textarea placeholder="Enter title in English" {...field} />
           </FormControl>
           <FormMessage />
          </FormItem>
@@ -121,11 +114,11 @@ function NewsAndNotificationFillForm() {
        />
        <FormField
         control={form.control}
-        name="title_hindi"
+        name="titleHindi"
         render={({ field }) => (
          <FormItem>
           <FormLabel className="text-titleColor text-base font-raleway">
-           Title in Hindi
+           Title (Hindi)
           </FormLabel>
           <FormControl>
            <Textarea placeholder="Enter title in Hindi" {...field} />
@@ -135,10 +128,10 @@ function NewsAndNotificationFillForm() {
         )}
        />
 
-       {/* Instead of url we need upload file (it optional) */}
+       {/* File Upload */}
        <div className="w-full flex flex-col space-y-1 my-2">
         <Label className="text-titleColor text-base font-raleway">
-         Document:
+         Document (Optional):
         </Label>
         <Input id="document" type="file" onChange={handleFileChange} />
        </div>
@@ -153,10 +146,7 @@ function NewsAndNotificationFillForm() {
             Type
            </FormLabel>
            <FormControl>
-            <Select
-             onValueChange={(value) => field.onChange(value)} // Update form value
-             // defaultValue={field.value} // Set the default value
-            >
+            <Select onValueChange={field.onChange}>
              <SelectTrigger className="w-full">
               <SelectValue placeholder="Select Type" />
              </SelectTrigger>
@@ -181,10 +171,7 @@ function NewsAndNotificationFillForm() {
             Status
            </FormLabel>
            <FormControl>
-            <Select
-             onValueChange={(value) => field.onChange(value)} // Update form value
-             // defaultValue={field.value} // Set the default value
-            >
+            <Select onValueChange={field.onChange}>
              <SelectTrigger className="w-full">
               <SelectValue placeholder="Select Status" />
              </SelectTrigger>
@@ -199,37 +186,23 @@ function NewsAndNotificationFillForm() {
          )}
         />
        </div>
+
        <FormField
         control={form.control}
-        name="order"
+        name="uiOrder"
         render={({ field }) => (
-         <FormItem className="flex flex-col w-full">
+         <FormItem>
           <FormLabel className="text-titleColor text-base font-raleway">
-           Select Order
+           Order
           </FormLabel>
           <FormControl>
-           <>
-            <Select
-             value={field.value}
-             onValueChange={(value) => field.onChange(value)}
-            >
-             <SelectTrigger className="w-full">
-              <SelectValue>
-               {field.value || 'Select Order'}{' '}
-               {/* Display selected value or placeholder */}
-              </SelectValue>
-             </SelectTrigger>
-             <SelectContent side="bottom" className="h-64">
-              <SelectGroup>
-               {Array.from(Array(50).keys()).map((item) => (
-                <SelectItem key={item} value={item}>
-                 {item + 1}
-                </SelectItem>
-               ))}
-              </SelectGroup>
-             </SelectContent>
-            </Select>
-           </>
+           <Input
+            type="number"
+            placeholder="Enter Order"
+            {...field}
+            min={1}
+            max={50}
+           />
           </FormControl>
           <FormMessage />
          </FormItem>
@@ -242,9 +215,7 @@ function NewsAndNotificationFillForm() {
         render={({ field }) => (
          <FormItem className="flex gap-2 items-center">
           <FormControl>
-           <>
-            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-           </>
+           <Checkbox checked={field.value} onCheckedChange={field.onChange} />
           </FormControl>
           <FormLabel className="text-titleColor text-base font-raleway">
            New
@@ -258,7 +229,7 @@ function NewsAndNotificationFillForm() {
       <div className="w-full flex justify-center">
        <Button
         type="submit"
-        className="w-fit text-white  bg-newprimaryColor"
+        className="w-fit text-white bg-newprimaryColor"
         size="lg"
        >
         Submit
