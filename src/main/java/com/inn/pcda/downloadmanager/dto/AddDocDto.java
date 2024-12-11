@@ -1,0 +1,15 @@
+package com.inn.pcda.downloadmanager.dto;
+
+import lombok.Data;
+
+@Data
+public class AddDocDto {
+    
+    private String title;
+
+    private String titleInHindi;
+
+    private Boolean status;
+
+    private Integer uiOrder; 
+}

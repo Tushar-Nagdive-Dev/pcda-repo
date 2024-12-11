@@ -12,21 +12,21 @@ function AdminDownloadTable() {
   }, []);
 
   const fetchAllDownloads = async () => {
-    // try {
-    //   // const response = await apiClient.get("faqdetails/getFaqTableData"); // Adjusted endpoint
-    //   // const data = response.data.map(mapFAQData); // Map response data to table format
-    //   setMappedData(data); // Update state with mapped data
-    // } catch (error) {
-    //   console.error("Error fetching FAQ table data:", error);
-    // }
+    try {
+      const response = await apiClient.get("/document"); // Adjusted endpoint
+      const data = response.data.map(mapDocumentData); // Map response data to table format
+      setMappedData(data); // Update state with mapped data
+    } catch (error) {
+      console.error("Error fetching document data:", error);
+    }
   };
 
-  const mapFAQData = (item) => ({
+  const mapDocumentData = (item) => ({
     id: String(item.id),
     title: item.title,
-    url: item.url,
+    url: item.documentPath,
     status: item.status ? "Active" : "Inactive",
-    order: item.order,
+    order: item.uiOrder,
     created_by: item.createdBy || "N/A",
     created_date: formatDate(item.createdDate),
     updated_by: item.updatedBy || "N/A",
