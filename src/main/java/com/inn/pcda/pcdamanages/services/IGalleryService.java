@@ -9,10 +9,18 @@ import com.inn.pcda.pcdamanages.entity.Gallery;
 
 public interface IGalleryService {
     Gallery saveGalleryWithFiles(Gallery gallery, MultipartFile[] files);
+
     List<Gallery> getAllGalleries();
+
     Gallery getGalleryById(Long id);
+
     boolean updateGallery(Long id, Gallery updatedGallery);
+
     boolean deleteGallery(Long id);
+
     List<String> getFilePaths(Long galleryId);
+
     public List<GallerShowDto> getAllGalleriesForView();
+
+    public void updateGalleryWithFiles(Long id, Gallery gallery, MultipartFile[] files);
 }

@@ -3,14 +3,17 @@ package com.inn.pcda.pcdamanages.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.inn.pcda.pcdamanages.dto.GalleryDTOdir.GallerShowDto;
 import com.inn.pcda.pcdamanages.entity.Gallery;
+import com.inn.pcda.pcdamanages.enums.GalleryTypes;
 import com.inn.pcda.pcdamanages.services.IGalleryService;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -93,12 +96,12 @@ public class GalleryController {
      * @param updatedGallery The updated gallery data.
      * @return Success or not found response.
      */
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updateGallery(@PathVariable Long id, @RequestBody Gallery updatedGallery) {
-        boolean updated = galleryService.updateGallery(id, updatedGallery);
-        return updated ? ResponseEntity.ok("Gallery updated successfully.")
-                       : ResponseEntity.notFound().build();
-    }
+    // @PutMapping("/{id}")
+    // public ResponseEntity<String> updateGallery(@PathVariable Long id, @RequestBody Gallery updatedGallery) {
+    //     boolean updated = galleryService.updateGallery(id, updatedGallery);
+    //     return updated ? ResponseEntity.ok("Gallery updated successfully.")
+    //                    : ResponseEntity.notFound().build();
+    // }
 
     /**
      * Delete a gallery by ID.
@@ -123,4 +126,26 @@ public class GalleryController {
         List<GallerShowDto> galleries = galleryService.getAllGalleriesForView();
         return ResponseEntity.ok(galleries);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateGallery(
+            @PathVariable Long id,
+            @RequestPart("gallery") Gallery gallery,
+            @RequestPart(value = "files", required = false) MultipartFile[] files) {
+        try {
+            // Ensure type is valid
+            if (gallery.getType() == null) {
+                gallery.setType(GalleryTypes.IMAGE); // Assign default type if null
+            }
+
+            galleryService.updateGalleryWithFiles(id, gallery, files);
+            return ResponseEntity.ok("Gallery updated successfully");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Gallery not found");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating gallery: " + e.getMessage());
+        }
+    }
+
+
 }

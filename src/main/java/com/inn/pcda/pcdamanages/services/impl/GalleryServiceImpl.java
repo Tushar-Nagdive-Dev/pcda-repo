@@ -15,6 +15,7 @@ import com.inn.pcda.pcdamanages.entity.Gallery;
 import com.inn.pcda.pcdamanages.repos.GalleryRepo;
 import com.inn.pcda.pcdamanages.services.IGalleryService;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -142,4 +143,39 @@ public class GalleryServiceImpl implements IGalleryService {
             }
         }
     }
+
+    @Override
+    public void updateGalleryWithFiles(Long id, Gallery gallery, MultipartFile[] files) {
+        Gallery existingGallery = galleryRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Gallery not found"));
+
+        // Update gallery metadata
+        existingGallery.setEventName(gallery.getEventName());
+        existingGallery.setType(gallery.getType());
+        existingGallery.setYear(gallery.getYear());
+        existingGallery.setIsActive(gallery.getIsActive());
+
+        galleryRepo.save(existingGallery);
+
+        // Handle file uploads
+        if (files != null) {
+            try {
+                String folderPath = existingGallery.getFolderPath();
+                if (folderPath == null || folderPath.isEmpty()) {
+                    folderPath = "gallery-files/" + existingGallery.getId();
+                    fileStorageUtil.createFolder(folderPath);
+                    existingGallery.setFolderPath(folderPath);
+                    galleryRepo.save(existingGallery);
+                }
+
+                // Add new files to the folder
+                fileStorageUtil.storeFilesInFolder(folderPath, files);
+
+            } catch (Exception e) {
+                log.error("Error updating gallery files: {}", e.getMessage());
+                throw new RuntimeException("Error updating gallery files: " + e.getMessage());
+            }
+        }
+    }
+
 }

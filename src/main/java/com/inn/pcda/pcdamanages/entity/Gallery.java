@@ -26,7 +26,7 @@ public class Gallery {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
-    private GalleryTypes type;
+    private GalleryTypes type = GalleryTypes.IMAGE;
 
     @Column(name = "year", nullable = false)
     private Integer year;

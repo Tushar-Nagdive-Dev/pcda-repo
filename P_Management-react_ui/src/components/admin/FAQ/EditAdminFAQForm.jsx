@@ -54,6 +54,8 @@ function EditAdminFAQForm() {
     },
   });
 
+  console.log("Sections", sections)
+
   useEffect(() => {
     getFAQSingleDetails();
   }, []);
@@ -198,7 +200,7 @@ function EditAdminFAQForm() {
                           value={field.value}
                         >
                           <SelectTrigger className="w-full">
-                            <SelectValue>{sections.find((sec) => sec.id === field.value)?.title || 'Select Section'}</SelectValue>
+                            <SelectValue>{sections.find((sec) => Number(sec.id) === Number(field.value))?.title || 'Select Section'}</SelectValue>
                           </SelectTrigger>
                           <SelectContent>
                             {sections.map((section) => (

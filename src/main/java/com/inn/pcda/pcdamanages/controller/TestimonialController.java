@@ -86,9 +86,9 @@ public class TestimonialController {
             @PathVariable Long id,
             @RequestPart("data") TestimonialDTO testimonialDTO,
             @RequestPart(value = "file", required = false) MultipartFile file,
-            HttpServletRequest request) { // Add HttpServletRequest to log headers
+            HttpServletRequest request) {
         log.info("Request Content-Type: {}", request.getContentType());
-        log.info("Inside @method updateTestimonialWithImage for id: {}", id);
+        log.info("Inside updateTestimonialWithImage for id: {}", id);
 
         try {
             Testimonial updatedTestimonial = iTestimonialService.updateTestimonialWithImage(id, testimonialDTO, file);
@@ -102,6 +102,7 @@ public class TestimonialController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
 
 
     @GetMapping("/{id}")

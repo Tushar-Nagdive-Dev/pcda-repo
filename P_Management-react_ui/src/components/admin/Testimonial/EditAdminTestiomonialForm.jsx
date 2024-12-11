@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -32,7 +31,6 @@ function EditAdminTestimonialForm() {
   const [imagePreview, setImagePreview] = useState(""); // To preview current image
 
   const form = useForm({
-    // resolver: zodResolver(), // Add your schema validation here
     defaultValues: {
       profile_picture: null,
       name: "",
@@ -80,32 +78,37 @@ function EditAdminTestimonialForm() {
 
   const onSubmit = async (values) => {
     const formData = new FormData();
-  
+
     // Append JSON data
     formData.append(
       "data",
-      JSON.stringify({
-        name: values.name,
-        position: values.position,
-        testimonialBrief: values.testimonial_brief,
-        status: values.status === "Active" ? "ACTIVE" : "INACTIVE",
-        isNew: values.new,
-      })
+      new Blob(
+        [
+          JSON.stringify({
+            name: values.name,
+            position: values.position,
+            testimonialBrief: values.testimonial_brief,
+            status: values.status === "Active" ? "ACTIVE" : "INACTIVE",
+            isNew: values.new,
+          }),
+        ],
+        { type: "application/json" }
+      )
     );
-  
+
     // Append file (optional)
     const file = watch("profile_picture");
     if (file && file.length > 0) {
       formData.append("file", file[0]);
     }
-  
+
     try {
-      const response = await apiClient.put(`/testimonial/update/${id}`, formData, {
+      await apiClient.put(`/testimonial/update/${id}`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data", // Correct header
+          // Let the browser handle Content-Type for multipart/form-data
         },
       });
-  
+
       toast.success("Testimonial updated successfully!");
       navigate("/pcdao/testimonials");
     } catch (err) {
@@ -113,7 +116,6 @@ function EditAdminTestimonialForm() {
       toast.error("Failed to update testimonial.");
     }
   };
-  
 
   if (loading) {
     return <div>Loading testimonial...</div>;
@@ -129,7 +131,7 @@ function EditAdminTestimonialForm() {
       <div className="flex flex-col space-y-3">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="md:max-lg:space-y-1 space-y-6 mb-7">
+            <div className="space-y-6 mb-7">
               <FormField
                 control={form.control}
                 name="profile_picture"
@@ -146,10 +148,10 @@ function EditAdminTestimonialForm() {
                         onChange={(e) => {
                           const file = e.target.files[0];
                           if (file) {
-                            field.onChange(e.target.files); // Pass file(s) to react-hook-form
+                            field.onChange(e.target.files);
                             const fileReader = new FileReader();
                             fileReader.onload = (event) => {
-                              setImagePreview(event.target.result); // Update the preview
+                              setImagePreview(event.target.result);
                             };
                             fileReader.readAsDataURL(file);
                           }
@@ -169,35 +171,32 @@ function EditAdminTestimonialForm() {
                   />
                 </div>
               )}
-              <div className="grid grid-cols-2 gap-2 w-full">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-titleColor text-base font-raleway">Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter Name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="position"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-titleColor text-base font-raleway">Position</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter Position" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-titleColor text-base font-raleway">Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="position"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-titleColor text-base font-raleway">Position</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Position" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="testimonial_brief"
@@ -213,7 +212,6 @@ function EditAdminTestimonialForm() {
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="status"
@@ -221,7 +219,7 @@ function EditAdminTestimonialForm() {
                   <FormItem>
                     <FormLabel className="text-titleColor text-base font-raleway">Status</FormLabel>
                     <FormControl>
-                      <Select onValueChange={(value) => field.onChange(value)} value={field.value}>
+                      <Select onValueChange={field.onChange} value={field.value}>
                         <SelectTrigger className="w-[180px]">
                           <SelectValue placeholder="Select Status" />
                         </SelectTrigger>
@@ -235,7 +233,6 @@ function EditAdminTestimonialForm() {
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="new"
