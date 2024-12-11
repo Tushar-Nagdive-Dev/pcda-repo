@@ -5,7 +5,7 @@ import UserDashboardTabsWithContent from "../../../components/users/Dashboard/Us
 
 function UserDashboard() {
     return (
-        <div className="p-10 overflow-hidden">
+        <div className="p-10 overflow-y-hidden">
             <h2 className="font-raleway text-xl">Dashboard</h2>
             <UserDashboardComponents/>
             <Separator className="my-4 h-1" />

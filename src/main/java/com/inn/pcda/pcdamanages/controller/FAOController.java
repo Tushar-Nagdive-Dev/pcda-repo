@@ -7,10 +7,13 @@ import com.inn.pcda.pcdamanages.dto.FAQWithQuestionsDTO;
 import com.inn.pcda.pcdamanages.dto.SectionDTO;
 import com.inn.pcda.pcdamanages.dto.FAQColllectionDtos.CFAQDTO;
 import com.inn.pcda.pcdamanages.dto.tableDTO.FAQTableDataResponseDTO;
+import com.inn.pcda.pcdamanages.dto.tableDTO.QuestionAnswerResponseDTO;
 import com.inn.pcda.pcdamanages.dto.tableDTO.SectionTableDataResponseDTO;
+import com.inn.pcda.pcdamanages.dto.tableDTO.UpdateQuestionRequestDTO;
 import com.inn.pcda.pcdamanages.entity.FAQ;
 import com.inn.pcda.pcdamanages.entity.Section;
 import com.inn.pcda.pcdamanages.services.IFAQDetailsService;
+import com.inn.pcda.pcdamanages.services.IQuestionAnswerService;
 import com.inn.pcda.pcdamanages.services.impl.FAQCollectionService;
 
 import jakarta.validation.Valid;
@@ -30,6 +33,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 
+
 @Slf4j
 @RestController
 @RequestMapping("/api/faqdetails")
@@ -40,6 +44,9 @@ public class FAOController {
 
     @Autowired
     private FAQCollectionService faqCollectionService;
+
+    @Autowired
+    private IQuestionAnswerService iQuestionAnswerService;
     
     @PostMapping("/addSection")
     public ResponseEntity<Section> addSection(@RequestBody SectionDTO sectionRequestDTO) {
@@ -96,5 +103,16 @@ public class FAOController {
             : ResponseEntity.status(HttpStatus.NOT_FOUND).body("Question not found.");
     }
 
+    @GetMapping("/faqTableDataById/{id}")
+    public ResponseEntity<QuestionAnswerResponseDTO> getFaqTableDataById(@PathVariable Long id) {
+        QuestionAnswerResponseDTO responseDTO = iQuestionAnswerService.findById(id);
+        return ResponseEntity.ok(responseDTO);
+    }
+
+    @PutMapping("/questionUpdate/{id}")
+    public ResponseEntity<String> updateFAQ(@PathVariable Long id, @RequestBody UpdateQuestionRequestDTO updateRequestDTO) {
+        iQuestionAnswerService.updateFAQ(id, updateRequestDTO);
+        return ResponseEntity.ok("FAQ updated successfully.");
+    }
     
 }

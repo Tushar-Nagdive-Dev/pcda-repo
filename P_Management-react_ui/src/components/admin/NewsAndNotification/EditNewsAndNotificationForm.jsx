@@ -28,6 +28,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import apiClient from '../../../auth/ApiClient.jsx'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { FilePdf } from '@phosphor-icons/react'
 
 function EditNewsAndNotificationForm() {
  /* To current selected Id from params */
@@ -41,13 +43,18 @@ function EditNewsAndNotificationForm() {
   defaultValues: {
    title: '',
    title_hindi: '',
-   url: '',
+   //  url: '',
    type: '',
    status: '',
    isNew: '',
    order: '',
   },
  })
+ const [selectedFile, setSelectedFile] = useState(null)
+
+ const handleFileChange = (event) => {
+  setSelectedFile(event.target.files[0])
+ }
 
  useEffect(() => {
   getNewsAndNotificationSingleDetails()
@@ -61,7 +68,7 @@ function EditNewsAndNotificationForm() {
    if (data.length > 0) {
     form.setValue('title', data[0].titleEnglish)
     form.setValue('title_hindi', data[0].titleHindi)
-    form.setValue('url', data[0].url)
+    // form.setValue('url', data[0].url)
     // Determine type
     const type =
      data[0].type === 'NEWS_AND_NOTIFICATION'
@@ -76,10 +83,13 @@ function EditNewsAndNotificationForm() {
       : data[0].status === 'INACTIVE'
       ? 'In-Active'
       : ''
-    form.setValue('type', type)
-    form.setValue('status', status)
-    form.setValue('isNew', data[0].isNew)
-    form.setValue('order', data[0].uiOrder.toString())
+
+      form.setValue('type', type)
+      form.setValue('status', status)
+      form.setValue('isNew', data[0].isNew)
+      form.setValue('order', data[0].uiOrder.toString())
+      // Set Document from backend
+      setSelectedFile(data[0]?.url)
    }
   } catch (error) {
    console.error('Failed to get data', error)
@@ -110,7 +120,7 @@ function EditNewsAndNotificationForm() {
   const newAndNotification = {
    titleEnglish: values.title,
    titleHindi: values.title_hindi,
-   url: values.url,
+   //  url: values.url,
    type: type,
    status: status,
    isNew: values.isNew,
@@ -122,12 +132,16 @@ function EditNewsAndNotificationForm() {
    const response = await apiClient.put(`news/${id}`, newAndNotification)
    // console.log('Response from API:', response)
    toast.success('News and Notification updated successfully!')
-   navigate('/admin/news-and-notification')
+   navigate('/pcdao/news-and-notification')
   } catch (error) {
    console.error('Error updating News and Notification:', error)
    // alert('Failed to update News and Notification. Please try again.')
    toast.error('Failed to update News and Notification. Please try again.')
   }
+ }
+
+ const getFileNameFromUrl = (url) => {
+  return url.substring(url.lastIndexOf('/') + 1)
  }
 
  return (
@@ -144,7 +158,9 @@ function EditNewsAndNotificationForm() {
         name="title"
         render={({ field }) => (
          <FormItem>
-          <FormLabel className="text-titleColor text-base font-raleway">Title</FormLabel>
+          <FormLabel className="text-titleColor text-base font-raleway">
+           Title
+          </FormLabel>
           <FormControl>
            <Textarea placeholder="Enter title" {...field} />
           </FormControl>
@@ -157,7 +173,9 @@ function EditNewsAndNotificationForm() {
         name="title_hindi"
         render={({ field }) => (
          <FormItem>
-          <FormLabel className="text-titleColor text-base font-raleway">Title in Hindi</FormLabel>
+          <FormLabel className="text-titleColor text-base font-raleway">
+           Title in Hindi
+          </FormLabel>
           <FormControl>
            <Textarea placeholder="Enter title in Hindi" {...field} />
           </FormControl>
@@ -166,21 +184,26 @@ function EditNewsAndNotificationForm() {
         )}
        />
 
-       <FormField
-        control={form.control}
-        name="url"
-        render={({ field }) => (
-         <FormItem>
-          <FormLabel className="text-titleColor text-base font-raleway">
-           Url
-          </FormLabel>
-          <FormControl>
-           <Input placeholder="Enter Url" {...field} />
-          </FormControl>
-          <FormMessage />
-         </FormItem>
+       {/* Instead of url we need upload file (it optional) */}
+       <div className="w-full flex flex-col space-y-1 my-2">
+        <Label className="text-titleColor text-base font-raleway">
+         Document:
+        </Label>
+        <Input id="document" type="file" onChange={handleFileChange} />
+        {selectedFile && (
+         <a
+          href={selectedFile}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex gap-2 py-4"
+         >
+          <div>
+           Stored File: <FilePdf size={30} color="#D21416" />
+          </div>
+          {getFileNameFromUrl(selectedFile)}
+         </a>
         )}
-       />
+       </div>
 
        <div className="w-full grid grid-cols-2 gap-2">
         <FormField

@@ -12,6 +12,7 @@ import com.inn.pcda.pcdamanages.dto.FAQResponseDTO;
 import com.inn.pcda.pcdamanages.dto.FAQWithQuestionsDTO;
 import com.inn.pcda.pcdamanages.dto.SectionDTO;
 import com.inn.pcda.pcdamanages.dto.tableDTO.FAQTableDataResponseDTO;
+import com.inn.pcda.pcdamanages.dto.tableDTO.QuestionAnswerResponseDTO;
 import com.inn.pcda.pcdamanages.dto.tableDTO.SectionTableDataResponseDTO;
 import com.inn.pcda.pcdamanages.entity.FAQ;
 import com.inn.pcda.pcdamanages.entity.QuestionAnswer;
@@ -156,6 +157,7 @@ public class FAQDetailsService implements IFAQDetailsService{
 
         // Map FAQ status, createdDate, and updatedDate from FAQ
         FAQ faq = questionAnswer.getSection().getWing().getFaq();
+        dto.setFaqId(faq.getId());
         dto.setFaqStatus(faq.getIsActive());
         dto.setCreatedDate(faq.getCreatedDate());
         dto.setUpdatedDate(faq.getUpdatedDate());
@@ -231,7 +233,5 @@ public class FAQDetailsService implements IFAQDetailsService{
             })
             .orElse(false); // Return false if the question was not found
     }
-
-
     
 }

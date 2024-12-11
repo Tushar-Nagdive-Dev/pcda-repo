@@ -36,6 +36,7 @@ function AdminFAQTable() {
     created_date: formatDate(item.createdDate),
     updated_by: item.updatedBy || "N/A",
     updated_date: formatDate(item.updatedDate),
+    faqId: item.faqId
   });
 
   const formatDate = (dateString) => {

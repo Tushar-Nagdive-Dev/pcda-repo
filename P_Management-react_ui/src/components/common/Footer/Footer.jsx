@@ -153,11 +153,12 @@ function Footer() {
                     </div>
                 </div>
 
-                <VisitorNoMessage/>
-            </div>
-            <LastSectionFooter/>
-        </footer>
-    </>)
+     <VisitorNoMessage />
+    </div>
+    <LastSectionFooter />
+   </footer>
+  </>
+ )
 }
 
 export default Footer

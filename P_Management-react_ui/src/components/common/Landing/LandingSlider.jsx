@@ -9,12 +9,13 @@ import kilkari_opening from "@/assets/images/pcdao_kilkari_opening.jpg";
 import pcdao_staff from "@/assets/images/pcdao_staff.jpg";
 import pcdao_award from "@/assets/images/pcdao_award.jpg"
 import pcdao_meeting from "@/assets/images/pcdao_meeting.jpg"
+import pcdao_building from "@/assets/images/office_building/DSC_5885.JPG"
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 
 const slides = [
   {
     id: 1,
-    image: pcdao_staff,
+    image: pcdao_building,
     text: "Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin. Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin.",
   },
   {

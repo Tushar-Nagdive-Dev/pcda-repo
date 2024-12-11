@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 
 import landingTestminionalCss from "./LandingTestimonial.module.css";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
-import apiClient from "../../../auth/ApiClient.jsx"; // Replace with your actual API client
+import apiClient from "../../../auth/ApiClient.jsx"; // Replace with actual API client import
 import testimionalImage from "../../../assets/images/testimional.jpeg"; // Background image
 
 function LandingTestimonial() {
@@ -89,11 +89,17 @@ function LandingTestimonial() {
                         {slide.comment}
                       </p>
                       <div className="flex gap-3 w-fit">
-                        <img
-                          src={slide.person_picture}
-                          alt={`${slide.person_name}'s picture`}
-                          className="rounded-full w-14 h-14 border-2 border-statebluecolor"
-                        />
+                        {slide.person_picture ? (
+                          <img
+                            src={slide.person_picture}
+                            alt={`${slide.person_name}'s picture`}
+                            className="rounded-full w-14 h-14 border-2 border-statebluecolor"
+                          />
+                        ) : (
+                          <div className="rounded-full w-14 h-14 bg-gray-300 flex items-center justify-center">
+                            <span className="text-titleColor">No Image</span>
+                          </div>
+                        )}
                         <div className="flex flex-col space-y-2">
                           <p className="text-lg font-bold text-statebluecolor">
                             {slide.person_name}

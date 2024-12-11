@@ -25,10 +25,8 @@ function TopHeader() {
             <div className="flex gap-2 items-center">
               <p className="inline m-0">Text Size</p>
               <p className="inline m-0">
-                <span className="font-bold text-base cursor-pointer"
-                      onClick={() => accessibilityCtx.setScale((prev) => Math.max(prev - 0.35, 0.3))}>-</span> A{' '}
-                <span className="font-bold text-base cursor-pointer"
-                      onClick={() => accessibilityCtx.setScale((prev) => Math.min(prev + 0.35, 1))}>+</span>
+                <span className="font-bold text-base cursor-pointer">-</span> A{' '}
+                <span className="font-bold text-base cursor-pointer">+</span>
               </p>
             </div>
 

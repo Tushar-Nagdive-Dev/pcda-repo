@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import { ChevronRight, Radar } from 'lucide-react'
+import {ChevronRight, Radar} from 'lucide-react'
 import './UserSidebar.css'
 import {
     Sidebar,
@@ -11,7 +11,17 @@ import {
     SidebarMenuItem,
     SidebarGroup,
     SidebarGroupContent,
+    SidebarFooter
 } from '@/components/ui/sidebar'
+import {
+    Dialog,
+    DialogContent,
+    DialogTrigger,
+    DialogFooter,
+    DialogClose,
+    DialogHeader
+} from "@/components/ui/dialog"
+import {Button} from "@/components/ui/button"
 import {
     Collapsible,
     CollapsibleContent,
@@ -25,8 +35,8 @@ import {
     Receipt,
     SignOut,
 } from '@phosphor-icons/react'
-import { ClipboardText, Files } from '@phosphor-icons/react'
-import { NavLink } from 'react-router-dom'
+import {ClipboardText, Files} from '@phosphor-icons/react'
+import {NavLink} from 'react-router-dom'
 import {clearToken} from "../../../auth/TokenExp.jsx";
 
 const data = [
@@ -86,14 +96,14 @@ const data = [
     },
 ]
 
-export function UserSidebar({ ...props }) {
+export function UserSidebar({...props}) {
     const navigate = useNavigate();
 
     return (
         <Sidebar {...props}>
             <SidebarHeader
                 className="h-[110px] border-b border-sidebar-border px-6 py-8 bg-white flex justify-center items-center">
-                <Link to={'/user'}><img src={pcdaoLogo} alt="PCDAO's Logo" className="h-[60px] w-auto" /></Link>
+                <Link to={'/user'}><img src={pcdaoLogo} alt="PCDAO's Logo" className="h-[60px] w-auto"/></Link>
             </SidebarHeader>
             <SidebarContent className="bg-white hover:bg-transparent">
                 {data.map((item) => (
@@ -143,7 +153,7 @@ export function UserSidebar({ ...props }) {
                                                         isActive={subItem?.isActive}
                                                     >
                                                         <div className="flex gap-2">
-                                                            <Circle size={16} />
+                                                            <Circle size={16}/>
                                                             <NavLink
                                                                 to={subItem?.url}
                                                                 className="text-lg font-raleway"
@@ -162,6 +172,35 @@ export function UserSidebar({ ...props }) {
                     </Collapsible>
                 ))}
             </SidebarContent>
+            <SidebarFooter className="p-0 cursor-pointer">
+                <div className="w-full h-[44px] bg-adminBreadCrumbsBg flex justify-center items-center">
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <p className="font-raleway font-semibold">Disclaimer</p>
+                        </DialogTrigger>
+                        <DialogContent className="font-raleway text-lg text-justify w-[900px]">
+                            <DialogHeader className="font-raleway font-bold">
+                                Disclaimer
+                            </DialogHeader>
+                            The information provided on this website is based on relevant Govt. orders, Army
+                            Instructions and Army Orders. However contents of this web site cannot be quoted as
+                            authority in any of the correspondence with the Office of the Principal Controller of
+                            Defence Accounts (Officers) or with any other organisation. No classified information will
+                            be provided or received through this web site. The copyright and ownership as regard to the
+                            domain name, contents and web design rests with the Principal Controller of Defence Accounts
+                            (Officers), Golibar Maidan, Pune, India - 411001.
+
+                            <DialogFooter className="sm:justify-start">
+                                <DialogClose asChild>
+                                    <Button type="button" variant="outline">
+                                        Close
+                                    </Button>
+                                </DialogClose>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                </div>
+            </SidebarFooter>
         </Sidebar>
     )
 }

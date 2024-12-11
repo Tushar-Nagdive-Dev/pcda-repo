@@ -1,5 +1,5 @@
 import {useEffect, useState, createRef, useContext} from 'react'
-import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+import {createBrowserRouter, Navigate, RouterProvider} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
@@ -42,6 +42,9 @@ import AdminRootLayout from './pages/Admin/AdminRootLayout.jsx'
 import AdminProtectPrivateRoute from './auth/AdminProtectPrivateRoute'
 import AdminEditFaqForm from './pages/Admin/FAQ/AdminEditFAQForm.jsx'
 import AdminLoginComponent from "./pages/AdminLoginComponent.jsx";
+import AdminDownloadForm from './pages/Admin/Download/AdminDownloadForm.jsx'
+import AdminEditDownloadForm from './pages/Admin/Download/AdminEditDownloadForm.jsx'
+import AdminDownloadTableList from './pages/Admin/Download/AdminDownloadTableList.jsx'
 
 /* User */
 import UserLoginComponent from "./pages/UserPanel/UserLoginComponent.jsx";
@@ -49,6 +52,9 @@ import UserForgetPassword from "./pages/UserPanel/UserForgetPassword.jsx";
 import UserPanelLayout from "./pages/UserPanel/Layout/UserPanelLayout.jsx";
 import UserProtectPrivateRoute from "./auth/UserProtectPrivateRoute.jsx";
 import UserDashboard from "./pages/UserPanel/Dashboard/UserDashboard.jsx";
+import UserTwoFA from "./pages/UserPanel/2FA/UserTwoFA.jsx";
+
+
 
 const websiteTitle = 'Welcome to PCDA(O) Pune '
 
@@ -98,6 +104,14 @@ const routes = [
                 ],
             },
             {
+                path: 'download',
+                children: [
+                    {index: true, element: <AdminDownloadTableList />},
+                    {path: 'new', element: <AdminDownloadForm/>},
+                    {path: 'edit/:id', element: <AdminEditDownloadForm />},
+                ],
+            },
+            {
                 path: 'faq',
                 children: [
                     {index: true, element: <AdminFAQTableList/>},
@@ -120,6 +134,11 @@ const routes = [
     {
         path: '/login',
         element: <UserLoginComponent/>,
+    },
+    /* Add Protect Layout for 2FA Authetication page if they havent login*/
+    {
+        path: "/twofa",
+        element: <UserTwoFA />
     },
     {
         path: '/forgotpassword',

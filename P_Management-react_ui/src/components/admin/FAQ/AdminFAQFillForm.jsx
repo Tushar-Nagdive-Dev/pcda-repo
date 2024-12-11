@@ -85,7 +85,7 @@ function AdminFAQFillForm() {
 
    if (response.status === 201) {
     toast.success('FAQ created successfully!')
-    navigate('/admin/faq') // Redirect on success
+    navigate('/pcdao/faq') // Redirect on success
    }
   } catch (error) {
    console.error('Error creating FAQ:', error.response?.data || error)

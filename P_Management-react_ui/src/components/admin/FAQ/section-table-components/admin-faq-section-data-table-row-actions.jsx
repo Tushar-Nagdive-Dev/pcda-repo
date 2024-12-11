@@ -28,7 +28,7 @@ export function FAQSectionDataTableRowActions({row, fetchData}) {
                         <div className="rounded-full p-2 bg-newprimaryColor">
                             <Pencil
                                 className="text-white w-4 h-4 cursor-pointer"
-                                onClick={() => navigate(`/admin/faq/edit-section/${row.original.id}`)}
+                                onClick={() => navigate(`/pcdao/faq/edit-section/${row.original.id}`)}
                             />
                         </div>
                     </TooltipTrigger>

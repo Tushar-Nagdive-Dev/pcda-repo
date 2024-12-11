@@ -36,4 +36,9 @@ public class NewsAndNotification extends BaseEntity{
 
     @Column(name = "ui_order")
     private Integer uiOrder;
+
+    @Column(name = "document_url", columnDefinition = "TEXT")
+    private String documentUrl;
+
+    
 }

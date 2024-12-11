@@ -56,7 +56,7 @@ function CalculatorForm() {
 
  return (
   <div className="w-full flex flex-col space-y-6">
-   <h3 className="text-2xl font-bold text-darkOrange">Option Calculator For Fixation on Promotion in 7th CPC</h3>
+   <h3 className="text-2xl font-bold text-darkOrange">Effect of option on pay at the time of promotion</h3>
    <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-4">
      <FormField

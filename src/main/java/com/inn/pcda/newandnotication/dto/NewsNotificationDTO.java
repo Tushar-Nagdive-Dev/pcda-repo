@@ -14,5 +14,5 @@ public class NewsNotificationDTO {
     private Status status;
     private Boolean isNew;
     private Integer uiOrder;
-    
+    private String documentUrl;
 }

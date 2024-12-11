@@ -9,12 +9,7 @@ import {
 } from '@/components/ui/sidebar'
 import {
     Sheet,
-    SheetClose,
     SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { Outlet } from 'react-router-dom'
@@ -27,7 +22,7 @@ function UserPanelLayout() {
         <SidebarProvider>
             <UserSidebar />
             <SidebarInset >
-                <header className="sticky top-0 flex h-[110px] shrink-0 items-center gap-2 border-b bg-background px-10 z-[999]">
+                <header className="sticky top-0 flex h-[110px] shrink-0 items-center gap-2 border-b bg-background px-10 z-[10]">
                     <SidebarTrigger className="-ml-1 text-titleColor" />
                     <Separator orientation="vertical" className="mr-2 h-4" />
                     <Breadcrumb>

@@ -60,8 +60,7 @@ function LandingCalculator() {
                 {currentStage === 1 && (
                   <CalculatorCard
                     className={"bg-darkOrange"}
-                    title="CALCULATOR DEVELOPED BY PCDA(O) FOR PAY FIXATION ON
-                        PROMOTION IN 7TH CPC"
+                    title="Effect of option on pay at the time of promotion"
                     info_one=" In order to facilitate the Army Officers to ascertain their pay on
             promotion under different options i.e. (i) from date of promotion
             and, (ii) from date of their next increment in lower rank, and to

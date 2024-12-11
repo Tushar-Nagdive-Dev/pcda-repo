@@ -6,6 +6,7 @@ import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
+  assetsInclude: ['**/*.JPG'], // Allow Vite to handle .JPG files
   plugins: [react(), svgr()],
   css: {
     postcss: {

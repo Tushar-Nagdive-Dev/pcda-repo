@@ -10,14 +10,14 @@ import {
 import { toast } from 'react-toastify'
 import apiClient from '../../../../auth/ApiClient.jsx'
 
-export function DataTableRowActions({ row }) {
+export function DataTableRowActions({ row, getAllNewAndNotification }) {
  const navigate = useNavigate()
 
  async function deleteItemlists() {
   try {
    const response = await apiClient.delete(`news/${row.original.id}`)
    toast.success('Successfully deleted')
-   navigate('/admin/news-and-notification')
+   getAllNewAndNotification();
   } catch (error) {
    console.error(error)
    toast.error('Failed to delete selected item')

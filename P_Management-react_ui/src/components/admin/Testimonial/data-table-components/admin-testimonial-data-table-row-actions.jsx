@@ -18,7 +18,7 @@ export function TestimonialDataTableRowActions({ row }) {
   try {
    const response = await apiClient.delete(`testimonial/${row.original.id}`)
    toast.success('Successfully deleted')
-   navigate('/admin/testimonial')
+   navigate('/pcdao/testimonial')
   } catch (error) {
    console.error(error)
    toast.error('Failed to delete selected item')

@@ -17,7 +17,7 @@ export function GalleryDataTableRowActions({ row }) {
   try {
    const response = await apiClient.delete(`gallery/${row.original.id}`)
    toast.success('Successfully deleted')
-   navigate('/admin/gallery')
+   navigate('/pcdao/gallery')
   } catch (error) {
    console.error(error)
    toast.error('Failed to delete selected item')

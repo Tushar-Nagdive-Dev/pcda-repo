@@ -132,10 +132,10 @@ const data = [
     title: 'FAQ Manager',
     url: 'faq',
    },
-   // {
-   //  title: 'Download Manager',
-   //  url: '#',
-   // },
+   {
+    title: 'Downloads Manager',
+    url: 'download',
+   },
    {
     title: 'Gallery Manager',
     url: 'gallery',

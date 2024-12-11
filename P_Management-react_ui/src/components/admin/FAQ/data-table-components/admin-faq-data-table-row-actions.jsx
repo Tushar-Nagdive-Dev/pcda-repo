@@ -15,7 +15,7 @@ export function FAQDataTableRowActions({ row, refreshFAQ }) {
 
  async function deleteItemlists() {
   try {
-   const response = await apiClient.delete(`faqdetails/${row.original.id}`)
+   const response = await apiClient.delete(`faqdetails/deleteById/${row.original.id}`)
    refreshFAQ()
    toast.success('Successfully deleted')
   } catch (error) {

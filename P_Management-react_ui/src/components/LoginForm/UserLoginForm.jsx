@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Fragment} from 'react'
+import React, {useState, useEffect, Fragment, useContext} from 'react'
 import axios from 'axios'
 import {useForm} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
@@ -22,6 +22,7 @@ import {toast} from 'react-toastify'
 import {setToken} from "../../auth/TokenExp.jsx";
 import UserForgetPasswordForm from "./User/UserForgetPasswordForm.jsx";
 import UserLoginWithOTP from "./User/Existing/UserLoginWithOTP.jsx";
+import {DemoUserFlowContext} from "../../context/DemoUserFlowPurposeContext.jsx";
 
 function AdminLoginForm() {
     const navigate = useNavigate()
@@ -32,7 +33,8 @@ function AdminLoginForm() {
             password: '',
             captcha: '',
         },
-    })
+    });
+    const demouserloginctx = useContext(DemoUserFlowContext);
 
     const [captchaImage, setCaptchaImage] = useState('')
     const [captchaToken, setCaptchaToken] = useState('')
@@ -40,6 +42,10 @@ function AdminLoginForm() {
     const [isExisting, setIsExisiting] = useState(false);
     /* set Phone number from backend when user is login */
     const [phoneNum, setPhoneNum] = useState('99xxxxxxxx99');
+
+    useEffect(() => {
+
+    }, [isExisting])
 
 
     // Fetch captcha when the component mounts
@@ -78,7 +84,13 @@ function AdminLoginForm() {
             return;
         }
 
-        setIsExisiting(true);
+        console.log("User Registered:", demouserloginctx.isRegisteredUser);
+
+        if(demouserloginctx.isRegisteredUser) {
+            setIsExisiting(true);
+        } else {
+            navigate("/twofa")
+        }
 
         /* API Login for user */
 

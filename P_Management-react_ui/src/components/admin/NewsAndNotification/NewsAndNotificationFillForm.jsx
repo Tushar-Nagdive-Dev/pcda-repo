@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
+import { Label } from '@/components/ui/label'
 import {
  Form,
  FormControl,
@@ -34,15 +35,22 @@ function NewsAndNotificationFillForm() {
  const form = useForm({
   resolver: zodResolver(NewsandNotificationValidation),
   defaultValues: {
+   id: null,
    title: '',
    title_hindi: '',
-   url: '',
+   //  url: '',
    type: '',
    status: '',
    isNew: '',
    order: 1,
   },
  })
+
+ const [selectedFile, setSelectedFile] = useState(null)
+
+ const handleFileChange = (event) => {
+  setSelectedFile(event.target.files[0])
+ }
 
  async function onSubmit(values) {
   console.log(values)
@@ -67,7 +75,7 @@ function NewsAndNotificationFillForm() {
   const newAndNotification = {
    titleEnglish: values.title,
    titleHindi: values.title_hindi,
-   url: values.url,
+   //  url: values.url,
    type: type,
    status: status,
    isNew: values.isNew,
@@ -79,7 +87,7 @@ function NewsAndNotificationFillForm() {
    const response = await apiClient.post('news', newAndNotification)
    // console.log('Response from API:', response)
    toast.success('News and Notification created successfully!')
-   navigate('/admin/news-and-notification')
+   navigate('/pcdao/news-and-notification')
   } catch (error) {
    console.error('Error creating News and Notification:', error)
    // alert('Failed to create News and Notification. Please try again.')
@@ -127,21 +135,13 @@ function NewsAndNotificationFillForm() {
         )}
        />
 
-       <FormField
-        control={form.control}
-        name="url"
-        render={({ field }) => (
-         <FormItem>
-          <FormLabel className="text-titleColor text-base font-raleway">
-           Url
-          </FormLabel>
-          <FormControl>
-           <Input placeholder="Enter Url" {...field} />
-          </FormControl>
-          <FormMessage />
-         </FormItem>
-        )}
-       />
+       {/* Instead of url we need upload file (it optional) */}
+       <div className="w-full flex flex-col space-y-1 my-2">
+        <Label className="text-titleColor text-base font-raleway">
+         Document:
+        </Label>
+        <Input id="document" type="file" onChange={handleFileChange} />
+       </div>
 
        <div className="w-full grid grid-cols-2 gap-2">
         <FormField
