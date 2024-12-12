@@ -23,5 +23,20 @@
     "name": "jwt.expiration",
     "type": "java.lang.String",
     "description": "Expiration time for JWT Auth"
+  },
+  {
+    "name": "document.base-url",
+    "type": "java.lang.String",
+    "description": "Document download base Url"
+  },
+  {
+    "name": "file.external.gallery.path",
+    "type": "java.lang.String",
+    "description": "file external gallery path"
+  },
+  {
+    "name": "file.external.testimonial.path",
+    "type": "java.lang.String",
+    "description": "file external testimonial path"
   }
 ]}

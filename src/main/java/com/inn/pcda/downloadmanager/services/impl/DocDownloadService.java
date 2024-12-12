@@ -6,12 +6,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +29,9 @@ import lombok.extern.slf4j.Slf4j;
 public class DocDownloadService implements IDocDownloadService{
     
     private static final String UPLOAD_DIR = "documents/uploads/";
+
+    @Value("${document.base-url}") // Base URL for serving documents
+    private String baseUrl;
 
     @Autowired
     private DocDownloadRepository docDownloadRepository;
@@ -158,8 +161,30 @@ public class DocDownloadService implements IDocDownloadService{
         }
     }
 
+
     @Override
     public List<DocDownload> getAllDocuments() {
-        return docDownloadRepository.findAll();
+        List<DocDownload> documents = docDownloadRepository.findAll();
+        return documents.stream().map(this::mapToDto).collect(Collectors.toList());
     }
+
+    private DocDownload mapToDto(DocDownload doc) {
+        DocDownload dto = new DocDownload();
+        dto.setId(doc.getId());
+        dto.setTitle(doc.getTitle());
+        dto.setTitleInHindi(doc.getTitleInHindi());
+        dto.setDocumentPath(buildDocumentUrl(doc.getDocumentPath())); // Include the computed URL
+        dto.setStatus(doc.getStatus());
+        dto.setUiOrder(doc.getUiOrder());
+        dto.setCreatedDate(doc.getCreatedDate());
+        dto.setUpdatedDate(doc.getUpdatedDate());
+        return dto;
+    }
+
+    private String buildDocumentUrl(String documentPath) {
+        return baseUrl + documentPath; // Replace with your base URL logic
+    }
+
 }
+
+

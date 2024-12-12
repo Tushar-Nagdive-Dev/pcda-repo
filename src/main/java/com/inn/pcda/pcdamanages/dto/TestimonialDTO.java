@@ -1,6 +1,8 @@
 package com.inn.pcda.pcdamanages.dto;
 
 
+import java.time.LocalDateTime;
+
 import com.inn.pcda.newandnotication.enums.Status;
 
 import lombok.Data;
@@ -15,4 +17,6 @@ public class TestimonialDTO {
     private Status status; // Status of the testimonial (e.g., ACTIVE, INACTIVE)
     private Boolean isNew; // Indicates if the testimonial is new
     private String imagePath; // Path or URL for the image (optional for response)
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
 }

@@ -1,5 +1,6 @@
 package com.inn.pcda.pcdamanages.entity;
 
+import com.inn.pcda.configs.baseImplementation.BaseEntity;
 import com.inn.pcda.pcdamanages.enums.GalleryTypes;
 
 import jakarta.persistence.Column;
@@ -15,7 +16,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "gallery")
-public class Gallery {
+public class Gallery extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

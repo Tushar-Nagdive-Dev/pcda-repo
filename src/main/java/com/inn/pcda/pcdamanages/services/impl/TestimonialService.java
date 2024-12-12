@@ -203,6 +203,8 @@ public class TestimonialService implements ITestimonialService {
         dto.setTestimonialBrief(entity.getTestimonialBrief());
         dto.setStatus(entity.getStatus());
         dto.setIsNew(entity.getIsNew());
+        dto.setCreatedDate(entity.getCreatedDate());
+        dto.setUpdatedDate(entity.getUpdatedDate());
     
         // Append base URL to the imagePath
         String baseUrl = "http://localhost:8888/testimonials/";
