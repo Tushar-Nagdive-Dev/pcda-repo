@@ -9,9 +9,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    // private static final String EXTERNAL_GALLERY_PATH = "file:/Users/tusharnagdive/Development/vsWorkspace/Projects/pcda/gallery-files/";
-    // private static final String EXTERNAL_TESTIMONIAL_IMAGE_PATH = "file:/Users/tusharnagdive/Development/vsWorkspace/Projects/pcda/uploads/testimonials/";
-
     @Value("${file.external.gallery.path}")
     private String externalGalleryPath;
 
@@ -20,11 +17,13 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Resource handler for gallery files
         registry.addResourceHandler("/gallery-files/**")
-                .addResourceLocations(externalGalleryPath);
+                .addResourceLocations("file:" + externalGalleryPath);
 
         registry.addResourceHandler("/testimonials/**")
-                .addResourceLocations(externalGalleryPath);
+                .addResourceLocations("file:" + externalTestimonialPath)
+                .setCachePeriod(3600);
     }
 
     @Override
