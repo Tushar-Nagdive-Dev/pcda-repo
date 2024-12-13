@@ -64,7 +64,10 @@ function EditNewsAndNotificationForm() {
    if (data) {
     form.setValue('title', data.titleEnglish)
     form.setValue('title_hindi', data.titleHindi)
-    form.setValue('type', data.type === 'NEWS_AND_NOTIFICATION' ? 'News & Notification' : 'News')
+    form.setValue(
+     'type',
+     data.type === 'NEWS_AND_NOTIFICATION' ? 'News & Notification' : 'News'
+    )
     form.setValue('status', data.status === 'ACTIVE' ? 'Active' : 'In-Active')
     form.setValue('isNew', data.isNew)
     form.setValue('order', data.uiOrder.toString())
@@ -82,13 +85,19 @@ function EditNewsAndNotificationForm() {
   const newAndNotificationDTO = {
    titleEnglish: values.title,
    titleHindi: values.title_hindi,
-   type: values.type === 'News & Notification' ? 'NEWS_AND_NOTIFICATION' : 'NEWS',
+   type:
+    values.type === 'News & Notification' ? 'NEWS_AND_NOTIFICATION' : 'NEWS',
    status: values.status === 'Active' ? 'ACTIVE' : 'INACTIVE',
    isNew: values.isNew,
    uiOrder: parseInt(values.order, 10),
   }
 
-  formData.append('news', new Blob([JSON.stringify(newAndNotificationDTO)], { type: 'application/json' }))
+  formData.append(
+   'news',
+   new Blob([JSON.stringify(newAndNotificationDTO)], {
+    type: 'application/json',
+   })
+  )
   if (selectedFile instanceof File) {
    formData.append('file', selectedFile)
   }
@@ -109,7 +118,9 @@ function EditNewsAndNotificationForm() {
 
  return (
   <div className="bg-adminBreadCrumbsBg flex flex-col p-10 rounded-lg">
-   <h3 className="font-raleway text-2xl text-center font-bold">Edit News Flash</h3>
+   <h3 className="font-raleway text-2xl text-center font-bold">
+    Edit News Flash
+   </h3>
    <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)}>
      <div className="space-y-6 mb-7">
@@ -118,7 +129,9 @@ function EditNewsAndNotificationForm() {
        name="title"
        render={({ field }) => (
         <FormItem>
-         <FormLabel className="text-titleColor text-base font-raleway">Title</FormLabel>
+         <FormLabel className="text-titleColor text-base font-raleway">
+          Title
+         </FormLabel>
          <FormControl>
           <Textarea placeholder="Enter title" {...field} />
          </FormControl>
@@ -131,7 +144,9 @@ function EditNewsAndNotificationForm() {
        name="title_hindi"
        render={({ field }) => (
         <FormItem>
-         <FormLabel className="text-titleColor text-base font-raleway">Title in Hindi</FormLabel>
+         <FormLabel className="text-titleColor text-base font-raleway">
+          Title in Hindi
+         </FormLabel>
          <FormControl>
           <Textarea placeholder="Enter title in Hindi" {...field} />
          </FormControl>
@@ -140,11 +155,17 @@ function EditNewsAndNotificationForm() {
        )}
       />
       <div className="w-full flex flex-col space-y-1 my-2">
-       <Label className="text-titleColor text-base font-raleway">Document:</Label>
+       <Label className="text-titleColor text-base font-raleway">
+        Document:
+       </Label>
        <Input id="document" type="file" onChange={handleFileChange} />
        {selectedFile && (
         <a
-         href={selectedFile instanceof File ? URL.createObjectURL(selectedFile) : selectedFile}
+         href={`http://localhost:8888/${
+          selectedFile instanceof File
+           ? URL.createObjectURL(selectedFile)
+           : selectedFile
+         }`}
          target="_blank"
          rel="noopener noreferrer"
          className="flex gap-2 py-4"
@@ -152,7 +173,9 @@ function EditNewsAndNotificationForm() {
          <div>
           Stored File: <FilePdf size={30} color="#D21416" />
          </div>
-         {selectedFile instanceof File ? selectedFile.name : getFileNameFromUrl(selectedFile)}
+         {selectedFile instanceof File
+          ? selectedFile.name
+          : getFileNameFromUrl(selectedFile)}
         </a>
        )}
       </div>
@@ -162,17 +185,18 @@ function EditNewsAndNotificationForm() {
         name="type"
         render={({ field }) => (
          <FormItem>
-          <FormLabel className="text-titleColor text-base font-raleway">Type</FormLabel>
+          <FormLabel className="text-titleColor text-base font-raleway">
+           Type
+          </FormLabel>
           <FormControl>
-           <Select
-            onValueChange={field.onChange}
-            value={field.value}
-           >
+           <Select onValueChange={field.onChange} value={field.value}>
             <SelectTrigger className="w-full">
              <SelectValue>{field.value || 'Select Type'}</SelectValue>
             </SelectTrigger>
             <SelectContent>
-             <SelectItem value="News & Notification">News & Notification</SelectItem>
+             <SelectItem value="News & Notification">
+              News & Notification
+             </SelectItem>
              <SelectItem value="News">News</SelectItem>
             </SelectContent>
            </Select>
@@ -186,12 +210,11 @@ function EditNewsAndNotificationForm() {
         name="status"
         render={({ field }) => (
          <FormItem>
-          <FormLabel className="text-titleColor text-base font-raleway">Status</FormLabel>
+          <FormLabel className="text-titleColor text-base font-raleway">
+           Status
+          </FormLabel>
           <FormControl>
-           <Select
-            onValueChange={field.onChange}
-            value={field.value}
-           >
+           <Select onValueChange={field.onChange} value={field.value}>
             <SelectTrigger className="w-full">
              <SelectValue>{field.value || 'Select Status'}</SelectValue>
             </SelectTrigger>
@@ -211,19 +234,20 @@ function EditNewsAndNotificationForm() {
        name="order"
        render={({ field }) => (
         <FormItem>
-         <FormLabel className="text-titleColor text-base font-raleway">Select Order</FormLabel>
+         <FormLabel className="text-titleColor text-base font-raleway">
+          Select Order
+         </FormLabel>
          <FormControl>
-          <Select
-           value={field.value}
-           onValueChange={field.onChange}
-          >
+          <Select value={field.value} onValueChange={field.onChange}>
            <SelectTrigger className="w-full">
             <SelectValue>{field.value || 'Select Order'}</SelectValue>
            </SelectTrigger>
            <SelectContent>
             <SelectGroup>
              {Array.from({ length: 50 }).map((_, i) => (
-              <SelectItem key={i} value={i.toString()}>{i}</SelectItem>
+              <SelectItem key={i} value={i.toString()}>
+               {i}
+              </SelectItem>
              ))}
             </SelectGroup>
            </SelectContent>
@@ -246,7 +270,11 @@ function EditNewsAndNotificationForm() {
       />
      </div>
      <div className="w-full flex justify-center">
-      <Button type="submit" className="w-fit text-white bg-newprimaryColor" size="lg">
+      <Button
+       type="submit"
+       className="w-fit text-white bg-newprimaryColor"
+       size="lg"
+      >
        Save
       </Button>
      </div>

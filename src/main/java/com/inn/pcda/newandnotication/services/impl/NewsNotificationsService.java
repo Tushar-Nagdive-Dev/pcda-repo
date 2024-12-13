@@ -6,10 +6,12 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.inn.pcda.newandnotication.dto.NewsNotificationDTO;
+import com.inn.pcda.newandnotication.dto.NewsResponseDTO;
 import com.inn.pcda.newandnotication.entity.NewsAndNotification;
 import com.inn.pcda.newandnotication.repos.NewsNotificationRepo;
 import com.inn.pcda.newandnotication.services.INewsAndNotificationDocService;
@@ -27,6 +29,9 @@ public class NewsNotificationsService implements INewsNotificationService {
 
     @Autowired 
     private INewsAndNotificationDocService iNewsDocService;
+
+    @Value("${document.base-url}") // Base URL for serving documents
+    private String baseUrl;
 
     @Override
     public NewsAndNotification createNewsAndNotifications(NewsNotificationDTO newsNotificationDTO) {
@@ -49,9 +54,35 @@ public class NewsNotificationsService implements INewsNotificationService {
     }
 
     @Override
-    public List<NewsAndNotification> getAllNewsAndNotifications() {
+    public List<NewsResponseDTO> getAllNewsAndNotifications() {
         log.info("Inside @class NewsNotificationsService @method getAllNewsAndNotifications");
-        return newsNotificationRepo.findAll();
+
+        List<NewsAndNotification> notifications = newsNotificationRepo.findAll();
+        return notifications.stream()
+                .map(this::mapToDTO)
+                .toList();
+    }
+
+    private NewsResponseDTO mapToDTO(NewsAndNotification entity) {
+        String documentUrl = null;
+
+        // Construct the downloadable document URL
+        if (entity.getDocumentUrl() != null && !entity.getDocumentUrl().isEmpty()) {
+            documentUrl = baseUrl + "news-and-notifications/" + entity.getDocumentUrl();
+        }
+
+        return new NewsResponseDTO(
+                entity.getId(),
+                entity.getTitleEnglish(),
+                entity.getTitleHindi(),
+                entity.getType(),
+                entity.getStatus(),
+                entity.getIsNew(),
+                entity.getUiOrder(),
+                documentUrl,
+                entity.getCreatedDate(),
+                entity.getUpdatedDate()
+        );
     }
 
     @Override

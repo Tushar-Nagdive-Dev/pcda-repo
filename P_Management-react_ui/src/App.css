@@ -40,13 +40,6 @@
     border-bottom: 3px solid var(--main-primary-color); /* Change color only */
 }
 
-.nav-link > svg {
-    color: var(--paragraph-color);
-}
-
-.nav-link.active > svg {
-    color: white;
-}
 
 .navLink {
     display: flex;

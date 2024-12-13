@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -14,14 +14,15 @@ import {
  FormMessage,
 } from '@/components/ui/form'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
- } from '@/components/ui/select'
+ Select,
+ SelectContent,
+ SelectItem,
+ SelectTrigger,
+ SelectValue,
+} from '@/components/ui/select'
 import { faqformValidation } from './FAQSectionFormValidation.js'
 import apiClient from '../../../auth/ApiClient.jsx'
+import { toast } from 'react-toastify'
 
 function EditFAQSectionForm() {
  const { id } = useParams() // Retrieve ID from the URL
@@ -35,6 +36,41 @@ function EditFAQSectionForm() {
    active: false,
   },
  })
+
+ useEffect(() => {
+  (async () => {
+    try {
+      await fetchSectionData();
+    } catch (err) {
+      console.error(err);
+    }
+  })();
+ }, [])
+
+ async function fetchSectionData() {
+  try {
+   const response = await apiClient.get('/faqdetails/getSectionTable')
+   // Use response.data if apiClient is Axios
+   const result = await response.data
+
+   const getSingleData = result.filter((item) => Number(item.id) === Number(id))
+   if (getSingleData.length > 0) {
+    form.setValue('section_name', getSingleData[0].title)
+    if(getSingleData[0].windId == 1) {
+      form.setValue('wing', 'Ledger');
+    }else if(getSingleData[0].windId == 2) {
+      form.setValue('wing', 'Transportation');
+    }else if(getSingleData[0].windId == 3) {
+      form.setValue('wing', 'Central');
+    }
+    // form.setValue('wing', getSingleData[0])  //// TODO: WING NAME NEED TO BE SET!
+    form.setValue('active', getSingleData[0].isActive)
+   }
+  } catch (error) {
+   console.error("Couldn't fetch section data")
+  //  toast.error("Couldn't fetch faq section data")
+  }
+ }
 
  const onSubmit = async (values) => {
   console.log('Form submitted with values:', values)

@@ -2,6 +2,7 @@ import React from 'react'
 import AdminBreadcrumbs from '../../../components/admin/AdminBreadcrumbs.jsx'
 import { Link } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
+import EditDownloadForm from '../../../components/admin/Download/EditDownloadForm.jsx'
 
 function AdminEditDownloadForm() {
  return (
@@ -19,7 +20,7 @@ function AdminEditDownloadForm() {
     </Link>
    </AdminBreadcrumbs>
    <div className="p-10">
-    
+    <EditDownloadForm />
    </div>
   </div>
  )

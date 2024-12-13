@@ -1,182 +1,177 @@
-import React, {useEffect, useRef, useState} from "react";
-import LeftBorderWithTitle from "../../LeftBorderWithTitle";
-import recordIcons from "@/assets/icons/record_icon.svg";
-import retiredOfficerIcons from "@/assets/icons/Retired_officer.svg";
-import transportationIcons from "@/assets/icons/Transportation_icon.svg";
-import ledgerIcons from "@/assets/icons/Ledger_icon.svg";
-import proIcons from "@/assets/icons/PRO_section.svg";
+import React, { useEffect, useRef, useState } from 'react'
+import LeftBorderWithTitle from '../../LeftBorderWithTitle'
+import recordIcons from '@/assets/icons/record_icon.svg'
+import retiredOfficerIcons from '@/assets/icons/Retired_officer.svg'
+import transportationIcons from '@/assets/icons/Transportation_icon.svg'
+import ledgerIcons from '@/assets/icons/Ledger_icon.svg'
+import proIcons from '@/assets/icons/PRO_section.svg'
 
 // Import Swiper React components
-import {Swiper, SwiperSlide} from "swiper/react";
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/pagination";
+import 'swiper/css'
+import 'swiper/css/free-mode'
+import 'swiper/css/pagination'
 
-import landingSectionCss from "./LandingSection.module.css";
+import landingSectionCss from './LandingSection.module.css'
 
 // import required modules
-import {FreeMode, Navigation} from "swiper/modules";
-import {CaretLeft, CaretRight} from "@phosphor-icons/react";
-import SectionCardLogoWithTitle from "./Section/SectionCardLogoWithTitle";
+import { FreeMode, Navigation } from 'swiper/modules'
+import { CaretLeft, CaretRight } from '@phosphor-icons/react'
+import SectionCardLogoWithTitle from './Section/SectionCardLogoWithTitle'
 
 const slides = [
-    {
-        id: 1,
-        icon: ledgerIcons,
-        section: "Ledger Wing",
-        description:
-            "Ledger wing section maintains the IRLAs of all the Officers for prompt and correct authorization of the Pay and Allowances.",
-    },
-    {
-        id: 2,
-        icon: transportationIcons,
-        section: "Transportation Wing",
-        description:
-            "Transportation Wing deals with Audit and Payment of Personal Claims for Temporary Duty, Leave Travel Concession, Permanent Posting, Courses, etc.",
-    },
-    {
-        id: 3,
-        icon: recordIcons,
-        section: "Central Wing",
-        description:
-            "Record Wing deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post.",
-    },
-    // {
-    //   id: 4,
-    //   icon: proIcons,
-    //   section: "PRO",
-    //   description:
-    //     "PRO section is a help desk for receiving the Army Officers and settling their queries, directing the officers to the concerned AOs/AAOs of the section where the queries can not be settled at the desk.",
-    // },
-    {
-        id: 4,
-        icon: retiredOfficerIcons,
-        section: "Deputed Officers",
-        description:
-            "Post Superannuation Cell (PSC) deals with queries correspondence of officers after finalisation of account.",
-    },
-];
+ {
+  id: 1,
+  icon: ledgerIcons,
+  section: 'Ledger Wing',
+  link: '/wings/ledger',
+  description:
+   'Ledger wing section maintains the IRLAs of all the Officers for prompt and correct authorization of the Pay and Allowances.',
+ },
+ {
+  id: 2,
+  icon: transportationIcons,
+  section: 'Transportation Wing',
+  link: '/wings/transportation',
+  description:
+   'Transportation Wing deals with Audit and Payment of Personal Claims for Temporary Duty, Leave Travel Concession, Permanent Posting, Courses, etc.',
+ },
+ {
+  id: 3,
+  icon: recordIcons,
+  section: 'Central Wing',
+  link: '/wings/central',
+  description:
+   'Record Wing deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post.',
+ },
+ // {
+ //   id: 4,
+ //   icon: proIcons,
+ //   section: "PRO",
+ //   description:
+ //     "PRO section is a help desk for receiving the Army Officers and settling their queries, directing the officers to the concerned AOs/AAOs of the section where the queries can not be settled at the desk.",
+ // },
+ // {
+ //     id: 4,
+ //     icon: retiredOfficerIcons,
+ //     section: "Deputed Officers",
+ //     description:
+ //         "Post Superannuation Cell (PSC) deals with queries correspondence of officers after finalisation of account.",
+ // },
+]
 
 function LandingSections() {
-    const swiperRef = useRef(null);
-    const [isNavigationVisible, setIsNavigationVisible] = useState(true);
+ const swiperRef = useRef(null)
+ const [isNavigationVisible, setIsNavigationVisible] = useState(true)
 
-    // Check navigation visibility based on visible slides
-    useEffect(() => {
-        const updateNavigationVisibility = () => {
-            if (swiperRef.current) {
-                const swiperInstance = swiperRef.current;
-                const totalSlides = slides.length;
-                const visibleSlides = swiperInstance.params.slidesPerView;
+ // Check navigation visibility based on visible slides
+ useEffect(() => {
+  const updateNavigationVisibility = () => {
+   if (swiperRef.current) {
+    const swiperInstance = swiperRef.current
+    const totalSlides = slides.length
+    const visibleSlides = swiperInstance.params.slidesPerView
 
-                // Show navigation if not all slides are visible
-                setIsNavigationVisible(totalSlides > visibleSlides);
-            }
-        };
+    // Show navigation if not all slides are visible
+    setIsNavigationVisible(totalSlides > visibleSlides)
+   }
+  }
 
-        // Update visibility on mount and resize
-        updateNavigationVisibility();
-        window.addEventListener("resize", updateNavigationVisibility);
+  // Update visibility on mount and resize
+  updateNavigationVisibility()
+  window.addEventListener('resize', updateNavigationVisibility)
 
-        // Cleanup on unmount
-        return () => {
-            window.removeEventListener("resize", updateNavigationVisibility);
-        };
-    }, [slides]);
+  // Cleanup on unmount
+  return () => {
+   window.removeEventListener('resize', updateNavigationVisibility)
+  }
+ }, [slides])
 
+ const handleNext = () => {
+  if (swiperRef.current) {
+   swiperRef.current.slideNext()
+  }
+ }
 
-    const handleNext = () => {
-        if (swiperRef.current) {
-            swiperRef.current.slideNext();
-        }
-    };
+ const handlePrev = () => {
+  if (swiperRef.current) {
+   swiperRef.current.slidePrev()
+  }
+ }
 
-    const handlePrev = () => {
-        if (swiperRef.current) {
-            swiperRef.current.slidePrev();
-        }
-    };
-
-    return (
-        <div className="w-full flex flex-col space-y-6 bg-adminCard px-custom pt-24 pb-28">
-            <LeftBorderWithTitle
-                textSize="text-base"
-                title="Welcome to Principal Controller of Defence Accounts (officers)"
-                className="text-newprimaryColor text-lg font-semibold"
-            />
-            <h4 className="text-3xl text-mainprimarycolor font-bold mb-9">
-                Wings
-            </h4>
-            <div className={landingSectionCss["custom-swiper-container"]}>
-                <Swiper
-                    slidesPerView={4}
-                    spaceBetween={20}
-                    navigation={true}
-                    freeMode={true}
-                    modules={[FreeMode, Navigation]}
-                    loop={true}
-                    autoplay={{delay: 3000}}
-                    className={landingSectionCss["my-swiper"]}
-                    onSwiper={(swiper) => (swiperRef.current = swiper)}
-                    breakpoints={{
-                        320: { // For small screens (mobile)
-                            slidesPerView: 1,
-                            spaceBetween: 10,
-                        },
-                        768: { // For medium screens (tablet)
-                            slidesPerView: 2,
-                            spaceBetween: 15,
-                        },
-                        1024: {
-                            slidesPerView: 3,
-                            spaceBetween: 15,
-                        },
-                        1440: { // For larger screens (desktop)
-                            slidesPerView: 4,
-                            spaceBetween: 20,
-                        },
-                    }}
-                >
-                    {slides.map((slide) => (
-                        <SwiperSlide
-                            key={slide.id}
-                            className={landingSectionCss["my-slide"]}
-                        >
-                            <SectionCardLogoWithTitle
-                                title={slide.section}
-                                icon={slide.icon}
-                                description={slide.description}
-                            />
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
-                {isNavigationVisible && (
-                    <>
-                        <button
-                            className={landingSectionCss["custom-prev"]}
-                            onClick={handlePrev}
-                        >
-                            <CaretLeft size={32}/>
-                        </button>
-                        <button
-                            className={landingSectionCss["custom-next"]}
-                            onClick={handleNext}
-                        >
-                            <CaretRight size={32}/>
-                        </button>
-                    </>
-                )}
-            </div>
-        </div>
-    );
+ return (
+  <div className="w-full flex flex-col space-y-6 bg-adminCard px-custom pt-24 pb-28">
+   <LeftBorderWithTitle
+    textSize="text-base"
+    title="Welcome to Principal Controller of Defence Accounts (officers)"
+    className="text-newprimaryColor text-lg font-semibold"
+   />
+   <h4 className="text-3xl text-mainprimarycolor font-bold mb-9">Wings</h4>
+   <div className={landingSectionCss['custom-swiper-container']}>
+    <Swiper
+     slidesPerView={4}
+     spaceBetween={20}
+     navigation={true}
+     freeMode={true}
+     modules={[FreeMode, Navigation]}
+     loop={true}
+     autoplay={{ delay: 3000 }}
+     className={landingSectionCss['my-swiper']}
+     onSwiper={(swiper) => (swiperRef.current = swiper)}
+     breakpoints={{
+      320: {
+       // For small screens (mobile)
+       slidesPerView: 1,
+       spaceBetween: 10,
+      },
+      768: {
+       // For medium screens (tablet)
+       slidesPerView: 2,
+       spaceBetween: 15,
+      },
+      1024: {
+       slidesPerView: 3,
+       spaceBetween: 15,
+      },
+      1440: {
+       // For larger screens (desktop)
+       slidesPerView: 3,
+       spaceBetween: 40,
+      },
+     }}
+    >
+     {slides.map((slide) => (
+      <SwiperSlide key={slide.id} className={landingSectionCss['my-slide']}>
+       <SectionCardLogoWithTitle
+        title={slide.section}
+        icon={slide.icon}
+        description={slide.description}
+        link={slide.link}
+       />
+      </SwiperSlide>
+     ))}
+    </Swiper>
+    {isNavigationVisible && (
+     <>
+      <button className={landingSectionCss['custom-prev']} onClick={handlePrev}>
+       <CaretLeft size={32} />
+      </button>
+      <button className={landingSectionCss['custom-next']} onClick={handleNext}>
+       <CaretRight size={32} />
+      </button>
+     </>
+    )}
+   </div>
+  </div>
+ )
 }
 
-export default LandingSections;
+export default LandingSections
 
 {
-    /* <Swiper
+ /* <Swiper
   slidesPerView={4}
   spaceBetween={30}
   navigation={true}
@@ -221,7 +216,7 @@ export default LandingSections;
 }
 
 {
-  /* <div class="overflow-hidden  aspect-video bg-red-400 cursor-pointer rounded-xl relative group">
+ /* <div class="overflow-hidden  aspect-video bg-red-400 cursor-pointer rounded-xl relative group">
         <div class="rounded-xl z-50 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out cursor-pointer absolute from-black/80 to-transparent bg-gradient-to-t inset-x-0 -bottom-2 pt-30 text-white flex items-end">
           <div>
             <div class="p-4 space-y-3 text-xl group-hover:opacity-100 group-hover:translate-y-0 translate-y-4 pb-10 transform transition duration-300 ease-in-out">

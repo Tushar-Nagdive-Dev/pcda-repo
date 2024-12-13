@@ -1,41 +1,37 @@
 import React from 'react'
-import {CSSTransition, TransitionGroup} from 'react-transition-group'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import pcdaoTeam from '@/assets/images/pcdao_team.jpg'
-import organizationChart from '@/assets/images/Organization_Chart.jpg'
+import organizationChart from '@/assets/images/OrganisationChart.png'
 import pcdaoStaffSpeech from '@/assets/images/speech.png'
 import pcdaoStaff from '@/assets/images/pcdao_staff_2.jpg'
-import {
-    Dialog,
-    DialogContent,
-    DialogTrigger,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 
 const transitionStyles = {
-    entering: {opacity: 0.5},
-    entered: {
-        opacity: 1,
-        transition: 'opacity 300ms ease-in',
-    },
-    exiting: {opacity: 0},
-    exited: {
-        opacity: 1,
-        transition: 'opacity 300ms ease-in',
-    },
+ entering: { opacity: 0.5 },
+ entered: {
+  opacity: 1,
+  transition: 'opacity 300ms ease-in',
+ },
+ exiting: { opacity: 0 },
+ exited: {
+  opacity: 1,
+  transition: 'opacity 300ms ease-in',
+ },
 }
 
 const aboutusData = [
-    {
-        id: 'ab1',
-        title: 'About PCDA (O)',
-        image: pcdaoTeam,
-        description:
-            'Welcome to the Principal Controller of Defence Accounts (PCDA) (O), a distinguished arm of the Defence Accounts Department (DAD), dedicated to managing the pay and allowances of Indian Army officers. Under the leadership of the Controller General of Defence Accounts (CGDA), we ensure the accurate and timely processing of all pay-related matters, including basic pay, allowances, and entitlements, in accordance with government regulations. Our responsibilities extend to managing various allowances such as house rent, travel, and special compensatory allowances, ensuring that each officer receives their rightful dues without delay. At the PCDA(O), precision, accountability, and service excellence are at the core of our operations. We are committed to maintaining comprehensive pay records and providing transparent, efficient financial management. By supporting Army officers with timely compensation, we contribute directly to their welfare, morale, and operational readiness. With decades of experience, we continue to uphold a legacy of reliable service to the Armed Forces, helping ensure that officers can focus on their mission of safeguarding the nation.',
-    },
-    {
-        id: 'ab2',
-        title: 'Message From PCDA (O)',
-        image: pcdaoStaffSpeech,
-        description: `It was with a great sense of honour & privilege that I took over the charge of PCDA(O) in the month of July 2022. There has been some delay in posting my first message here to you all. The Office of PCDA(O) is responsible for the correct and timely disbursement of Pay & Allowances of all Army Officers serving throughout the length and breadth of our immense country. I wanted to understand a little of the vast scope of its functioning and the problems facing it before posting my first message here.
+ {
+  id: 'ab1',
+  title: 'About PCDA (O)',
+  image: pcdaoTeam,
+  description:
+   'Welcome to the Principal Controller of Defence Accounts (PCDA) (O), a distinguished arm of the Defence Accounts Department (DAD), dedicated to managing the pay and allowances of Indian Army officers. Under the leadership of the Controller General of Defence Accounts (CGDA), we ensure the accurate and timely processing of all pay-related matters, including basic pay, allowances, and entitlements, in accordance with government regulations. Our responsibilities extend to managing various allowances such as house rent, travel, and special compensatory allowances, ensuring that each officer receives their rightful dues without delay. At the PCDA(O), precision, accountability, and service excellence are at the core of our operations. We are committed to maintaining comprehensive pay records and providing transparent, efficient financial management. By supporting Army officers with timely compensation, we contribute directly to their welfare, morale, and operational readiness. With decades of experience, we continue to uphold a legacy of reliable service to the Armed Forces, helping ensure that officers can focus on their mission of safeguarding the nation.',
+ },
+ {
+  id: 'ab2',
+  title: 'Message From PCDA (O)',
+  image: pcdaoStaffSpeech,
+  description: `It was with a great sense of honour & privilege that I took over the charge of PCDA(O) in the month of July 2022. There has been some delay in posting my first message here to you all. The Office of PCDA(O) is responsible for the correct and timely disbursement of Pay & Allowances of all Army Officers serving throughout the length and breadth of our immense country. I wanted to understand a little of the vast scope of its functioning and the problems facing it before posting my first message here.
 I have completed over five months in this Office. I now have first hand experience of its day-to-day functioning. In order to get a better idea of its working and various issues I have also paid visits to different Army stations like Mhow, Chandimandir, Meerut, Ambala and ARTRAC, Shimla and interacted with Officers posted there. I have realized that the majority of problems in the correct and timely disbursement of Pay & Allowances arise from the misinterpretation of rules both by my Office as also by the Officers submitting the claims.
 I have also attended a few retirement seminars held at Army HQrs, New Delhi to better understand the issues faced by retiring Officers. One of the main problems is that of huge recoveries from retirement benefits due to the delayed issue of Part II Orders and delayed Review of the IRLAs. This process has to be streamlined at both ends.
 In these five (05) months it has been my humble endeavour to take certain steps to improve the functioning of this Office and reduce the number of grievances. The following are some of the
@@ -52,142 +48,150 @@ Wishing everyone a very Happy New Year 2023.
 !! Jai Hind !!
 Jajn
 (SANJAY KUMAR SINGH) Pr. Controller`,
-    },
-    {
-        id: 'ab3',
-        title: 'History of PCDA (O)',
-        image: pcdaoStaff,
-        description:
-            'The Principal Controller of Defence Accounts (Officers) originated as the Military Accounts Department during British colonial rule. After India\'s independence in 1947, it was restructured and formally established as PCDA(O), with its headquarters in Allahabad (now Prayagraj), Uttar Pradesh. Initially focused on managing military officers\' accounts, the organization has evolved from manual accounting to digital operations. Today, PCDA(O) functions under the Ministry of Defence, Government of India, providing comprehensive financial services including pension management, medical benefits, and other entitlements for defence personnel.',
-    },
-    {
-        id: 'ab4',
-        title: 'Organization Chart',
-        image: organizationChart,
-        description: '',
-    },
+ },
+ {
+  id: 'ab3',
+  title: 'History of PCDA (O)',
+  image: pcdaoStaff,
+  description:
+   "The Principal Controller of Defence Accounts (Officers) originated as the Military Accounts Department during British colonial rule. After India's independence in 1947, it was restructured and formally established as PCDA(O), with its headquarters in Allahabad (now Prayagraj), Uttar Pradesh. Initially focused on managing military officers' accounts, the organization has evolved from manual accounting to digital operations. Today, PCDA(O) functions under the Ministry of Defence, Government of India, providing comprehensive financial services including pension management, medical benefits, and other entitlements for defence personnel.",
+ },
+ {
+  id: 'ab4',
+  title: 'Organization Chart',
+  image: organizationChart,
+  description: '',
+ },
 ]
 
 function AboutUsSection() {
-    const [currentStage, setCurrentStage] = React.useState(0)
-    return (
-        <div className="w-full h-full max-h-[850px] flex my-12 px-custom">
-            <div className="max-w-[450px] full_hd_screen:max-w-[550px]  h-[750px] full_hd_screen:h-[850px] w-full flex flex-col justify-between full_hd_screen:space-y-5">
-                {aboutusData.map((item, index) => (
-                    <React.Fragment key={item.id}>
-                        <div
-                            className={`flex  text-titleColor  items-center 
+ const [currentStage, setCurrentStage] = React.useState(0)
+ return (
+  <div className="w-full h-full max-h-[850px] flex my-12 px-custom">
+   <div className="max-w-[450px] full_hd_screen:max-w-[550px]  h-[750px] full_hd_screen:h-[850px] w-full flex flex-col justify-between full_hd_screen:space-y-5">
+    {aboutusData.map((item, index) => (
+     <React.Fragment key={item.id}>
+      <div
+       className={`flex  text-titleColor  items-center 
                                      px-6 full_hd_screen:px-8 py-16 full_hd_screen:py-20 cursor-pointer transition-all  ${
-                                currentStage !== index
-                                    ? 'mr-4 bg-mainsecondarysecond rounded-lg'
-                                    : 'bg-selectedSecondary rounded-l-lg'
-                            }`}
-                            onClick={() => setCurrentStage(index)}
-                        >
-                            <h3
-                                className={`${
-                                    currentStage !== index
-                                        ? `text-titleColor`
-                                        : `text-statebluecolor`
-                                } text-3xl font-bold `}
-                            >
-                                {item.title}
-                            </h3>
-                        </div>
-                    </React.Fragment>
-                ))}
-            </div>
-            {/* Content Wing */
-            }
-            <div className="relative  w-5/6 full_hd_screen:w-full max-h-[850px]">
-                <TransitionGroup component={'div'}>
-                    <CSSTransition key={currentStage} timeout={300}>
-                        {(state) => (
-                            <>
-                                {aboutusData.map((item, index) => (
-                                    <React.Fragment key={item.id}>
-                                        {currentStage === index && (
-                                            <React.Fragment>
-                                                {currentStage === 3 ? (
-                                                    <div
-                                                        style={{
-                                                            ...transitionStyles[state],
-                                                            height: '100%',
-                                                            width: '100%',
-                                                            position: 'absolute',
-                                                            top: 0,
-                                                            left: 0,
-                                                        }}
-                                                        className={`p-10 ${
-                                                            currentStage !== index ?
-                                                                'bg-selectedSecondary rounded-lg' : 'bg-selectedSecondary rounded-t-lg rounded-r-lg'
-                                                        }`}
-                                                    >
-                                                        <Dialog>
-                                                            <DialogTrigger>
-                                                                <img
-                                                                    src={item.image}
-                                                                    alt={item.title}
-                                                                    className={`h-full w-full object-cover rounded-lg`}
-                                                                />
-                                                            </DialogTrigger>
-                                                            <DialogContent className="max-w-[1250px] h-fit p-0"
-                                                            >
-                                                                <div
-                                                                    className="w-auto flex items-center justify-center">
-                                                                    <img
-                                                                        src={item.image}
-                                                                        alt={item.title}
-                                                                        className={`max-h-[700px] h-full w-full ${currentStage === 3 ? 'object-fill' : 'object-cover'} rounded-lg`}
-                                                                    />
-                                                                </div>
-                                                            </DialogContent>
-                                                        </Dialog>
-                                                    </div>
-                                                ) : (
-                                                    <div
-                                                        style={{
-                                                            ...transitionStyles[state],
-                                                            height: '100%',
-                                                            width: '100%',
-                                                            position: 'absolute',
-                                                            top: 0,
-                                                            left: 0,
-                                                        }}
-                                                        className={`p-10 ${
-                                                            currentStage === index
-                                                                ? index !== 1 ? 'bg-selectedSecondary rounded-r-lg rounded-b-lg' : 'bg-selectedSecondary rounded-lg'
-                                                                : 'bg-mainsecondarysecond rounded-lg'
-                                                        }`}
-                                                    >
-                                                        <div className="h-full flex gap-16">
-                                                            <div
-                                                                className="w-full flex flex-col space-y-6 text-ternaryGrey font-medium ">
-                                                                <div className="w-full">
-                                                                    <img
-                                                                        src={item.image}
-                                                                        alt={item.title}
-                                                                        className={`h-[400px] w-full ${currentStage === 3 ? 'object-fill' : 'object-cover'} rounded-lg`}
-                                                                    />
-                                                                </div>
-                                                                <p className="text-justify  overflow-y-auto">
-                                                                    {item.description}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </React.Fragment>
-                                        )}
-                                    </React.Fragment>
-                                ))}
-                            </>
-                        )}
-                    </CSSTransition>
-                </TransitionGroup>
-            </div>
-        </div>
-    )
+                                      currentStage !== index
+                                       ? 'mr-4 bg-mainsecondarysecond rounded-lg'
+                                       : 'bg-selectedSecondary rounded-l-lg'
+                                     }`}
+       onClick={() => setCurrentStage(index)}
+      >
+       <h3
+        className={`${
+         currentStage !== index ? `text-titleColor` : `text-statebluecolor`
+        } text-3xl font-bold `}
+       >
+        {item.title}
+       </h3>
+      </div>
+     </React.Fragment>
+    ))}
+   </div>
+   {/* Content Wing */}
+   <div className="relative  w-5/6 full_hd_screen:w-full max-h-[850px]">
+    <TransitionGroup component={'div'}>
+     <CSSTransition key={currentStage} timeout={300}>
+      {(state) => (
+       <>
+        {aboutusData.map((item, index) => (
+         <React.Fragment key={item.id}>
+          {currentStage === index && (
+           <React.Fragment>
+            {currentStage === 3 ? (
+             <div
+              style={{
+               ...transitionStyles[state],
+               height: '100%',
+               width: '100%',
+               position: 'absolute',
+               top: 0,
+               left: 0,
+              }}
+              className={`p-10 flex items-center ${
+               currentStage !== index
+                ? 'bg-selectedSecondary rounded-lg'
+                : 'bg-selectedSecondary rounded-t-lg rounded-r-lg'
+              }`}
+             >
+              <Dialog>
+               <>
+                <div className="relative">
+                 <img
+                  src={item.image}
+                  alt={item.title}
+                  className={` h-full w-full object-cover rounded-lg`}
+                 />
+                 <DialogTrigger>
+                  <button className="absolute bottom-10 left-1/2 -translate-x-1/2 px-4 py-2 bg-statebluecolor rounded-md text-white">
+                   Preview
+                  </button>
+                 </DialogTrigger>
+                </div>
+               </>
+               <DialogContent className="max-w-[1440px] h-fit p-0">
+                <div className="w-auto max-h-[850px] flex items-center justify-center">
+                 <img
+                  src={item.image}
+                  alt={item.title}
+                  className={` h-full w-full ${
+                   currentStage === 3 ? 'object-cover' : 'object-cover'
+                  } rounded-lg`}
+                 />
+                </div>
+               </DialogContent>
+              </Dialog>
+             </div>
+            ) : (
+             <div
+              style={{
+               ...transitionStyles[state],
+               height: '100%',
+               width: '100%',
+               position: 'absolute',
+               top: 0,
+               left: 0,
+              }}
+              className={`p-10 ${
+               currentStage === index
+                ? index !== 1
+                  ? 'bg-selectedSecondary rounded-r-lg rounded-b-lg'
+                  : 'bg-selectedSecondary rounded-lg'
+                : 'bg-mainsecondarysecond rounded-lg'
+              }`}
+             >
+              <div className="h-full flex gap-16">
+               <div className="w-full flex flex-col space-y-6 text-ternaryGrey font-medium ">
+                <div className="w-full">
+                 <img
+                  src={item.image}
+                  alt={item.title}
+                  className={`h-[400px] w-full ${
+                   currentStage === 3 ? 'object-fill' : 'object-cover'
+                  } rounded-lg`}
+                 />
+                </div>
+                <p className="text-justify  overflow-y-auto">
+                 {item.description}
+                </p>
+               </div>
+              </div>
+             </div>
+            )}
+           </React.Fragment>
+          )}
+         </React.Fragment>
+        ))}
+       </>
+      )}
+     </CSSTransition>
+    </TransitionGroup>
+   </div>
+  </div>
+ )
 }
 
 export default AboutUsSection

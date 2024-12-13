@@ -117,7 +117,7 @@ function UpdateGalleryFillForm() {
   
       if (response.status === 200) {
         alert("Gallery updated successfully!");
-        navigate("/gallery");
+        navigate("/pcdao/gallery");
       }
     } catch (error) {
       console.error("Error updating gallery:", error);

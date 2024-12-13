@@ -15,6 +15,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${file.external.testimonial.path}")
     private String externalTestimonialPath;
 
+    @Value("${file.external.news-and-notifications.path}")
+    private String newsAndNotificationsPath;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // Resource handler for gallery files
@@ -23,6 +26,10 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addResourceHandler("/testimonials/**")
                 .addResourceLocations("file:" + externalTestimonialPath)
+                .setCachePeriod(3600);
+
+        registry.addResourceHandler("/news-and-notifications/**")
+                .addResourceLocations("file:" + newsAndNotificationsPath)
                 .setCachePeriod(3600);
     }
 

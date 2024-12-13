@@ -6,13 +6,14 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.inn.pcda.newandnotication.dto.NewsNotificationDTO;
+import com.inn.pcda.newandnotication.dto.NewsResponseDTO;
 import com.inn.pcda.newandnotication.entity.NewsAndNotification;
 
 public interface INewsNotificationService {
     
     public NewsAndNotification createNewsAndNotifications(NewsNotificationDTO newsNotificationDTO);
 
-    public List<NewsAndNotification> getAllNewsAndNotifications();
+    public List<NewsResponseDTO> getAllNewsAndNotifications();
 
     public Boolean deleteNewsAndNotificationById(Long id);
 

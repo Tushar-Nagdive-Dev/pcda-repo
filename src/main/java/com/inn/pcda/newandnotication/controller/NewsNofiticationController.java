@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.inn.pcda.newandnotication.dto.NewsNotificationDTO;
+import com.inn.pcda.newandnotication.dto.NewsResponseDTO;
 import com.inn.pcda.newandnotication.entity.NewsAndNotification;
 import com.inn.pcda.newandnotication.services.INewsNotificationService;
 
@@ -45,10 +46,10 @@ public class NewsNofiticationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<NewsAndNotification>> getAllNewsAndNotifications() {
+    public ResponseEntity<List<NewsResponseDTO>> getAllNewsAndNotifications() {
         log.info("Inside @class NewsNofiticationController @method getAllNewsAndNotifications");
 
-        List<NewsAndNotification> newsList = iNewsNotificationService.getAllNewsAndNotifications();
+        List<NewsResponseDTO> newsList = iNewsNotificationService.getAllNewsAndNotifications();
         if (newsList.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

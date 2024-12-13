@@ -38,5 +38,10 @@
     "name": "file.external.testimonial.path",
     "type": "java.lang.String",
     "description": "file external testimonial path"
+  },
+  {
+    "name": "file.external.news-and-notifications.path",
+    "type": "java.lang.String",
+    "description": "file external news and notofication path"
   }
 ]}

@@ -47,7 +47,25 @@ function NewsAndNotificationFillForm() {
  const [selectedFile, setSelectedFile] = useState(null)
 
  const handleFileChange = (event) => {
-  setSelectedFile(event.target.files[0])
+  const uploadFile = event.target.files[0]
+
+  if (uploadFile) {
+   // Check file type
+   if (uploadFile.type !== 'application/pdf') {
+    toast.error('Only PDF files are allowed.')
+    setSelectedFile(null)
+    return
+   }
+
+   // Check file size (e.g., 10MB limit)
+   const maxSize = 10 * 1024 * 1024 // 10MB in bytes
+   if (uploadFile.size > maxSize) {
+    toast.error('File size must be less than 10MB.')
+    setSelectedFile(null)
+    return
+   }
+   setSelectedFile(event.target.files[0])
+  }
  }
 
  async function onSubmit(values) {
@@ -57,7 +75,8 @@ function NewsAndNotificationFillForm() {
   const newAndNotification = {
    titleEnglish: values.titleEnglish,
    titleHindi: values.titleHindi,
-   type: values.type === 'News & Notification' ? 'NEWS_AND_NOTIFICATION' : 'NEWS',
+   type:
+    values.type === 'News & Notification' ? 'NEWS_AND_NOTIFICATION' : 'NEWS',
    status: values.status === 'Active' ? 'ACTIVE' : 'INACTIVE',
    isNew: values.isNew,
    uiOrder: values.uiOrder,
@@ -133,7 +152,7 @@ function NewsAndNotificationFillForm() {
         <Label className="text-titleColor text-base font-raleway">
          Document (Optional):
         </Label>
-        <Input id="document" type="file" onChange={handleFileChange} />
+        <Input id="document" type="file"  accept=".pdf" onChange={handleFileChange} />
        </div>
 
        <div className="w-full grid grid-cols-2 gap-2">

@@ -25,13 +25,15 @@ const updateLists = [
  {
   id: 'list3',
   titleEnglish: 'Handbook Pay and Allowances 2023',
-  link: 'https://pcdaopune.gov.in/downloads/newmessages/Handbook_Pay_and_Allowances_2023.pdf',
+  link:
+   'https://pcdaopune.gov.in/downloads/newmessages/Handbook_Pay_and_Allowances_2023.pdf',
   isNew: true,
   createdDate: '2024-12-01T20:10:01.976088',
  },
  {
   id: 'list4',
-  titleEnglish: 'Ceiling of Rs 5 Lakh on subscription to Defence Services Officers Provident (DSOP) Fund in Financial Year',
+  titleEnglish:
+   'Ceiling of Rs 5 Lakh on subscription to Defence Services Officers Provident (DSOP) Fund in Financial Year',
   link: 'https://pcdaopune.gov.in/downloads/pensiondata.pdf',
   isNew: true,
   createdDate: '2024-12-02T20:10:01.976088',
@@ -39,13 +41,15 @@ const updateLists = [
  {
   id: 'list5',
   titleEnglish: 'Handbook Pay and Allowances 2023',
-  link: 'https://pcdaopune.gov.in/downloads/newmessages/Handbook_Pay_and_Allowances_2023.pdf',
+  link:
+   'https://pcdaopune.gov.in/downloads/newmessages/Handbook_Pay_and_Allowances_2023.pdf',
   isNew: false,
   createdDate: '2023-07-17T20:10:01.976088',
  },
  {
   id: 'list6',
-  titleEnglish: 'Ceiling of Rs 5 Lakh on subscription to Defence Services Officers Provident (DSOP) Fund in Financial Year',
+  titleEnglish:
+   'Ceiling of Rs 5 Lakh on subscription to Defence Services Officers Provident (DSOP) Fund in Financial Year',
   link: 'https://pcdaopune.gov.in/downloads/Dsop_message.pdf',
   isNew: false,
   createdDate: '2023-05-21T20:10:01.976088',
@@ -53,34 +57,31 @@ const updateLists = [
 ]
 
 function LatestLandingUpdateLists() {
- const accessibilityCtx = useContext(AccessibilityContext);
+ const accessibilityCtx = useContext(AccessibilityContext)
  const [newsData, setNewsData] = useState(updateLists)
 
  useEffect(() => {
-  fetchNoteApi();
- }, []);
+  fetchNoteApi()
+ }, [])
 
  function formatDate(dateString) {
-  if (!dateString) return ""; // Handle null or undefined dates
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
-   year: "numeric",
-   month: "short",
-   day: "2-digit",
-  }); // Example: "Dec 03, 2024"
+  if (!dateString) return '' // Handle null or undefined dates
+  const date = new Date(dateString)
+  return date.toLocaleDateString('en-US', {
+   year: 'numeric',
+   month: 'short',
+   day: '2-digit',
+  }) // Example: "Dec 03, 2024"
  }
 
  async function fetchNoteApi() {
   try {
    const response = await apiClient.get('news')
-   const data = response.data.filter((item) => item.type === 'NEWS' || item.type === 'NEWS_AND_NOTIFICATION')
-   if (data.length === 0) {
-    setNewsData(updateLists)
-   } else {
-    setNewsData(data)
-   }
-  } catch
-   (error) {
+   const data = response.data.filter(
+    (item) => item.type === 'NEWS' || item.type === 'NEWS_AND_NOTIFICATION'
+   )
+   setNewsData(data)
+  } catch (error) {
    console.error('Failed to fetch news')
    // toast.error("")
   }
@@ -95,28 +96,37 @@ function LatestLandingUpdateLists() {
     />
     <div className="w-full flex flex-col space-y-2 !rounded-none overflow-y-auto">
      {newsData.map((item) => (
-      <div key={item.id} className="py-2 flex flex-col border-b-2 border-b-selectedSecondary">
-       <div className="flex gap-1">
-        {item?.isNew ? <img src={newicon} alt="New Message" /> : <div className="min-w-6 min-h-6 w-6 h-6"></div>}
-        <Link to={item.link || '#'} target="_blank" rel="noopener noreferrer">
-         <p
-          className={`text-newprimaryColor font-semibold p-2 m-0 ${accessibilityCtx.getFontSizeClass(
-           'text-base',
-          )}`}
-         >
-          {item.titleEnglish}
-         </p>
-        </Link>
+      <div
+       key={item.id}
+       className="py-2 flex flex-col border-b-2 border-b-selectedSecondary"
+      >
+       <div className="flex gap-1 justify-between">
+        <div className='flex gap-1 items-center'>
+         {item?.isNew ? (
+          <img src={newicon} alt="New Message" className="min-w-6 min-h-6 w-6 h-6"/>
+         ) : (
+          <div className="min-w-6 min-h-6 w-6 h-6"></div>
+         )}
+         <Link to={item.link || '#'} target="_blank" rel="noopener noreferrer">
+          <p
+           className={`text-newprimaryColor font-semibold p-2 m-0 ${accessibilityCtx.getFontSizeClass(
+            'text-base'
+           )}`}
+          >
+           {item.titleEnglish}
+          </p>
+         </Link>
+        </div>
         <div className="min-w-28 w-32 flex flex-col items-end justify-center gap-2 text-titleColor">
          <CalendarDots size={20} />
-         <p className="text-titleColor text-xs font-semibold">{formatDate(item.createdDate)}</p>
+         <p className="text-titleColor text-xs font-semibold">
+          {formatDate(item.createdDate)}
+         </p>
         </div>
        </div>
-
       </div>
      ))}
     </div>
-
    </div>
   </ScrollArea>
  )

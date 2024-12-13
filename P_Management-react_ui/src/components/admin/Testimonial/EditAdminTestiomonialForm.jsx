@@ -110,7 +110,7 @@ function EditAdminTestimonialForm() {
       });
 
       toast.success("Testimonial updated successfully!");
-      navigate("/pcdao/testimonials");
+      navigate("/pcdao/testimonial");
     } catch (err) {
       console.error("Error updating testimonial:", err);
       toast.error("Failed to update testimonial.");

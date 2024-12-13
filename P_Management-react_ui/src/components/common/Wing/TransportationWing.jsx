@@ -33,6 +33,8 @@ import { Input } from '../../ui/input.jsx'
 import { MagnifyingGlass } from '@phosphor-icons/react'
 import apiClient from '../../../auth/ApiClient.jsx'
 
+import wingsBanner from "@/assets/images/banner/Wingscover.jpg"
+
 const wingNamesMap = {
  LEDGER_WING: 'Ledger Wing',
  TRANSPORT_WING: 'Transportation Wing',
@@ -117,7 +119,7 @@ function TransportationWing() {
 
  return (
   <div>
-   <Breadcrumbs title="Wings">
+   <Breadcrumbs title="Wings" picture={wingsBanner}>
     <p className="text-mainprimarycolor text-lg font-light">{`> Transportation Wing`}</p>
    </Breadcrumbs>
    <div className="px-custom py-14 w-full h-full">
@@ -126,38 +128,7 @@ function TransportationWing() {
       title="Transportation Wing"
       className="font-semibold text-newprimaryColor text-lg"
      />
-     <div className="w-full flex justify-between">
-      <h3 className="text-3xl font-bold text-mainprimarycolor">FAQ</h3>
-      <div className="flex gap-3">
-       <Input
-        type="text"
-        placeholder="Search"
-        className="rounded-2xl h-full border-none bg-adminBreadCrumbsBg"
-       />
-       <button className="rounded-full text-white bg-mainprimarycolor p-3">
-        <MagnifyingGlass size={20} />
-       </button>
-      </div>
-     </div>
-     <div className="w-full flex flex-col">
-      <Accordion type="multiple" collapsible className="space-y-4">
-       {singleFaqDetails[0]?.lists.map((item) => (
-        <AccordionItem value={item?.title} key={item?.title}>
-         <AccordionTrigger>{item?.title}</AccordionTrigger>
-         <AccordionContent>
-          <SubAccordion type="multiple" collapsible className="space-y-2">
-           {item?.questions_lists?.map((subitem) => (
-            <SubAccordionItem value={subitem?.id}>
-             <SubAccordionTrigger>{subitem?.question}</SubAccordionTrigger>
-             <SubAccordionContent>{subitem?.content}</SubAccordionContent>
-            </SubAccordionItem>
-           ))}
-          </SubAccordion>
-         </AccordionContent>
-        </AccordionItem>
-       ))}
-      </Accordion>
-     </div>
+     
 
      {/* Ledger Wing */}
      <TitleWithInfo
@@ -194,6 +165,39 @@ function TransportationWing() {
      </div>
 
      <Separator className="my-4 h-1" />
+
+     <div className="w-full flex justify-between">
+      <h3 className="text-3xl font-bold text-mainprimarycolor">FAQ</h3>
+      <div className="flex gap-3">
+       <Input
+        type="text"
+        placeholder="Search"
+        className="rounded-2xl h-full border-none bg-adminBreadCrumbsBg"
+       />
+       <button className="rounded-full text-white bg-mainprimarycolor p-3">
+        <MagnifyingGlass size={20} />
+       </button>
+      </div>
+     </div>
+     <div className="w-full flex flex-col">
+      <Accordion type="multiple" collapsible className="space-y-4">
+       {singleFaqDetails[0]?.lists.map((item) => (
+        <AccordionItem value={item?.title} key={item?.title}>
+         <AccordionTrigger>{item?.title}</AccordionTrigger>
+         <AccordionContent>
+          <SubAccordion type="multiple" collapsible className="space-y-2">
+           {item?.questions_lists?.map((subitem) => (
+            <SubAccordionItem value={subitem?.id}>
+             <SubAccordionTrigger>{subitem?.question}</SubAccordionTrigger>
+             <SubAccordionContent>{subitem?.content}</SubAccordionContent>
+            </SubAccordionItem>
+           ))}
+          </SubAccordion>
+         </AccordionContent>
+        </AccordionItem>
+       ))}
+      </Accordion>
+     </div>
     </div>
    </div>
   </div>

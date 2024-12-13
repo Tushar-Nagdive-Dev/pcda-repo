@@ -193,6 +193,7 @@ public class FAQDetailsService implements IFAQDetailsService{
         dto.setId(section.getId());
         dto.setTitle(section.getTitle());
         dto.setIsActive(section.getIsActive());
+        dto.setWindId(section.getWing().getId());
         dto.setCreatedDate(section.getCreatedDate());
         dto.setUpdatedDate(section.getUpdatedDate());
         return dto;

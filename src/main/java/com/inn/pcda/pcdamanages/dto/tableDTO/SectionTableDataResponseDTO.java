@@ -9,6 +9,7 @@ public class SectionTableDataResponseDTO {
     private Long id;
     private String title;
     private Boolean isActive;
+    private Long windId;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 }
