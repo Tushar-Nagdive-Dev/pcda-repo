@@ -2,7 +2,7 @@ package com.inn.pcda.users.entity;
 
 import java.util.List;
 
-import com.inn.pcda.configs.baseImplementation.BaseEntity;
+import com.inn.pcda.configs.baseimplementation.BaseEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

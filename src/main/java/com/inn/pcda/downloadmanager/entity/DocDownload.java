@@ -3,7 +3,7 @@ package com.inn.pcda.downloadmanager.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import com.inn.pcda.configs.baseImplementation.BaseEntity;
+import com.inn.pcda.configs.baseimplementation.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

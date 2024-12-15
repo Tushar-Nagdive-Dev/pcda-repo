@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.inn.pcda.configs.baseImplementation.BaseEntity;
+import com.inn.pcda.configs.baseimplementation.BaseEntity;
 
 import jakarta.persistence.*;
 import lombok.Data;

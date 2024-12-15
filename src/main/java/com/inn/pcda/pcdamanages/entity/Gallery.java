@@ -1,6 +1,6 @@
 package com.inn.pcda.pcdamanages.entity;
 
-import com.inn.pcda.configs.baseImplementation.BaseEntity;
+import com.inn.pcda.configs.baseimplementation.BaseEntity;
 import com.inn.pcda.pcdamanages.enums.GalleryTypes;
 
 import jakarta.persistence.Column;

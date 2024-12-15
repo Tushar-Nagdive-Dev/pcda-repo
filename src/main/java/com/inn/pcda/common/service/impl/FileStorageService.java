@@ -12,9 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.inn.pcda.common.service.IFileStorageService;
+import com.inn.pcda.exceptions.FileStorageException;
 
 @Service
-public class FileStorageService implements IFileStorageService{
+public class FileStorageService implements IFileStorageService {
 
     private static final String UPLOAD_DIR = "uploads/";
 
@@ -42,11 +43,8 @@ public class FileStorageService implements IFileStorageService{
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to store files", e);
+            throw new FileStorageException("Failed to store files", e);
         }
         return fileIds;
     }
-
-    
 }

@@ -1,6 +1,6 @@
 package com.inn.pcda.messages.entity;
 
-import com.inn.pcda.configs.baseImplementation.BaseEntity;
+import com.inn.pcda.configs.baseimplementation.BaseEntity;
 import com.inn.pcda.messages.enums.Status;
 import com.inn.pcda.messages.enums.StatusConverter;
 import com.inn.pcda.messages.enums.Types;

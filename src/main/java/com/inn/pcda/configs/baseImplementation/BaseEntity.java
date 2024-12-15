@@ -1,4 +1,4 @@
-package com.inn.pcda.configs.baseImplementation;
+package com.inn.pcda.configs.baseimplementation;
 
 import java.time.LocalDateTime;
 
@@ -8,7 +8,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.inn.pcda.configs.baseImplementation.audits.IpAddressEntityListener;
+import com.inn.pcda.configs.baseimplementation.audits.IpAddressEntityListener;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

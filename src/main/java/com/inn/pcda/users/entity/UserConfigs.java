@@ -2,7 +2,7 @@ package com.inn.pcda.users.entity;
 
 import java.time.LocalDateTime;
 
-import com.inn.pcda.configs.baseImplementation.BaseEntity;
+import com.inn.pcda.configs.baseimplementation.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

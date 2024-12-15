@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-import com.inn.pcda.configs.baseImplementation.audits.CustomAuditorAware;
+import com.inn.pcda.configs.baseimplementation.audits.CustomAuditorAware;
 import com.inn.pcda.users.repository.UserRepository;
 
 @Configuration

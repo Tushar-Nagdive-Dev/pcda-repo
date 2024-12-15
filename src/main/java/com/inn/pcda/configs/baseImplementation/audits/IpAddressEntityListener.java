@@ -1,4 +1,4 @@
-package com.inn.pcda.configs.baseImplementation.audits;
+package com.inn.pcda.configs.baseimplementation.audits;
 
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.inn.pcda.configs.baseImplementation.BaseEntity;
+import com.inn.pcda.configs.baseimplementation.BaseEntity;
 
 public class IpAddressEntityListener {
 

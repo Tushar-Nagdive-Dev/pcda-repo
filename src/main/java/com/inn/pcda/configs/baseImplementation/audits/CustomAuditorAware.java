@@ -1,14 +1,12 @@
-package com.inn.pcda.configs.baseImplementation.audits;
+package com.inn.pcda.configs.baseimplementation.audits;
 
 import java.util.Optional;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.inn.pcda.users.entity.CustomUserDetails;
-import com.inn.pcda.users.entity.Users;
 import com.inn.pcda.users.repository.UserRepository;
 
 public class CustomAuditorAware implements AuditorAware<Long> {
@@ -29,15 +27,11 @@ public class CustomAuditorAware implements AuditorAware<Long> {
 
         Object principal = authentication.getPrincipal();
 
-        // Use a custom UserDetails implementation or cast to retrieve user ID
-        if (principal instanceof CustomUserDetails) { 
-            return Optional.of(((CustomUserDetails) principal).getId());
+        // Use enhanced instanceof with pattern matching
+        if (principal instanceof CustomUserDetails customUserDetails) {
+            return Optional.of(customUserDetails.getId());
         }
 
         return Optional.empty();
     }
-
-
-
-
 }

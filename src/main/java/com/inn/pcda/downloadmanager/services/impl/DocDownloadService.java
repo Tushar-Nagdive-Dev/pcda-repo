@@ -182,7 +182,7 @@ public class DocDownloadService implements IDocDownloadService{
     }
 
     private String buildDocumentUrl(String documentPath) {
-        return baseUrl + documentPath; // Replace with your base URL logic
+        return baseUrl +"doc-download/"+ documentPath; // Replace with your base URL logic
     }
 
 }

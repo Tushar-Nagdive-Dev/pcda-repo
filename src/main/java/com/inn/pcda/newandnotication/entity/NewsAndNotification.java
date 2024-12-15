@@ -1,6 +1,6 @@
 package com.inn.pcda.newandnotication.entity;
 
-import com.inn.pcda.configs.baseImplementation.BaseEntity;
+import com.inn.pcda.configs.baseimplementation.BaseEntity;
 import com.inn.pcda.newandnotication.enums.Status;
 import com.inn.pcda.newandnotication.enums.Types;
 

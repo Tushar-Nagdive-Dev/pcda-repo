@@ -2,7 +2,7 @@ package com.inn.pcda.pcdamanages.entity;
 
 import java.util.Objects;
 
-import com.inn.pcda.configs.baseImplementation.BaseEntity;
+import com.inn.pcda.configs.baseimplementation.BaseEntity;
 
 import jakarta.persistence.*;
 import lombok.Data;

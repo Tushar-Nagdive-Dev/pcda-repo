@@ -13,7 +13,6 @@ import com.inn.pcda.downloadmanager.services.IDocDownloadService;
 import java.io.IOException;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,10 +28,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @RequestMapping("/api/document")
 public class DocDownloadController {
-   @Autowired
-    private IDocDownloadService docDownloadService;
 
-    @PostMapping()
+    private final IDocDownloadService docDownloadService;
+
+    public DocDownloadController(IDocDownloadService docDownloadService) {
+        this.docDownloadService = docDownloadService;
+    }
+
+    @PostMapping
     public ResponseEntity<DocDownload> addDocument(@ModelAttribute AddDocDto dto, @RequestParam("file") MultipartFile file) {
         try {
             DocDownload docDownload = docDownloadService.addDocument(dto, file);
@@ -45,13 +48,25 @@ public class DocDownloadController {
     @PutMapping("/{id}")
     public ResponseEntity<String> updateDocument(@PathVariable Long id, @ModelAttribute UpdateDocDto dto, @RequestParam(value = "file", required = false) MultipartFile file) {
         try {
-            Boolean isUpdated = docDownloadService.updateDocument(id, dto, file);
-            if (isUpdated) {
+            if (docDownloadService.updateDocument(id, dto, file)) {
                 return ResponseEntity.ok("Document updated successfully");
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Document update failed");
             }
         } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteDocument(@PathVariable Long id) {
+        try {
+            if (docDownloadService.deleteDocument(id)) {
+                return ResponseEntity.ok("Document deleted successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Document deletion failed");
+            }
+        } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
@@ -63,20 +78,6 @@ public class DocDownloadController {
             return ResponseEntity.ok(docDownload);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteDocument(@PathVariable Long id) {
-        try {
-            Boolean isDeleted = docDownloadService.deleteDocument(id);
-            if (isDeleted) {
-                return ResponseEntity.ok("Document deleted successfully");
-            } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Document deletion failed");
-            }
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -92,7 +93,7 @@ public class DocDownloadController {
         }
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<DocDownload>> getAllDocuments() {
         try {
             List<DocDownload> documents = docDownloadService.getAllDocuments();
@@ -101,5 +102,4 @@ public class DocDownloadController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-    
 }

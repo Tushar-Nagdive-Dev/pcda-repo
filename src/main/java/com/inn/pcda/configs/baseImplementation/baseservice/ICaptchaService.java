@@ -1,4 +1,4 @@
-package com.inn.pcda.configs.baseImplementation.baseservice;
+package com.inn.pcda.configs.baseimplementation.baseservice;
 
 import java.util.Map;
 import java.awt.image.BufferedImage;
