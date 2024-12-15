@@ -3,14 +3,16 @@ package com.inn.pcda.configs.baseimplementation.baseservice;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 
 import org.springframework.stereotype.Service;
+
+import com.inn.pcda.exceptions.CaptchaGenerationException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,12 +21,12 @@ import lombok.extern.slf4j.Slf4j;
 public class Captcha implements ICaptchaService {
 
     private final Map<String, String> captchaStore = new HashMap<>();
-    private final Random random = new Random();
+    private final SecureRandom secureRandom = new SecureRandom(); // Use SecureRandom for better security
 
     @Override
     public Map<String, String> generateCaptcha() {
         log.info("Generating new CAPTCHA...");
-        
+
         // Generate CAPTCHA text and token
         String captchaText = generateRandomText(6);
         String token = generateToken();
@@ -74,7 +76,7 @@ public class Captcha implements ICaptchaService {
         String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder captchaText = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            captchaText.append(chars.charAt(random.nextInt(chars.length())));
+            captchaText.append(chars.charAt(secureRandom.nextInt(chars.length())));
         }
         return captchaText.toString();
     }
@@ -82,14 +84,16 @@ public class Captcha implements ICaptchaService {
     @Override
     public String generateToken() {
         log.debug("Generating unique CAPTCHA token...");
-        return Long.toHexString(System.currentTimeMillis()) + random.nextInt(1000);
+        return Long.toHexString(System.currentTimeMillis()) + secureRandom.nextInt(1000);
     }
 
     @Override
     public BufferedImage createCaptchaImage(String text) {
         log.debug("Creating CAPTCHA image for text: {}", text);
 
-        Integer width = 200, height = 70;
+        Integer width = 200; 
+        Integer height = 70;
+        
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = image.createGraphics();
 
@@ -105,7 +109,7 @@ public class Captcha implements ICaptchaService {
         // Add some noise lines
         g2d.setColor(Color.GRAY);
         for (int i = 0; i < 10; i++) {
-            g2d.drawLine(random.nextInt(width), random.nextInt(height), random.nextInt(width), random.nextInt(height));
+            g2d.drawLine(secureRandom.nextInt(width), secureRandom.nextInt(height), secureRandom.nextInt(width), secureRandom.nextInt(height));
         }
 
         g2d.dispose();
@@ -123,7 +127,7 @@ public class Captcha implements ICaptchaService {
             return "data:image/png;base64," + base64;
         } catch (Exception e) {
             log.error("Error encoding image to Base64", e);
-            throw new RuntimeException("Error encoding image to Base64", e);
+            throw new CaptchaGenerationException("Error encoding image to Base64", e);
         }
     }
 }
