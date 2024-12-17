@@ -7,9 +7,6 @@ import {
  Dialog,
  DialogTrigger,
  DialogContent,
- DialogHeader,
- DialogFooter,
- DialogClose,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 
@@ -22,6 +19,7 @@ function LinkWithTitleCard({ title, link, view_link }) {
  const [numPages, setNumPages] = useState()
  const [containerWidth, setContainerWidth] = useState(null)
  const pdfContainerRef = useRef(null)
+ console.log("Download link title -", title)
 
  useEffect(() => {
   if (pdfContainerRef.current) {
@@ -39,7 +37,7 @@ function LinkWithTitleCard({ title, link, view_link }) {
     <div className="flex justify-between p-3 bg-white text-paragraphcolor">
      <DialogTrigger>
       <p className="text-secondaryGrey underline underline-offset-2">
-       <li className="relative px-4 ">{title}</li>
+       <li className="relative px-4 text-left">{title}</li>
       </p>
      </DialogTrigger>
      <DialogContent className="p-0 bg-transparent !max-w-2xl">
@@ -63,13 +61,6 @@ function LinkWithTitleCard({ title, link, view_link }) {
        </Document>
       </div>
      </DialogContent>
-     <DialogFooter>
-      <DialogClose asChild>
-       <Button type="button" variant="secondary">
-        Close
-       </Button>
-      </DialogClose>
-     </DialogFooter>
      <div className="flex gap-2 items-center">
       {/*<a href={view_link} target="_blank" rel="noopener noreferrer">*/}
       {/*  <Eye size={24} color="#0D6EFD" className="cursor-pointer" />*/}

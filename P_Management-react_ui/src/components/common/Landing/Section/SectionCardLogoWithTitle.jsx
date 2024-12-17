@@ -1,6 +1,6 @@
 import { CaretRight } from '@phosphor-icons/react'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 // function SectionCardLogoWithTitle({ title, icon }) {
 //   return (
@@ -60,13 +60,13 @@ function SectionCardLogoWithTitle({ title, icon, description, link }) {
      <p className="text-white text-base">{description}</p>
     </div>
 
-    <button
+    <Link
+     to={link}
      className="flex items-center gap-2 w-fit rounded-full bg-white h-fit py-2 px-3"
-     onClick={() => navigate(link)}
     >
      <p className="text-titleColor">Read More </p>
      <CaretRight size={26} color="#0d6efd" />
-    </button>
+    </Link>
    </div>
   </div>
  )

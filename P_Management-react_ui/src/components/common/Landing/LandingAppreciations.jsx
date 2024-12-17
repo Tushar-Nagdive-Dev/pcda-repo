@@ -3,21 +3,23 @@ import LeftBorderWithTitle from "../../LeftBorderWithTitle";
 import { Quote } from "lucide-react";
 import quoteIcon from "@/assets/icons/quotes.svg"
 import appreciationsLetter from "@/assets/images/apperications_letter.svg"
+import { useNavigate } from "react-router-dom";
 
 function LandingAppreciations() {
+  const navigate = useNavigate();
   return (
     <div className="w-full flex flex-col space-y-6 bg-mainsecondarysecond px-custom py-24">
       <LeftBorderWithTitle
         textSize="text-base"
-        title="Honored"
-        className="text-newprimaryColor text-lg font-semibold"
+        title="Appreciations"
+        className="text-newprimaryColor text-3xl font-bold"
       />
       <div className="w-full h-full flex justify-between ">
         <div className="w-1/2 h-full flex flex-col justify-between">
           <div className="flex flex-col gap-6 mb-12">
-            <h4 className="text-3xl text-mainprimarycolor font-bold mb-9">
+            {/* <h4 className="text-3xl text-mainprimarycolor font-bold mb-9">
               Appreciations
-            </h4>
+            </h4> */}
 
             <p className="text-titleColor text-justify">
               Donec dictum tristique porta. Etiam convallis lorem lobortis nulla
@@ -34,6 +36,7 @@ function LandingAppreciations() {
             <button
               type="button"
               className="flex items-center justify-center py-3 px-6 bg-statebluecolor text-white font-bold w-fit rounded-full"
+              onClick={() => navigate("/appreciations")}
             >
               See All
             </button>

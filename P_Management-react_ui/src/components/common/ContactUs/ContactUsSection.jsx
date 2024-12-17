@@ -108,9 +108,7 @@ function ContactUsSection() {
       >
        <h3
         className={`${
-         currentStage !== index
-          ? `text-titleColor`
-          : `text-statebluecolor`
+         currentStage !== index ? `text-titleColor` : `text-statebluecolor`
         } text-2xl font-bold `}
        >
         {item.title}
@@ -142,77 +140,91 @@ function ContactUsSection() {
             : 'bg-selectedSecondary rounded-r-lg rounded-b-lg'
           }`}
          >
-          <div className="flex flex-col space-y-6" style={{
-           ...transitionStyles[state],
-          }}>
+          <div
+           className="flex flex-col space-y-8"
+           style={{
+            ...transitionStyles[state],
+           }}
+          >
            <div className="flex flex-col gap-2">
-            <p className="text-mainprimarycolor font-bold text-2xl">
-             Office Of The Principal Controller Of Defence Accounts
-             (Officers)
+            <p className="text-mainprimarycolor font-bold text-2xl text-center">
+             Office Of The Principal Controller Of Defence Accounts (Officers)
             </p>
-            <p className="text-mainprimarycolor text-lg">
+            <p className="text-mainprimarycolor text-lg text-center font-semibold">
              Golibar Maidan, Pune - 411 001
             </p>
            </div>
 
-           <div className="flex flex-col gap-2">
+           <div className="flex flex-col gap-2 items-center">
             <ContactUsInlineTitleAndContent
-                title="Fax"
-                info="(020) 2645-3446"
+             title="Fax"
+             info="(020) 2645-3446"
             />
             <ContactUsInlineTitleAndContent
-                title="Website"
-                info="https://pcdaopune.gov.in"
-            />
-           </div>
-
-           <p className="text-mainprimarycolor font-bold text-lg">
-            PCDA(O) Exchange
-           </p>
-
-           <div className="flex flex-col gap-2">
-            <ContactUsInlineTitleAndContent
-                title="Pro Civil"
-                info="(020) 2640-1100"
-            />
-            <ContactUsInlineTitleAndContent
-                title="Army"
-                info="https://pcdaopune.gov.in"
+             title="Website"
+             info="https://pcdaopune.gov.in"
             />
            </div>
 
-           <p className="text-mainprimarycolor font-bold text-lg">
-            Timings
-           </p>
+           <div className="flex flex-col items-center space-y-3">
+            <p className="text-mainprimarycolor font-bold text-base">
+             PCDA(O) Exchange
+            </p>
 
-           <div className="flex flex-col gap-2">
-            <ContactUsInlineTitleAndContent
-                bigtitle="Timings"
-                title="PRO Timing"
-                info="Monday To Friday (08:30hr to 16:00Hr)"
-            />
-            <ContactUsInlineTitleAndContent
-                title="Office Timing"
-                info="(09:30hr to 18:00Hr)"
-            />
+            <div className="flex flex-col items-center">
+             <ContactUsInlineTitleAndContent
+              title="PRO Civil"
+              info="(020) 2640-1100"
+             />
+             <ContactUsInlineTitleAndContent
+              title="Army"
+              info="6512/6528/7756/7761/7762/7763"
+             />
+            </div>
            </div>
 
-           <div className="flex flex-col gap-2">
+           <div className='flex flex-col items-center space-y-4'>
+            <p className="text-mainprimarycolor font-bold text-lg">Timings</p>
+
+            <div className="grid grid-cols-2 gap-10">
+             <ContactUsTitleAndContent
+            //   bigtitle="Timings"
+              title="PRO Timing"
+              info="Monday To Friday (09:30hr to 18:00Hr)"
+              className="items-center"
+             />
+             <ContactUsTitleAndContent
+              title="Office Timing"
+              info="Monday To Friday (09:30hr to 18:00Hr)"
+              className="items-center"
+             />
+            </div>
+           </div>
+
+           {/* <div className="flex flex-col space-y-4">
+            <p className="text-mainprimarycolor font-bold text-xl">Timings</p>
+            <ContactUsTitleAndContent
+             title="Monday to Friday"
+             info="(09:00hr to 13:30Hr) & (14:30Hr to 17:30hr)"
+            />
+           </div> */}
+
+           <div className="flex flex-col gap-2 items-center">
             <ContactUsInlineTitleAndContent
-                title="For Retired Officers and rank pay arrears related matter"
-                info="rankpay-pcdaopune[at]nic[dot]in"
+             title="Retired Officers and rank pay arrears related queries"
+             info="rankpay-pcdaopune@nic.in"
             />
             <ContactUsInlineTitleAndContent
-                title="For TA/DA related matter"
-                info="tada-pcdaopune[at]nic[dot]in"
+             title="TA/DA related queries"
+             info="tada-pcdaopune@nic.in"
             />
             <ContactUsInlineTitleAndContent
-                title="For Ledger Section matter"
-                info="ledger-pcdaopune[at]nic[dot]in"
+             title="Ledger Section queries"
+             info="ledger-pcdaopune@nic.in"
             />
             <ContactUsInlineTitleAndContent
-                title="For grievances pertaining to other matter"
-                info="generalquery-pcdaopune[at]nic[dot]in"
+             title="Grievances pertaining to other queries"
+             info="generalquery-pcdaopune@nic.in"
             />
            </div>
           </div>
@@ -221,14 +233,14 @@ function ContactUsSection() {
 
         {/* Details of Chief Vigilance Officer (CVO) in DAD*/}
         {currentStage === 1 && (
-            <div
-                style={{
-                 ...transitionStyles[state],
-                 position: 'absolute',
-                 top: 0,
-                 left: 0,
-                 width: '100%',
-                 height: '100%',
+         <div
+          style={{
+           ...transitionStyles[state],
+           position: 'absolute',
+           top: 0,
+           left: 0,
+           width: '100%',
+           height: '100%',
           }}
           className={`h-full p-10 ${
            currentStage === 1
@@ -236,25 +248,25 @@ function ContactUsSection() {
             : 'bg-selectedSecondary rounded-r-lg rounded-b-lg'
           }`}
          >
-          <div className="flex flex-col space-y-4">
+          <div className="h-full flex flex-col items-center justify-center space-y-4 text-2xl">
            <ContactUsTitleAndContent
             title="Shri. Rajesh Chandra"
             info="IDAS, Jt.CGDA & CVO"
+            className="items-center"
            />
 
            <ContactUsTitleAndContent
             title="Address"
             info="Office Of The CGDA, Ulan Batar Road, Palam, Delhi Cantt-110010"
+            className="items-center"
            />
 
-           <ContactUsTitleAndContent
-            title="Telephone"
-            info="011-20893013"
-           />
+           <ContactUsTitleAndContent title="Telephone" info="011-20893013" />
 
            <ContactUsTitleAndContent
             title="Email"
             info="chandra44e.dad@gov.in"
+            className="items-center"
            />
           </div>
          </div>
@@ -288,10 +300,7 @@ function ContactUsSection() {
             info="Office Of The PCDA(O), Golibar Maidan, Pune-411011"
            />
 
-           <ContactUsTitleAndContent
-            title="Telephone"
-            info="020-26401102"
-           />
+           <ContactUsTitleAndContent title="Telephone" info="020-26401102" />
 
            <ContactUsTitleAndContent
             title="Email"
@@ -332,20 +341,14 @@ function ContactUsSection() {
             info="Office-In-Charge"
            />
 
-           <ContactUsTitleAndContent
-            title="Email"
-            info="ramkc.56566@gov.in"
-           />
+           <ContactUsTitleAndContent title="Email" info="ramkc.56566@gov.in" />
 
            <div className="w-full grid grid-cols-2">
             <div className="flex flex-col space-y-2">
              <p className="text-mainprimarycolor font-bold text-xl">
               For Serving Officers
              </p>
-             <ContactUsInlineTitleAndContent
-              title="ASCON"
-              info="7275 & 7975"
-             />
+             <ContactUsInlineTitleAndContent title="ASCON" info="7275 & 7975" />
              <ContactUsInlineTitleAndContent
               title="Civ Landline"
               info="(020) 2645-0691"
@@ -368,9 +371,7 @@ function ContactUsSection() {
            </div>
 
            <div className="flex flex-col space-y-4">
-            <p className="text-mainprimarycolor font-bold text-xl">
-             Timings
-            </p>
+            <p className="text-mainprimarycolor font-bold text-xl">Timings</p>
             <ContactUsTitleAndContent
              title="Monday to Friday"
              info="(09:00hr to 13:30Hr) & (14:30Hr to 17:30hr)"

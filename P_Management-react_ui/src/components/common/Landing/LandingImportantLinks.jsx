@@ -28,7 +28,10 @@ import itr from '@/assets/icons/ITR.svg'
 import itrInvertedLogo from '@/assets/icons/ITR_inverted.svg'
 import sheBoxLogo from '@/assets/icons/she_box.png'
 import LogoWithLinkCard from './ImportantLinks/LogoWithLinkCard'
+import ebookLogo from '@/assets/icons/ebook.png'
+import ebookPdf from '@/assets/docs/Handbook_Pay_and_Allowances_2023.pdf'
 import { Link } from 'react-router-dom'
+import EBOOKModal from './EBOOKModal'
 
 const slides = [
  {
@@ -73,20 +76,20 @@ const slides = [
   link: 'https://shebox.wcd.gov.in/',
   title: 'SHE-BOX',
  },
-//  {
-//   id: 7,
-//   icon: nationalPortalLogo,
-//   icon2: nationalPortalInvertedLogo,
-//   link: 'https://www.india.gov.in/',
-//   title: 'India\'s National Portal',
-//  },
  {
-    id: 7,
-    icon: nationalPortalLogo,
-    icon2: nationalPortalInvertedLogo,
-    link: 'https://www.india.gov.in/',
-    title: 'India\'s National Portal',
-   },
+  id: 7,
+  icon: pcdap,
+  icon2: pcdapInvertedLogo,
+  link: 'sparsh',
+  title: 'Sparsh',
+ },
+ {
+  id: 8,
+  icon: ebookLogo,
+  icon2: ebookLogo,
+  link: ebookPdf,
+  title: 'E-BOOK',
+ },
 ]
 
 function LandingImportantLinks() {
@@ -114,64 +117,40 @@ function LandingImportantLinks() {
     <h4 className={`text-3xl text-mainprimarycolor font-bold`}>
      Important Links
     </h4>
-    {/*<div className={landingImportantLinkCSS["custom-swiper-container"]}>*/}
-    {/*  <Swiper*/}
-    {/*    slidesPerView={5}*/}
-    {/*    spaceBetween={20}*/}
-    {/*    navigation={true}*/}
-    {/*    freeMode={true}*/}
-    {/*    modules={[FreeMode, Navigation]}*/}
-    {/*    loop={true}*/}
-    {/*    autoplay={{ delay: 3000 }}*/}
-    {/*    className={landingImportantLinkCSS["my-swiper"]}*/}
-    {/*    onSwiper={(swiper) => (swiperRef.current = swiper)}*/}
-    {/*  >*/}
-    {/*    {slides.map((slide) => (*/}
-    {/*      <SwiperSlide*/}
-    {/*        key={slide.id}*/}
-    {/*        className={landingImportantLinkCSS["my-slide"]}*/}
-    {/*      >*/}
-    {/*        <Link to={slide.link} target="_blank" rel="noopener noreferrer">*/}
-    {/*          <LogoWithLinkCard*/}
-    {/*            icon={slide.icon}*/}
-    {/*            icon2={slide.icon2}*/}
-    {/*            link={slide.link}*/}
-    {/*            title={slide.title}*/}
-    {/*          />*/}
-    {/*        </Link>*/}
-    {/*      </SwiperSlide>*/}
-    {/*    ))}*/}
-    {/*  </Swiper>*/}
-
-    {/*  <button*/}
-    {/*    className={landingImportantLinkCSS["custom-prev"]}*/}
-    {/*    onClick={handlePrev}*/}
-    {/*  >*/}
-    {/*    <CaretLeft size={32} />*/}
-    {/*  </button>*/}
-    {/*  <button*/}
-    {/*    className={landingImportantLinkCSS["custom-next"]}*/}
-    {/*    onClick={handleNext}*/}
-    {/*  >*/}
-    {/*    <CaretRight size={32} />*/}
-    {/*  </button>*/}
-    {/*</div>*/}
     <div className="grid grid-cols-3 hd_screen:grid-cols-4 gap-6 h-[750px] max-h-[950px]">
      {slides.map((slide) => (
-      <Link key={slide.id} to={slide.link} target="_blank" rel="noopener noreferrer">
-       <LogoWithLinkCard
-        icon={slide.icon}
-        icon2={slide.icon2}
-        link={slide.link}
-        title={slide.title}
-       />
-      </Link>
+      <React.Fragment>
+       {slide.title === 'E-BOOK' ? (
+        <EBOOKModal pdf={slide.link}>
+         <LogoWithLinkCard
+          icon={slide.icon}
+          icon2={slide.icon2}
+          link={slide.link}
+          title={slide.title}
+         />
+        </EBOOKModal>
+       ) : (
+        <Link
+         key={slide.id}
+         to={slide.link}
+         target="_blank"
+         rel="noopener noreferrer"
+         className='h-full'
+        >
+         <LogoWithLinkCard
+          icon={slide.icon}
+          icon2={slide.icon2}
+          link={slide.link}
+          title={slide.title}
+         />
+        </Link>
+       )}
+      </React.Fragment>
      ))}
     </div>
    </div>
   </div>
  )
-
 }
 
 export default LandingImportantLinks

@@ -4,6 +4,8 @@ import pcdaoTeam from '@/assets/images/pcdao_team.jpg'
 import organizationChart from '@/assets/images/OrganisationChart.png'
 import pcdaoStaffSpeech from '@/assets/images/speech.png'
 import pcdaoStaff from '@/assets/images/pcdao_staff_2.jpg'
+import pcdaoOffice from '@/assets/images/office_building/DSC_5900_2.jpg'
+import pcdaoStoneImage from "@/assets/images/office_building/Foundation Stone of PCDAO Building.JPG";
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 
 const transitionStyles = {
@@ -25,7 +27,7 @@ const aboutusData = [
   title: 'About PCDA (O)',
   image: pcdaoTeam,
   description:
-   'Welcome to the Principal Controller of Defence Accounts (PCDA) (O), a distinguished arm of the Defence Accounts Department (DAD), dedicated to managing the pay and allowances of Indian Army officers. Under the leadership of the Controller General of Defence Accounts (CGDA), we ensure the accurate and timely processing of all pay-related matters, including basic pay, allowances, and entitlements, in accordance with government regulations. Our responsibilities extend to managing various allowances such as house rent, travel, and special compensatory allowances, ensuring that each officer receives their rightful dues without delay. At the PCDA(O), precision, accountability, and service excellence are at the core of our operations. We are committed to maintaining comprehensive pay records and providing transparent, efficient financial management. By supporting Army officers with timely compensation, we contribute directly to their welfare, morale, and operational readiness. With decades of experience, we continue to uphold a legacy of reliable service to the Armed Forces, helping ensure that officers can focus on their mission of safeguarding the nation.',
+   'Welcome to the PCDA (O), a distinguished organization within Defence Accounts Department (DAD), with a legacy as one of the oldest departments within Government of India. At the helm of this esteemed department is the Controller General of Defence Accounts (CGDA). We take pride in our pivotal role in providing indispensable facilitation of pay and allowances to the Army Officers, conducting meticulous accounting and performing comprehensive internal audits. Our focus lies in managing the expenditures and receipts of the Defence Officers. With our unwavering commitment ot excellence and accountability, we ensure the utmost precision in managing the financial affiars of these cirtical institutions, contributing to the nation’s defence and security. \n\n Mission Statement- We strives to achieve excellence and professionalism in accounting and financial services and in performing audit functions. Our Mission & Vision- PCDA (O) Strives to be a recognized leader in DAD, by consistently delivering first-class services and solutions. The Office has adopted a vision that challenges us to build upon past accomplishments to reach higher. \n\n Quality Policy- Office of the PCDA (O) is committed to render efficient, correct and prompt accounting, payment and financial services leading to customer satisfaction. It is also committed to render efficient audit services to ensure public accountability. \n\n Office of the PCDA (O), Pune takes great pride in providing service to services. Our key service features are as follows: \n • Audit, Accounting & disbursement of Pay & Allowances of the Officers of the Indian Army. \n • Audit & adjustment of the Travel related & other claims of the Officers. \n • Timely processing of Terminal/Retiring benefits of the Officers. \n• Updation/Maintenance of Pay Records',
  },
  {
   id: 'ab2',
@@ -52,9 +54,9 @@ Jajn
  {
   id: 'ab3',
   title: 'History of PCDA (O)',
-  image: pcdaoStaff,
+  image: pcdaoStoneImage,
   description:
-   "The Principal Controller of Defence Accounts (Officers) originated as the Military Accounts Department during British colonial rule. After India's independence in 1947, it was restructured and formally established as PCDA(O), with its headquarters in Allahabad (now Prayagraj), Uttar Pradesh. Initially focused on managing military officers' accounts, the organization has evolved from manual accounting to digital operations. Today, PCDA(O) functions under the Ministry of Defence, Government of India, providing comprehensive financial services including pension management, medical benefits, and other entitlements for defence personnel.",
+   "The PCDA(O) , a office located in pune, is an institution which provides all the finance related work especially oriented to army and defence officers. It originated in 1939 due to the need to manage pay and allowances for army personnel during World War II. At start it was set up for the \"Office of the Field Controller of Military Accounts\" on November 1, 1940. After that it grew and as reinforcements were sent overseas, a new office was sought, eventually located in the \"Shri Shahu Palace\" in Pune. Furthermore, their work expands into wings each handling specific branches like Infantry, Ordinance, Medical, etc. In 1942, a separate office was established for British Service Officers' accounts, and the office later became the Controller of Defence Accounts, streamlining operations. In 1957, a new building was approved, and the office moved to its permanent location in 1958 and handled all the work of pay, allowances, and financial accounts of Indian Army officers from there.",
  },
  {
   id: 'ab4',
@@ -170,11 +172,15 @@ function AboutUsSection() {
                   src={item.image}
                   alt={item.title}
                   className={`h-[400px] w-full ${
-                   currentStage === 3 ? 'object-fill' : 'object-cover'
+                   currentStage === 3
+                    ? 'object-fill'
+                    : currentStage === 2
+                    ? ' object-fill'
+                    : 'object-cover'
                   } rounded-lg`}
                  />
                 </div>
-                <p className="text-justify  overflow-y-auto">
+                <p className="text-justify  overflow-y-auto whitespace-pre-line leading-relaxed">
                  {item.description}
                 </p>
                </div>

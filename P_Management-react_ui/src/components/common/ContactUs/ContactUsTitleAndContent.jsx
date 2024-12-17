@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react'
 
-function ContactUsTitleAndContent({ title, info }) {
-  return (
-    <div
-      className={`
-        "flex flex-col gap-2" 
+function ContactUsTitleAndContent({ title, info, className }) {
+ return (
+  <div
+   className={`
+        flex flex-col gap-2 ${className}
       `}
-    >
-      <p className="text-mainprimarycolor font-bold ">{title}</p>
-      <p className="text-titleColor">{info}</p>
-    </div>
-  );
+  >
+   <p className="text-mainprimarycolor font-bold ">{title}</p>
+   <p className="text-titleColor">{info}</p>
+  </div>
+ )
 }
 
-export default ContactUsTitleAndContent;
+export default ContactUsTitleAndContent

@@ -36,12 +36,11 @@ function Footer() {
                                 height={60}
                                 className="w-72 h-fit"
                             />
-                            <p className="w-full flex flex-wrap h-fit text-justify">
+                            <p className="w-full flex flex-wrap h-fit text-justify text-lg">
                                 The PCDA (O) is an abbreviation for the Principal Controller of Defence Accounts
-                                (Officers). It is a
+                                (Officers). It is an
                                 organization under the Ministry of Defence, Government of India, responsible for
-                                handling the pension and other
-                                related matters of Defence Service Personnel.
+                                handling the pay and allowances of the Army Officers.
                             </p>
                         </div>
 
@@ -67,7 +66,7 @@ function Footer() {
                                     </div>
                                     <p className="p-0 m-0">
                                         {' '}
-                                        Website: https://pcdaopune[dot]gov[dot]in
+                                        Website: https://pcdaopune.gov.in
                                     </p>
                                 </div>
                             </div>
@@ -78,7 +77,7 @@ function Footer() {
                                     <div className="w-9 h-9 rounded-full bg-white flex justify-center items-center">
                                         <Phone size={24} color="#fffff"/>
                                     </div>
-                                    <p className="p-0 m-0"> PRO CIVIL: (020) 2645-3446</p>
+                                    <p className="p-0 m-0"> PRO CIVIL: (020) 2640-1100</p>
                                 </div>
                                 <div className="flex h-fit flex-row gap-3 items-center">
                                     <div className="w-9 h-9 rounded-full bg-white flex justify-center items-center">
@@ -86,7 +85,7 @@ function Footer() {
                                     </div>
                                     <p className="p-0 m-0">
                                         {' '}
-                                        ARMY: (020) 2645-3446
+                                        ARMY: 6512/6528/7756/7761/7762/7763
                                     </p>
                                 </div>
                             </div>

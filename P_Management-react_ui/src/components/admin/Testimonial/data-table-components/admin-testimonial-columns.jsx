@@ -3,7 +3,7 @@ import { TestimonialDataTableRowActions } from "./admin-testimonial-data-table-r
 import {AdminDataTableColumnHeader} from "../../TableComponents/admin-data-table-column-header.jsx";
 
 
-export const testimonialColumns = [
+export const testimonialColumns = (fetchTestimonial) => [
   {
     id: "sr_no",
     header: ({ table }) => <p className>Sr. No.</p>,
@@ -144,6 +144,6 @@ export const testimonialColumns = [
   {
     id: "actions",
     header: ({ column }) => <p className>Actions</p>,
-    cell: ({ row }) => <TestimonialDataTableRowActions row={row} />,
+    cell: ({ row }) => <TestimonialDataTableRowActions row={row} fetchTestimonial={fetchTestimonial}/>,
   },
 ];

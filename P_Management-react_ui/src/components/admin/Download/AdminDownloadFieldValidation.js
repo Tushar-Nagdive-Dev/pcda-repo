@@ -5,4 +5,5 @@ export const NewsandNotificationValidation = z.object({
  title_hindi: z.string().min(5),
  status: z.string(),
  order: z.number(),
+ wing: z.string(),
 })

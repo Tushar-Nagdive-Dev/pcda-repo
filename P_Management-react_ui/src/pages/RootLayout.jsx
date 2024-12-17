@@ -3,6 +3,7 @@ import Header from "../components/common/Header/Header";
 import { Outlet, useLocation, useOutlet } from "react-router-dom";
 import Footer from "../components/common/Footer/Footer";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
+import ScrollToTop from "../components/ScrollToTop";
 
 function RootLayout() {
   const location = useLocation();
@@ -13,6 +14,7 @@ function RootLayout() {
 
   return (
     <>
+      <ScrollToTop />
       <Header />
       <SwitchTransition>
         <CSSTransition

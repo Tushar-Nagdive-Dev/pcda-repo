@@ -11,14 +11,15 @@ import { Eye } from '@phosphor-icons/react'
 import apiClient from '../../../../auth/ApiClient.jsx'
 import { toast } from 'react-toastify'
 
-export function TestimonialDataTableRowActions({ row }) {
+export function TestimonialDataTableRowActions({ row, fetchTestimonial }) {
  const navigate = useNavigate()
 
  async function deleteItemlists() {
   try {
    const response = await apiClient.delete(`testimonial/${row.original.id}`)
-   toast.success('Successfully deleted')
-   navigate('/pcdao/testimonial')
+   toast.success('Successfully deleted');
+   fetchTestimonial();
+  //  navigate('/pcdao/testimonial')
   } catch (error) {
    console.error(error)
    toast.error('Failed to delete selected item')

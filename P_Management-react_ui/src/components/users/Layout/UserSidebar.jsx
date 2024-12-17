@@ -74,6 +74,11 @@ const data = [
             },
         ],
     },
+    // {
+    //     title: 'DSOP Fund Statement',
+    //     url: 'dsop-fund-statement',
+    //     icon: Receipt,
+    // },
     {
         title: 'Status of Claims',
         url: 'status-claims',

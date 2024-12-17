@@ -9,6 +9,7 @@ import {
  PROSectionContactDetails,
  RetiredOfficerSectionLinkLists,
  RetiredOfficerContactDetails,
+ LedgerWingContactDetails,
 } from './sectionData'
 import LeftBorderWithTitle from '../../LeftBorderWithTitle.jsx'
 import Breadcrumbs from '../Breadcrumbs.jsx'
@@ -33,7 +34,7 @@ import { Input } from '../../ui/input.jsx'
 import { MagnifyingGlass } from '@phosphor-icons/react'
 import apiClient from '../../../auth/ApiClient.jsx'
 
-import wingsBanner from "@/assets/images/banner/Wingscover.jpg"
+import wingsBanner from '@/assets/images/banner/Wingscover.jpg'
 
 const wingNamesMap = {
  LEDGER_WING: 'Ledger Wing',
@@ -130,10 +131,82 @@ function LedgerWing() {
      />
 
      {/* Ledger Wing */}
-     <TitleWithInfo
-      title="Ledger Wing"
-      subtitle="Record Section deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post. Record Section deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post. Record Section deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post. Record Section deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post."
-     />
+     <div>
+      <TitleWithInfo
+       title="Ledger Wing"
+       subtitle="The Ledger Wing in the PCDA (O) is one of the pivotal wing that supports officers in managing and authorizing pay, allowances, and financial transactions. It covers a wide range of assistance, such as processing pay for officers on deputation, Territorial Army, and on UN missions; auditing medical claims; managing various allowances and reimbursements; adjusting DSOP funds; revising pay based on court judgments; and ensuring the accurate settlement of retirement-related payments."
+      />
+      {/* <div className='space-y-3 text-paragraphcolor text-lg my-3'>
+      <p>Stepping of Pay/Bunching of Pay in respect of Army Officers.</p>
+      <p>
+       Revision of Pay and allowances due to AFT judgments, preparing due drawn
+       statements.
+      </p>
+      <p>Withholding of Pay based on GoC-in-C orders/Court judgments.</p>
+      <p>
+       Admittance of FAMA based on Goc-in-C orders and related correspondence.
+       As on date 155 FAMA cases are there which has to be reviewed every month.
+      </p>
+      </div> */}
+      <div className="w-full grid grid-cols-1 gap-6 h-full">
+       <ul className="grid grid-cols-2 gap-3 list-disc list-inside text-justify overflow-y-auto text-paragraphcolor my-4">
+        <li className="flex flex-col gap-2">
+         <p>
+          {' '}
+          <b>Pay & Allowances:</b>
+         </p>{' '}
+         <p>
+          Admittance, revision, and special cases such as UN Missions,
+          Territorial Army, and short-service officers.
+         </p>
+        </li>
+        <li>
+         <b>Claims & Reimbursements:</b> Processing medical claims, furniture,
+         water bills, and various allowances.
+        </li>
+        <li>
+         <b>Financial Adjustments:</b> Handling tax-saving proofs, advances,
+         arrears, and special adjustments like pay stepping, bunching, and AFT
+         judgments.
+        </li>
+        <li>
+         <b>Grievances & Reports:</b> Addressing officer queries, grievances,
+         RTI, and CPGRAM cases; preparing audit reports and LPCs.
+        </li>
+        <li>
+         <b>Final Settlements:</b> Managing retirement benefits such as DSOP
+         withdrawals, leave encashments, and gratuity.
+        </li>
+        <li>
+         <b>SS Section:</b> Deals with stipend payments, starting of psy snd
+         sllowances of newly commissioned officers,Commencement of Pay and
+         allowances for the Officers seconded to Army from Navy and Air Force.
+         and data updates such as personal and bank details.
+        </li>
+        <li>
+         <b>IT Cell:</b> Uploads TDS data, manages Form 16, and resolves
+         discrepancies in tax filings.
+        </li>
+        <li>
+         <b>AFL Section:</b>Handles promotions, PRC registers, and related
+         grievances.
+        </li>
+        <li>
+         <b>Rent Cell:</b> Ensures accurate recovery of rent and allied charges
+         for officers occupying govt accomodations.
+        </li>
+        <li>
+         <b>NR Cell:</b>Maintains strength returns and processes training and
+         allowance-related casualties.
+        </li>
+        <li>
+         <b>FSR Section:</b> Reviews IRLA accounts and issues Full Pay
+         Certificates for superannuation cases.
+        </li>
+       </ul>
+      </div>
+      <ul className="text-lg list-disc list-inside   space-y-2 "></ul>
+     </div>
      <div className="grid grid-cols-3 gap-6 h-full">
       <div className="col-span-2">
        <TitleWithLinkCard title="Important Points">
@@ -146,7 +219,7 @@ function LedgerWing() {
       </div>
       <TitleWithLinkCard title="Contact Details">
        <ul className="list-disc space-y-2 list-inside overflow-y-auto">
-        {recordSectionContactDetails.map((item) => (
+        {LedgerWingContactDetails.map((item) => (
          <ContactDetailsCard
           key={item.id}
           person_name={item.person_name}

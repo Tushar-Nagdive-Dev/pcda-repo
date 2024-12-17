@@ -33,6 +33,7 @@ function AdminDownloadFillForm() {
    title: '',
    titleInHindi: '',
    status: '',
+   wing: '',
    uiOrder: 1,
   },
  })
@@ -69,6 +70,7 @@ function AdminDownloadFillForm() {
    formData.append('titleInHindi', values.titleInHindi)
    formData.append('status', values.status === 'Active')
    formData.append('uiOrder', values.uiOrder)
+   formData.append('wing', values.wing)
    if (selectedFile) {
     formData.append('file', selectedFile)
    }
@@ -136,8 +138,40 @@ function AdminDownloadFillForm() {
         <Label className="text-titleColor text-base font-raleway">
          Document:
         </Label>
-        <Input id="document" type="file"  accept=".pdf" onChange={handleFileChange} />
+        <Input
+         id="document"
+         type="file"
+         accept=".pdf"
+         onChange={handleFileChange}
+        />
        </div>
+
+       <FormField
+        control={form.control}
+        name="wing"
+        render={({ field }) => (
+         <FormItem>
+          <FormLabel className="text-titleColor text-base font-raleway">
+           Wing
+          </FormLabel>
+          <FormControl>
+           <Select
+            onValueChange={(value) => field.onChange(value)} // Update form value
+           >
+            <SelectTrigger className="w-full">
+             <SelectValue placeholder="Select Wing" />
+            </SelectTrigger>
+            <SelectContent>
+             <SelectItem value="LEDGER_WING">Ledger</SelectItem>
+             <SelectItem value="TRANSPORT_WING">Transportation</SelectItem>
+             <SelectItem value="CENTRAL_WING">Central</SelectItem>
+            </SelectContent>
+           </Select>
+          </FormControl>
+          <FormMessage />
+         </FormItem>
+        )}
+       />
 
        <FormField
         control={form.control}

@@ -148,7 +148,7 @@
 
 @media screen and (min-width: 1920px) {
     .nav-link {
-        padding:  0.75rem 1.5rem; /* Adjust the padding as needed */
+        padding:  0.8rem 1rem; /* Adjust the padding as needed */
         outline: none;
         color: var(--paragraph-color);
         gap: 1rem;

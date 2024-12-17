@@ -47,7 +47,7 @@ function UserDashboardWelcomeCard() {
                                         <h5 className=" text-titleColor text-xl font-bold font-raleway">
                                             Rajat Singh
                                         </h5>
-                                        <p className="text-statebluecolor text-xl font-raleway">
+                                        <p className="text-statebluecolor text-xl ">
                                             96511941C
                                         </p>
                                     </div>
@@ -64,19 +64,19 @@ function UserDashboardWelcomeCard() {
 
             {/* Grievance */
             }
-            <UserDashboardCountCard title="Grievance" number={10}/>
+            <UserDashboardCountCard title="Grievance" number={7}/>
 
             {/* DO-II Orders  */
             }
-            <UserDashboardCountCard title="DO-II Orders" number={10}/>
+            <UserDashboardCountCard title="DO Part-II" number={6}/>
 
             {/* DSOP  */
             }
-            <UserDashboardCountCard title="DSOP" number={10}/>
+            <UserDashboardCountCard title="Status of Claim" number={8}/>
 
             {/* TA/DA Orders  */
             }
-            <UserDashboardCountCard title="TA/DA Orders" number={1}/>
+            <UserDashboardCountCard title="Personal Message" number={4}/>
         </div>
     );
 }

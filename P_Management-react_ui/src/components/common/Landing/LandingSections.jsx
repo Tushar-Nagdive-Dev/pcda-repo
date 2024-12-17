@@ -105,10 +105,10 @@ function LandingSections() {
   <div className="w-full flex flex-col space-y-6 bg-adminCard px-custom pt-24 pb-28">
    <LeftBorderWithTitle
     textSize="text-base"
-    title="Welcome to Principal Controller of Defence Accounts (officers)"
-    className="text-newprimaryColor text-lg font-semibold"
+    title="Wings"
+    className="text-newprimaryColor text-3xl font-bold"
    />
-   <h4 className="text-3xl text-mainprimarycolor font-bold mb-9">Wings</h4>
+   <h4 className="text-xl text-mainprimarycolor font-bold mb-9">Wings(Section) - Functional in the of PCDA(O)</h4>
    <div className={landingSectionCss['custom-swiper-container']}>
     <Swiper
      slidesPerView={4}

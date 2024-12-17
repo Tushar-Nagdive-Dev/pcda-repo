@@ -128,15 +128,30 @@ const LedgerChecklistsDownloadLinkLists = [
 const LedgerWingContactDetails = [
  {
   id: 'lwc1',
-  person_name: 'Ms. Seena Thomas',
-  rank: 'WO-LWSS',
+  person_name: 'SRI  UDAY G KADAM',
+  rank: 'IDAS, ACDA(O)',
   number: '020-26401108',
  },
  {
   id: 'lwc2',
-  person_name: 'Smt. M Ramya',
-  rank: 'AO-LWSS',
-  number: '020-26401234',
+  person_name: 'Smt Leena Thankachan',
+  rank: 'IDAS, ACDA',
+  number: '020-26401104',
+ },
+]
+
+const centralWingContactDetails = [
+ {
+  id: 'cwc1',
+  person_name: 'Ms. Seena Thomas',
+  rank: 'IDAS, DCDA',
+  number: '020-26401106',
+ },
+ {
+  id: 'cwc2',
+  person_name: 'Smt Leena Thankachan',
+  rank: 'IDAS, ACDA',
+  number: '020-26401104',
  },
 ]
 
@@ -191,5 +206,6 @@ export {
  ledgerDownloadLinkLists,
  LedgerChecklistsDownloadLinkLists,
  LedgerWingContactDetails,
+ centralWingContactDetails,
  downloadlists,
 }

@@ -9,6 +9,7 @@ import {
  PROSectionContactDetails,
  RetiredOfficerSectionLinkLists,
  RetiredOfficerContactDetails,
+ transportationContactDetails,
 } from './sectionData'
 import LeftBorderWithTitle from '../../LeftBorderWithTitle.jsx'
 import Breadcrumbs from '../Breadcrumbs.jsx'
@@ -33,7 +34,7 @@ import { Input } from '../../ui/input.jsx'
 import { MagnifyingGlass } from '@phosphor-icons/react'
 import apiClient from '../../../auth/ApiClient.jsx'
 
-import wingsBanner from "@/assets/images/banner/Wingscover.jpg"
+import wingsBanner from '@/assets/images/banner/Wingscover.jpg'
 
 const wingNamesMap = {
  LEDGER_WING: 'Ledger Wing',
@@ -128,13 +129,50 @@ function TransportationWing() {
       title="Transportation Wing"
       className="font-semibold text-newprimaryColor text-lg"
      />
-     
 
-     {/* Ledger Wing */}
-     <TitleWithInfo
-      title="Transportation Wing"
-      subtitle="Record Section deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post. Record Section deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post. Record Section deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post. Record Section deals with receipt of dak/sorting, distribution to concerned sections and dispatch of all dak through the post."
-     />
+     <div>
+      {/* Ledger Wing */}
+      <TitleWithInfo
+       title="Transportation Wing"
+       subtitle="The Transportation Wing in PCDA (O) deals with the payment related to  traveling claims such as  temporary duty or permanent duty and LTC claims of the Army Officers.Furthermore, it also ensures scrutiny and clearance of payment or advance of TA/DA & LTC including those drawn from Impress holders; other Accounts offices, CsDA/ PCsDA and NE cases. "
+      />
+      <ul className="text-lg list-disc list-inside text-paragraphcolor my-4 space-y-2">
+       {/* <li>
+        Ensure prompt payment of entitlements for Army Officers' Permanent Move,
+        Temporary Duty, and LTC, maintaining morale and efficiency.
+       </li>
+       <li>
+        Prevent irregular expenditure on TA/DA, LTC journeys, Free Railway
+        Warrants, and Form D/G.
+       </li> */}
+       <li>
+        <b>Auditing of Claims:</b> Review and approve TA/DA, LTC entitlements
+        of Army officers, Short Service, Territorial Army, NCC, re-employed,
+        and reserve officers.
+       </li>
+       {/* <li>
+        <b>Scrutiny & Payment:</b> Process advances and adjustments for TA/DA,
+        LTC, and related claims.
+       </li> */}
+       <li>
+        <b>Post-Audit:</b> Audit of railway warrants, Form D/G, and claims for
+        transportation, daily allowances, and camp allowances.
+       </li>
+       <li>
+        <b>Claims Processing:</b> Handle claims and  allowances under TR rules,
+        including Form D and G.
+       </li>
+       <li>
+        <b>E-Ticket Processing:</b> Manage e-ticket data for credit/debit in
+        IRLA.
+       </li>
+       <li>
+        <b>Clearance & Adjustments::</b> Track TA/DA advances, MRO adjustments,
+        and issue No Demand Certificates.
+       </li>
+      </ul>
+     </div>
+
      <div className="grid grid-cols-3 gap-6 h-full">
       <div className="col-span-2">
        <TitleWithLinkCard title="Important Points">
@@ -147,7 +185,7 @@ function TransportationWing() {
       </div>
       <TitleWithLinkCard title="Contact Details">
        <ul className="list-disc space-y-2 list-inside overflow-y-auto">
-        {recordSectionContactDetails.map((item) => (
+        {transportationContactDetails.map((item) => (
          <ContactDetailsCard
           key={item.id}
           person_name={item.person_name}

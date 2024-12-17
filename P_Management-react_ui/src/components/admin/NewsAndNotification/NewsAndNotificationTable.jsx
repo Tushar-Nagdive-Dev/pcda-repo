@@ -45,7 +45,7 @@ function NewsAndNotificationTable() {
    const data = response.data.map((item) => ({
     id: String(item.id),
     title: item.titleEnglish,
-    url: item.url,
+    url: item.documentUrl,
     type:
      item.type === 'NEWS_AND_NOTIFICATION' ? 'News & Notification' : 'News',
     new: item.isNew ? 'Yes' : 'No',

@@ -16,22 +16,22 @@ const slides = [
   {
     id: 1,
     image: pcdao_building,
-    text: "Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin. Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin.",
+    text: "Principal Controller of Defence Accounts (Officers), Pune",
   },
   {
     id: 2,
     image: pcdao_award,
-    text: "Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin. Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin.",
+    text: "Visit of Shri S G Dastidar, FA(DS), to the office of PCDA(O), Pune",
   },
   {
     id: 3,
     image: pcdao_meeting,
-    text: "Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin. Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin.",
+    text: "Visit of Smt, Devika Raguvamshi, CGDA, to the office of PCDA(O), Pune",
   },
   {
     id: 4,
     image: kilkari_opening,
-    text: "Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin. Integer lobortis lorem lorem, id accumsan arcu tempor id. Suspendisse vitae accumsan massa. Duis porttitor, mauris et faucibus sollicitudin.",
+    text: "Inaugration of créche facility(kilkari) at PCDA(O), Pune",
   },
 ];
 
@@ -79,7 +79,7 @@ function LandingSlider() {
                   className="text-statebluecolor hover:text-white "
                 />
               </button>
-              <p className="line-clamp-2">{slide.text}</p>
+              <p className="line-clamp-2 font-bold text-xl">{slide.text}</p>
               <button
                 className="h-full bg-transparent hover:bg-mainprimarycolor rounded-lg transition-all p-2"
                 onClick={handleNext}

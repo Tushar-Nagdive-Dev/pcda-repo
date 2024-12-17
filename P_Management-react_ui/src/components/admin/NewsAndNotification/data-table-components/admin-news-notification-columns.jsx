@@ -37,8 +37,8 @@ export const newsAndNotificationColumns = (getAllNewAndNotification) => [
   ),
   cell: ({ row }) => (
    <div className=" capitalize">
-    {row.getValue('url') ? (
-     <a href={row.getValue('url')} target="_blank" rel="noopener noreferrer">
+    {row.original.url ? (
+     <a href={row.original.url} target="_blank" rel="noopener noreferrer">
       <FilePdf size={24} color="#D21416" />
      </a>
     ) : (

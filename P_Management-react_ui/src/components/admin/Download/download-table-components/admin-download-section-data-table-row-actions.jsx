@@ -11,14 +11,14 @@ export function FAQDownloadDataTableRowActions({row, fetchData}) {
     const navigate = useNavigate();
 
     async function deleteItemlists() {
-        // try {
-        //     const response = await apiClient.delete(`/faqdetails/section/${row.original.id}`)
-        //     fetchData();
-        //     toast.success('Successfully deleted')
-        // } catch (error) {
-        //     console.error(error)
-        //     toast.error('Failed to delete selected item')
-        // }
+        try {
+            const response = await apiClient.delete(`/document/${row.original.id}`)
+            fetchData();
+            toast.success('Successfully deleted')
+        } catch (error) {
+            console.error(error)
+            toast.error('Failed to delete selected item')
+        }
     }
 
     return (<div className="flex gap-2 justify-center items-center">

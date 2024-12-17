@@ -125,8 +125,21 @@ function NewsAndNotificationFillForm() {
            Title (English)
           </FormLabel>
           <FormControl>
-           <Textarea placeholder="Enter title in English" {...field} />
+           <Textarea
+            placeholder="Enter title in English"
+            {...field}
+            onInput={(e) => {
+             const value = e.target.value
+             if (value.length > 70) {
+              e.target.value = value.slice(0, 70) // Truncate pasted text
+             }
+             field.onChange(e) // Update form state
+            }}
+           />
           </FormControl>
+          <p className="text-sm text-newprimaryColor">
+           {`${field.value?.length || 0}/70 characters`}
+          </p>
           <FormMessage />
          </FormItem>
         )}
@@ -140,8 +153,20 @@ function NewsAndNotificationFillForm() {
            Title (Hindi)
           </FormLabel>
           <FormControl>
-           <Textarea placeholder="Enter title in Hindi" {...field} />
+           <Textarea
+            placeholder="Enter title in Hindi"
+            {...field}
+            onInput={(e) => {
+             const value = e.target.value
+             if (value.length > 70) {
+              e.target.value = value.slice(0, 70) // Truncate pasted text
+             }
+            }}
+           />
           </FormControl>
+          <p className="text-sm text-newprimaryColor">
+           {`${field.value?.length || 0}/70 characters`}
+          </p>
           <FormMessage />
          </FormItem>
         )}
@@ -152,7 +177,12 @@ function NewsAndNotificationFillForm() {
         <Label className="text-titleColor text-base font-raleway">
          Document (Optional):
         </Label>
-        <Input id="document" type="file"  accept=".pdf" onChange={handleFileChange} />
+        <Input
+         id="document"
+         type="file"
+         accept=".pdf"
+         onChange={handleFileChange}
+        />
        </div>
 
        <div className="w-full grid grid-cols-2 gap-2">

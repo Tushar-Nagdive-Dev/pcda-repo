@@ -48,21 +48,13 @@ function AdminDashboardCardSection() {
     </div>
    </div>
 
-   {/* Request Send  */
-   }
-   <AdminDashboardCountCard title="DO-II Orders" number={10} />
-
-   {/* In-Progress Send  */
-   }
-   <AdminDashboardCountCard title="TA/DA Orders" number={2} />
-
-   {/* Resolved  */
-   }
    <AdminDashboardCountCard title="Grievance" number={6} />
 
-   {/* Rejected  */
-   }
-   <AdminDashboardCountCard title="DSOP" number={1} />
+   <AdminDashboardCountCard title="DO Part-II" number={9} />
+
+   <AdminDashboardCountCard title="TA/DA" number={4} />
+
+   <AdminDashboardCountCard title="Claims" number={7} />
   </div>
  )
 

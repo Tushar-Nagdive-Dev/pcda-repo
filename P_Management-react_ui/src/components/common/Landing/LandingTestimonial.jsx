@@ -85,7 +85,7 @@ function LandingTestimonial() {
                     className={landingTestminionalCss["my-slide"]}
                   >
                     <div className="h-full flex flex-col justify-between px-10">
-                      <p className="max-h-44 overflow-y-auto scrollbar-thin text-justify text-titleColor w-3/4">
+                      <p className="max-h-60 overflow-y-auto scrollbar-thin text-2xl text-justify text-orange-700 w-3/4">
                         {slide.comment}
                       </p>
                       <div className="flex gap-3 w-fit">
@@ -93,18 +93,18 @@ function LandingTestimonial() {
                           <img
                             src={slide.person_picture}
                             alt={`${slide.person_name}'s picture`}
-                            className="rounded-full w-14 h-14 border-2 border-statebluecolor"
+                            className="rounded-full w-16 h-16 border-2 border-orange-700"
                           />
                         ) : (
-                          <div className="rounded-full w-14 h-14 bg-gray-300 flex items-center justify-center">
+                          <div className="rounded-full w-16 h-16 bg-gray-300 flex items-center justify-center">
                             <span className="text-titleColor">No Image</span>
                           </div>
                         )}
                         <div className="flex flex-col space-y-2">
-                          <p className="text-lg font-bold text-statebluecolor">
+                          <p className="text-xl font-bold text-orange-700">
                             {slide.person_name}
                           </p>
-                          <p className="text-sm text-titleColor">
+                          <p className="text-base text-titleColor">
                             {slide.person_role}
                           </p>
                         </div>

@@ -1,8 +1,7 @@
 import React from "react";
-import LoginBanner from "@/assets/images/pcdao_officer_login_banner.svg";
 // import LoginBanner from "@/assets/images/Login_Banner.png";
 import {Link} from "react-router-dom";
-import pcdaoLogo from "@/assets/logo/pcdao_logo-removebg.png";
+import LoginBanner from '@/assets/images/pcdao_login_banner.svg'
 import UserLoginForm from "../../components/LoginForm/UserLoginForm.jsx";
 
 function UserLoginComponent() {
@@ -14,7 +13,7 @@ function UserLoginComponent() {
                     src={LoginBanner}
                     width={1280}
                     alt="Army People"
-                    className="block object-cover object-top w-full h-[100svh]"
+                    className="block object-cover full_hd_screen:object-[left_-18px] w-full h-[100svh]"
                 />
             </div>
             <UserLoginForm/>

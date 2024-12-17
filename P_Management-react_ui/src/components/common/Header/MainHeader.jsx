@@ -2,6 +2,7 @@ import React from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import pcdaoLogo from '../../../assets/logo/pcdao_hd.png'
 import defenceLogo from '../../../assets/logo/defence_account_logo.png'
+import BISLogo from '@/assets/logo/Bureau_of_Indian_Standards_Logo.svg'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import {
  DropdownMenu,
@@ -85,8 +86,6 @@ function MainHeader() {
  const navigate = useNavigate()
  const location = useLocation()
 
- console.log(location.pathname + ' ' + '/wings/transportation')
-
  return (
   <nav
    className="px-custom"
@@ -105,32 +104,12 @@ function MainHeader() {
      />{' '}
      <div className="flex gap-5 items-center">
       <div className="flex items-center h-full">
-       {/*<TransitionGroup component={null}>*/}
-       {/* {navbarMenuList.map((item) => (*/}
-       {/*  <CSSTransition*/}
-       {/*   key={item.id}*/}
-       {/*   timeout={300}*/}
-       {/*   classNames="navLink"*/}
-       {/*   unmountOnExit*/}
-       {/*  >*/}
-       {/*   <NavLink*/}
-       {/*    to={item.link}*/}
-       {/*    className={({ isActive }) =>*/}
-       {/*     `nav-link ${isActive ? '!bg-newprimaryColor  !text-white' : ''}`*/}
-       {/*    }*/}
-       {/*    end={item.title === 'Home'}*/}
-       {/*   >*/}
-       {/*    {item.title}*/}
-       {/*   </NavLink>*/}
-       {/*  </CSSTransition>*/}
-       {/* ))}*/}
-       {/*</TransitionGroup>*/}
        <TransitionGroup component={null}>
         {navbarMenuList.map((item) => {
          if (item.isSubmenu && item.submenu) {
           // Render dropdown for submenu items
           const isActiveSubmenu = item.submenu.some(
-           (subItem) => location.pathname === subItem.link,
+           (subItem) => location.pathname === subItem.link
           )
           return (
            <CSSTransition
@@ -140,10 +119,16 @@ function MainHeader() {
             unmountOnExit
            >
             <DropdownMenu>
-             <DropdownMenuTrigger className={`nav-link flex gap-1 items-center ${
-              isActiveSubmenu ? '!bg-newprimaryColor !text-white' : ''
-             } font-semibold `}>
-              {item.title} <CaretDown size={20} className={`${isActiveSubmenu ? 'text-white' : ''}`} />
+             <DropdownMenuTrigger
+              className={`nav-link flex gap-1 items-center ${
+               isActiveSubmenu ? '!bg-newprimaryColor !text-white' : ''
+              } font-semibold `}
+             >
+              {item.title}{' '}
+              <CaretDown
+               size={20}
+               className={`${isActiveSubmenu ? 'text-white' : ''}`}
+              />
              </DropdownMenuTrigger>
              <DropdownMenuContent>
               {item.submenu.map((subItem) => (
@@ -155,7 +140,9 @@ function MainHeader() {
                  to={subItem.link}
                  className={({ isActive }) =>
                   `dropdown-link font-semibold ${
-                   location.pathname === subItem.link ? '!bg-newprimaryColor !text-white' : ''
+                   location.pathname === subItem.link
+                    ? '!bg-newprimaryColor !text-white'
+                    : ''
                   }`
                  }
                 >
@@ -176,10 +163,13 @@ function MainHeader() {
             classNames="navLink"
             unmountOnExit
            >
+            {/* navLink nav-link is added on app.css */}
             <NavLink
              to={item.link}
              className={({ isActive }) =>
-              `nav-link font-semibold ${isActive ? '!bg-newprimaryColor  !text-white' : ''}`
+              `nav-link font-semibold ${
+               isActive ? '!bg-newprimaryColor  !text-white' : ''
+              }`
              }
              end={item.title === 'Home'}
             >
@@ -192,8 +182,8 @@ function MainHeader() {
        </TransitionGroup>
       </div>
      </div>
-     {/* logout button */}
-     <div className="flex gap-8 h-fit items-center">
+     {/* logout button and icon*/}
+     <div className="flex gap-10 h-fit items-center">
       <button
        onClick={() => navigate('/login')}
        className="flex gap-2 md:px-4 xl:text-sm hd_screen:text-base full_hd_screen:text-lg  xl:px-6 py-3 bg-loginButtonPrimary hover:bg-loginButtonHover text-white rounded-3xl h-fit font-semibold"
@@ -201,13 +191,21 @@ function MainHeader() {
        {' '}
        Login <SignIn size={22} color="#ffffff" />
       </button>
-      <img
-       alt="PCDA(O)'s logo"
-       src={defenceLogo}
-       height="70"
-       className=" h-20 lg:h-24"
-      />{' '}
+      <div className='flex gap-2 items-center'>
+       <img
+        alt="BIS's logo"
+        src={BISLogo}
+        className="w-fit h-20 lg:h-20"
+       />{' '}
+       <img
+        alt="PCDA(O)'s logo"
+        src={defenceLogo}
+        height="70"
+        className=" h-20 lg:h-24"
+       />{' '}
+      </div>
      </div>
+
 
     </div>
    </div>
