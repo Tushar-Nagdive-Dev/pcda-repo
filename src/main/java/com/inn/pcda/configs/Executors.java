@@ -5,7 +5,7 @@ package com.inn.pcda.configs;
 public class Executors {
      public static void main(String[] args) {
        /*  BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String rawPassword = "admin";
+        String rawPassword = "admin123";
         String hashedPassword = encoder.encode(rawPassword);
         System.out.println("Hashed Password: " + hashedPassword); */
      }
