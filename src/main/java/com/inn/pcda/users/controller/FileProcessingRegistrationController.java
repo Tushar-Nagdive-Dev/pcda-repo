@@ -50,15 +50,35 @@ public class FileProcessingRegistrationController {
 	                    .body("Unexpected error: " + e.getMessage());
 	        }
 	    }
-		@GetMapping("/download")
-		public void downloadSimpleFile(HttpServletResponse response) throws IOException {
-			String simpleContent = "Hello, this is a simple text file download!";
-			
-			response.setContentType("text/plain");
-			response.setHeader("Content-Disposition", "attachment; filename=\"simple_file.txt\"");
-			
-			response.getOutputStream().write(simpleContent.getBytes());
-			response.flushBuffer();
-		}
+@GetMapping("/download")
+public void downloadAllData(HttpServletResponse response) throws IOException {
+    log.info("Starting file download process...");
+
+    // Fetch the data from the service
+    List<ResponseRegistrationDTO> data = fileProcessingService.downloadAllDataAsJson();
+
+    // Serialize the data to JSON
+    String jsonData = "";
+    try {
+        ObjectMapper objectMapper = new ObjectMapper();
+        jsonData = objectMapper.writeValueAsString(data);
+    } catch (IOException e) {
+        log.error("Error serializing data to JSON: ", e);
+        throw new RuntimeException("Error serializing data", e);
+    }
+
+    // Set response headers to force file download
+    response.setContentType("application/json");
+    response.setHeader("Content-Disposition", "attachment; filename=registration_data.json");
+
+    // Write the JSON data to the response output stream
+    try (ServletOutputStream outputStream = response.getOutputStream()) {
+        outputStream.write(jsonData.getBytes());
+        outputStream.flush();  // Ensure the data is written to the output stream
+    }
+
+    log.info("File download completed successfully.");
+}
+
 
 }
