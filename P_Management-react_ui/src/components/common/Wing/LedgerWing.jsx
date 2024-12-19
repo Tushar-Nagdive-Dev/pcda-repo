@@ -1,14 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import apiClient from '../../../auth/ApiClient.jsx'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+ } from '@/components/ui/table'
 
 import { Separator } from '@/components/ui/separator'
 
 import {
  recordSectionLinkLists,
- recordSectionContactDetails,
- PROSectionLinkLists,
- PROSectionContactDetails,
- RetiredOfficerSectionLinkLists,
- RetiredOfficerContactDetails,
+ ledgerWingDescriptionOne,
  LedgerWingContactDetails,
 } from './sectionData'
 import LeftBorderWithTitle from '../../LeftBorderWithTitle.jsx'
@@ -32,8 +37,6 @@ import {
 import { faqData } from '../FAQ/FAQData.js'
 import { Input } from '../../ui/input.jsx'
 import { MagnifyingGlass } from '@phosphor-icons/react'
-import apiClient from '../../../auth/ApiClient.jsx'
-
 import wingsBanner from '@/assets/images/banner/Wingscover.jpg'
 
 const wingNamesMap = {
@@ -134,77 +137,114 @@ function LedgerWing() {
      <div>
       <TitleWithInfo
        title="Ledger Wing"
-       subtitle="The Ledger Wing in the PCDA (O) is one of the pivotal wing that supports officers in managing and authorizing pay, allowances, and financial transactions. It covers a wide range of assistance, such as processing pay for officers on deputation, Territorial Army, and on UN missions; auditing medical claims; managing various allowances and reimbursements; adjusting DSOP funds; revising pay based on court judgments; and ensuring the accurate settlement of retirement-related payments."
+       subtitle="This wing maintains the IRLAs of all the officers for prompt & correct authorization of the pay & allowances. It is entrusted with the duties such as audit & admittance of claims namely CEA, OPD medical claims, encashment of leave on LTC, reimbursement of furniture & water bills etc. It also deals with payment of advances viz, HBA advance, personal computer advance etc. It undertakes admittance of FAMA based on GOC-in-c orders, transfer of DSOP fund through DID schedule, stepping up of pay of the army officers as well."
       />
-      {/* <div className='space-y-3 text-paragraphcolor text-lg my-3'>
-      <p>Stepping of Pay/Bunching of Pay in respect of Army Officers.</p>
-      <p>
-       Revision of Pay and allowances due to AFT judgments, preparing due drawn
-       statements.
-      </p>
-      <p>Withholding of Pay based on GoC-in-C orders/Court judgments.</p>
-      <p>
-       Admittance of FAMA based on Goc-in-C orders and related correspondence.
-       As on date 155 FAMA cases are there which has to be reviewed every month.
-      </p>
-      </div> */}
-       <Separator className="my-4" />
+      {/* <div className="space-y-3 text-paragraphcolor text-lg my-3">
+       <p>Section under ledger wing with brief description is listed below:</p>
+      </div>
       <div className="w-full grid grid-cols-1 gap-6 h-full">
        <ul className="grid grid-cols-2 gap-3  list-outside text-justify overflow-y-auto text-paragraphcolor gap-x-6 my-4">
         <li>
-         <b className='underline underline-offset-4'>Pay & Allowances:</b> Admittance, revision, and special cases such
-         as UN Missions, Territorial Army, and short-service officers.
+         <b className="underline underline-offset-4">Pay & Allowances:</b>{' '}
+         Admittance, revision, and special cases such as UN Missions,
+         Territorial Army, and short-service officers.
         </li>
         <li>
-         <b className='underline underline-offset-4'>Claims & Reimbursements:</b> Processing medical claims, furniture,
-         water bills, and various allowances.
+         <b className="underline underline-offset-4">
+          Claims & Reimbursements:
+         </b>{' '}
+         Processing medical claims, furniture, water bills, and various
+         allowances.
         </li>
         <li>
-         <b className='underline underline-offset-4'>Financial Adjustments:</b> Handling tax-saving proofs, advances,
-         arrears, and special adjustments like pay stepping, bunching, and AFT
-         judgments.
+         <b className="underline underline-offset-4">Financial Adjustments:</b>{' '}
+         Handling tax-saving proofs, advances, arrears, and special adjustments
+         like pay stepping, bunching, and AFT judgments.
         </li>
         <li>
-         <b className='underline underline-offset-4'>Grievances & Reports:</b> Addressing officer queries, grievances,
-         RTI, and CPGRAM cases; preparing audit reports and LPCs.
+         <b className="underline underline-offset-4">Grievances & Reports:</b>{' '}
+         Addressing officer queries, grievances, RTI, and CPGRAM cases;
+         preparing audit reports and LPCs.
         </li>
         <li>
-         <b className='underline underline-offset-4'>Final Settlements:</b> Managing retirement benefits such as DSOP
-         withdrawals, leave encashments, and gratuity.
+         <b className="underline underline-offset-4">Final Settlements:</b>{' '}
+         Managing retirement benefits such as DSOP withdrawals, leave
+         encashments, and gratuity.
         </li>
        </ul>
       </div>
       <Separator className="my-4" />
       <ul className="grid grid-cols-2 gap-3  list-outside  text-justify overflow-y-auto text-paragraphcolor gap-x-6 my-4">
        <li>
-        <b className='underline underline-offset-4'>SS Section:</b> Deals with stipend payments, starting of psy snd
-        sllowances of newly commissioned officers,Commencement of Pay and
-        allowances for the Officers seconded to Army from Navy and Air Force.
-        and data updates such as personal and bank details.
+        <b className="underline underline-offset-4">SS Section:</b> Deals with
+        stipend payments, starting of psy snd sllowances of newly commissioned
+        officers,Commencement of Pay and allowances for the Officers seconded to
+        Army from Navy and Air Force. and data updates such as personal and bank
+        details.
        </li>
        <li>
-        <b className='underline underline-offset-4'>IT Cell:</b> Uploads TDS data, manages Form 16, and resolves
-        discrepancies in tax filings.
+        <b className="underline underline-offset-4">IT Cell:</b> Uploads TDS
+        data, manages Form 16, and resolves discrepancies in tax filings.
        </li>
        <li>
-        <b className='underline underline-offset-4'>AFL Section:</b> Handles promotions, PRC registers, and related
-        grievances.
+        <b className="underline underline-offset-4">AFL Section:</b> Handles
+        promotions, PRC registers, and related grievances.
        </li>
        <li>
-        <b className='underline underline-offset-4'>Rent Cell:</b> Ensures accurate recovery of rent and allied charges
-        for officers occupying govt accomodations.
+        <b className="underline underline-offset-4">Rent Cell:</b> Ensures
+        accurate recovery of rent and allied charges for officers occupying govt
+        accomodations.
        </li>
        <li>
-        <b className='underline underline-offset-4'>NR Cell:</b> Maintains strength returns and processes training and
-        allowance-related casualties.
+        <b className="underline underline-offset-4">NR Cell:</b> Maintains
+        strength returns and processes training and allowance-related
+        casualties.
        </li>
        <li>
-        <b className='underline underline-offset-4'>FSR Section:</b> Reviews IRLA accounts and issues Full Pay
-        Certificates for superannuation cases.
+        <b className="underline underline-offset-4">FSR Section:</b> Reviews
+        IRLA accounts and issues Full Pay Certificates for superannuation cases.
        </li>
-      </ul>
+      </ul> */}
+      <div className="grid grid-cols-2 text-justify  text-paragraphcolor gap-x-6 my-4">
+       <Table className=" border [&_tr]:!border [&_tr]:border-adminTextColor">
+        <TableHeader>
+         <TableRow>
+          <TableHead className="w-[100px] font-bold text-xl border-r border-r-adminTextColor">
+           Sr.No.
+          </TableHead>
+          <TableHead className="font-bold text-xl border-r border-r-adminTextColor">
+           Section
+          </TableHead>
+          <TableHead className="w-[350px] font-bold text-xl border-r border-r-adminTextColor">
+           Description
+          </TableHead>
+         </TableRow>
+        </TableHeader>
+        <TableBody>
+         {ledgerWingDescriptionOne.map((row, index) => (
+          <React.Fragment key={row.id}>
+           <TableRow>
+           <TableCell
+             className={`font-medium text-xl border-r border-adminTextColor`}
+            >
+             {index + 1}
+            </TableCell>
+            <TableCell
+             className={`font-medium text-xl border-r border-adminTextColor`}
+            >
+             {row.title}
+            </TableCell>
+            <TableCell className={`text-xl border-r border-adminTextColor`}>
+             {row.description}
+            </TableCell>
+           </TableRow>
+          </React.Fragment>
+         ))}
+        </TableBody>
+       </Table>
+      </div>
      </div>
-     <Separator className="my-4" />
+     <Separator className="my-4 h-1" />
      <div className="grid grid-cols-3 gap-6 h-full">
       <div className="col-span-2">
        <TitleWithLinkCard title="Important Points">
@@ -226,11 +266,11 @@ function LedgerWing() {
          />
         ))}
        </ul>
-       <ul className="list-disc list-inside">
+       {/* <ul className="list-disc list-inside">
         <li className="text-orangeIndiaPrimaryColor font-bold mt-6">
          Note: To Contact SAO/AO of the concerned Section,kindly visit RTI page.
         </li>
-       </ul>
+       </ul> */}
       </TitleWithLinkCard>
      </div>
 

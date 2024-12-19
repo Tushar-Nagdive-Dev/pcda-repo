@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import TwoFaLayoutBackground from '../../../components/users/Authentication/TwoFALayoutBackground.jsx'
-import TwoFATermsAndConditions from '../../../components/users/Authentication/TwoFATermsAndConditions.jsx'
 import {
  Sheet,
  SheetContent,
@@ -8,9 +6,10 @@ import {
  SheetTitle,
  SheetFooter,
 } from '@/components/ui/sheet'
-import UserMobileOtpRegistration from '../../../components/users/Authentication/UserMobileOTPRegistration.jsx'
-import UserMobileRegistration from '../../../components/users/Authentication/UserMobileRegistration.jsx'
 import UserFirstTimeLogin from '../../../components/LoginForm/User/New/UserFirstTimeLogin.jsx'
+import TwoFaLayoutBackground from "@/components/LoginForm/User/New/TwoFaLayoutBackground.jsx"
+import TwoFATermsAndConditions from "@/components/LoginForm/User/New/TwoFATermsAndConditions.jsx"
+
 
 function UserTwoFA() {
  const [isOpen, setIsOpen] = useState(true) // Dialog starts open
@@ -40,10 +39,6 @@ function UserTwoFA() {
      <UserFirstTimeLogin />
     </SheetContent>
    </Sheet>
-   {/* <UserMobileRegistration
-    isSheetOpen={isSheetOpen}
-    setIsSheetOpen={setIsSheetOpen}
-   /> */}
   </TwoFaLayoutBackground>
  )
 }

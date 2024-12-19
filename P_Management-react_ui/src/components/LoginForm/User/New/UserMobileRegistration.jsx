@@ -14,34 +14,35 @@ import {
  FormLabel,
  FormMessage,
 } from '@/components/ui/form'
-import UserFirstTimeEmailOTP from './UserFirstTimeEmailOTP.jsx'
-import { Input } from '@/components/ui/input.jsx'
+import { Input } from '../../../ui/input.jsx'
+import UserMobileOtpRegistration from './UserMobileOTPRegistration.jsx'
 
-function UserFirstTimeEmail() {
- const [isEmailRegistred, setIsEmailRegistred] = useState(false) // Set True if email registered on backend
+function UserMobileRegistration() {
+ const [phoneNum, setPhoneNum] = useState('99XXXXXX99') // Set Phone Number from backend
+ const [isPhoneRegistredAPI, setIsPhoneRegistredAPI] = useState(false) // Set True if phone number is called backend and get otp
  const form = useForm({
   // resolver: zodResolver(),
   defaultValues: {
-   email: '',
+   phoneNumber: '',
   },
  })
 
- useEffect(() => {}, [isEmailRegistred])
+ useEffect(() => {}, [isPhoneRegistredAPI])
 
- // call api for register email
+ // call api for register phone number
  const onSubmit = async (values) => {
-  const { email } = values
-  console.log('Email', email)
-  setIsEmailRegistred(true)
+  const { phoneNumber } = values
+  console.log('Phone Number', phoneNumber)
+  setIsPhoneRegistredAPI(true)
  }
 
  return (
   <React.Fragment>
-   {isEmailRegistred ? (
-    <UserFirstTimeEmailOTP />
+   {isPhoneRegistredAPI ? (
+    <UserMobileOtpRegistration phoneNum={phoneNum} />
    ) : (
     <div className="w-full h-full flex flex-col justify-center items-center space-y-10">
-     <h2 className="text-xl font-raleway">Email Registration</h2>
+     <h2 className="text-xl font-raleway">Mobile Registration</h2>
      <Form {...form}>
       <form
        onSubmit={form.handleSubmit(onSubmit)}
@@ -53,11 +54,11 @@ function UserFirstTimeEmail() {
          name="phoneNumber"
          render={({ field }) => (
           <FormItem>
-           <FormLabel>Email id:</FormLabel>
+           <FormLabel>Mobile Number:</FormLabel>
            <FormControl>
             <Input
              //startIcon={UserRound}
-             placeholder="Enter Your Email id"
+             placeholder="Enter Your Mobile Number"
              {...field}
              type="text"
             />
@@ -79,4 +80,4 @@ function UserFirstTimeEmail() {
  )
 }
 
-export default UserFirstTimeEmail
+export default UserMobileRegistration

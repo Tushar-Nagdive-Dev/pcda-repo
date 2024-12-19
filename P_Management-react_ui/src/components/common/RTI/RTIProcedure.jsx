@@ -131,7 +131,7 @@ function RtiProcedure({ transitionStyles, state, currentStage }) {
      Description of CDA (O) Account Number allotted to Army Officers
     </h3>
     <p className="text-titleColor text-lg">For Example: 2/72/208339 M</p>
-    <Table>
+    <Table  className=" border [&_tr]:!border [&_tr]:border-adminTextColor">
      <TableHeader>
       <TableRow>
        <TableHead className="w-[120px] font-bold"></TableHead>
@@ -140,42 +140,42 @@ function RtiProcedure({ transitionStyles, state, currentStage }) {
      </TableHeader>
      <TableBody>
       <TableRow>
-       <TableCell className={`font-medium text-lg`}>
+       <TableCell className={`font-medium text-lg border-r border-adminTextColor`}>
         2
        </TableCell>
        <TableCell className="text-lg">represents Ledger Wing Section</TableCell>
       </TableRow>
 
       <TableRow>
-       <TableCell className={`font-medium text-lg`}>
+       <TableCell className={`font-medium text-lg  border-r border-adminTextColor`}>
         72
        </TableCell>
        <TableCell className={`text-lg`}>represents Task Number</TableCell>
       </TableRow>
 
       <TableRow>
-       <TableCell className={`font-medium text-lg`}>
+       <TableCell className={`font-medium text-lg  border-r border-adminTextColor`}>
         208339
        </TableCell>
        <TableCell className={`text-lg`}>represents Pr.CDA (O) Account No. allotted to the Army Officer</TableCell>
       </TableRow>
 
       <TableRow>
-       <TableCell className={`font-medium text-lg`}>
+       <TableCell className={`font-medium text-lg  border-r border-adminTextColor`}>
         M
        </TableCell>
        <TableCell className={`text-lg`}>check alpha accuracy of the numerical part</TableCell>
       </TableRow>
 
       <TableRow>
-       <TableCell className={`font-medium text-lg`}>
+       <TableCell className={`font-medium text-lg  border-r border-adminTextColor`}>
         9
        </TableCell>
        <TableCell className={`text-lg`}>represents 'T' Wing Section</TableCell>
       </TableRow>
 
       <TableRow>
-       <TableCell className={`font-medium text-lg`}>
+       <TableCell className={`font-medium text-lg  border-r border-adminTextColor`}>
         39
        </TableCell>
        <TableCell className={`text-lg`}>represents 'T' Section Task number</TableCell>

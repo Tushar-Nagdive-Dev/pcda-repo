@@ -2,8 +2,10 @@ package com.inn.pcda.users.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.inn.pcda.exceptions.FileProcessingException;
 import com.inn.pcda.users.dto.RegistrationRequestDTO;
 import com.inn.pcda.users.dto.ResponseRegistrationDTO;
+import com.inn.pcda.users.dto.TableResponseDTO;
 import com.inn.pcda.users.entity.Roles;
 import com.inn.pcda.users.entity.Users;
 import com.inn.pcda.users.repository.RoleRepository;
@@ -26,97 +28,135 @@ import java.util.stream.Collectors;
 @Slf4j
 public class FileProcessingRegistrationServiceImpl implements IFileProcessingRegistrationService {
 
-    private ObjectMapper objectMapper = new ObjectMapper();
-    private UserRepository userRepository = null;
+    private final ObjectMapper objectMapper;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private RoleRepository roleRepository;
-
-     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-
-    @Autowired
-    public FileProcessingRegistrationServiceImpl(ObjectMapper objectMapper, UserRepository userRepository) {
+    public FileProcessingRegistrationServiceImpl(ObjectMapper objectMapper, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.objectMapper = objectMapper;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
-    String randomUsername = generateRandomString();
-    String randomPassword = generateRandomString();
 
     @Override
     public String processFile(MultipartFile file) throws IOException {
-
-       
-        List<RegistrationRequestDTO> registrationRequestDTOs = objectMapper.readValue(
-                file.getInputStream(),
-                new TypeReference<List<RegistrationRequestDTO>>() {}
-        );
-
-        
-        for (RegistrationRequestDTO dto : registrationRequestDTOs) {
-            Users user = new Users();
-
-
-
-            user.setUsername(randomUsername);
-            log.info("this is password and encode this username : {}",randomUsername);
-
-            user.setPassword(passwordEncoder.encode(randomPassword));
-            log.info("this is password and encode this pasword : {}",randomPassword);
-
-            user.setOldPassword(generateRandomString());
-            user.setOfficeCode("123123");
-
-            
-            if (dto.getOfficer_Name() != null) {
-                String[] nameParts = dto.getOfficer_Name().split(" ");
-                user.setFirstName(nameParts[0]);
-                user.setMiddleName(nameParts.length > 2 ? nameParts[1] : null); 
-                user.setLastName(nameParts.length > 1 ? nameParts[nameParts.length - 1] : null); 
-            } else {
-                user.setFirstName(null);
-                user.setMiddleName(null);
-                user.setLastName(null);
-            }
-
-            
-            user.setEmail(dto.getEmail());
-            user.setTaskNo(dto.getTask_no());
-            user.setAccountNo(dto.getAccountno());
-
-           
-            Roles role = roleRepository.findById(1L)
-                    .orElseThrow(() -> new RuntimeException("Role not found with ID: 1"));
-
-            user.setRole(role);
-
-           
-            userRepository.save(user);
+        if (file == null || file.isEmpty()) {
+            throw new FileProcessingException("Uploaded file is empty or null.");
         }
 
+        List<RegistrationRequestDTO> registrationRequestDTOs = parseFile(file);
+
+        for (RegistrationRequestDTO dto : registrationRequestDTOs) {
+            processUser(dto);
+        }
+
+        log.info("File processing completed for {} records.", registrationRequestDTOs.size());
         return "File successfully processed and data saved to User table!";
     }
 
-    
+    private List<RegistrationRequestDTO> parseFile(MultipartFile file) throws IOException {
+        try {
+            return objectMapper.readValue(file.getInputStream(), new TypeReference<List<RegistrationRequestDTO>>() {});
+        } catch (IOException e) {
+            log.error("Error occurred while parsing the uploaded file: {}", file.getOriginalFilename(), e);
+            throw new FileProcessingException("Failed to parse the uploaded file.", e);
+        }
+    }
+
+    private void processUser(RegistrationRequestDTO dto) {
+        Users user = mapToUserEntity(dto);
+
+        // Ensure required fields like office_code are populated
+        if (user.getOfficeCode() == null || user.getOfficeCode().isEmpty()) {
+            user.setOfficeCode("DEFAULT_CODE"); // Set a default value
+        }
+
+        userRepository.save(user);
+        log.info("User successfully saved: {}", user.getUsername());
+    }
+
+    private Users mapToUserEntity(RegistrationRequestDTO dto) {
+        Users user = new Users();
+
+        // Generate random username and password if not provided
+        String randomUsername = generateRandomString();
+        String randomPassword = generateRandomString();
+
+        user.setUsername(dto.getUsername() != null ? dto.getUsername() : randomUsername);
+        user.setPassword(dto.getPassword() != null ? passwordEncoder.encode(dto.getPassword()) : passwordEncoder.encode(randomPassword));
+        user.setOldPassword(randomPassword);
+        user.setOfficeCode("OFFCODE"); // Set default office code
+
+        log.info("Generated credentials for user - Username: {}, Password: [encrypted]", randomUsername);
+
+        setNameFields(dto.getOfficer_Name(), user);
+        user.setEmail(dto.getEmail());
+        user.setTaskNo(dto.getTask_no());
+        user.setAccountNo(dto.getAccountno());
+        user.setRole(getDefaultRole());
+
+        return user;
+    }
+
+    private void setNameFields(String fullName, Users user) {
+        if (fullName != null && !fullName.trim().isEmpty()) {
+            String[] nameParts = fullName.trim().split("\\s+");
+            user.setFirstName(nameParts[0]);
+            user.setMiddleName(nameParts.length > 2 ? nameParts[1] : null);
+            user.setLastName(nameParts.length > 1 ? nameParts[nameParts.length - 1] : null);
+        } else {
+            user.setFirstName("Unknown");
+            user.setMiddleName(null);
+            user.setLastName("User");
+        }
+    }
+
+    private Roles getDefaultRole() {
+        return roleRepository.findById(1L)
+                .orElseThrow(() -> new FileProcessingException("Default role not found with ID: 1"));
+    }
+
     private String generateRandomString() {
         return UUID.randomUUID().toString().substring(0, 8);
     }
 
+    @Override
     public List<ResponseRegistrationDTO> downloadAllDataAsJson() {
-        // Fetch all users from the database
         List<Users> users = userRepository.findAll();
-
-        // Convert Users to RegistrationRequestDTO
-        return users.stream().map(user -> {
-            ResponseRegistrationDTO dto = new ResponseRegistrationDTO();
-            dto.setUsername(user.getUsername());
-           
-            dto.setTask_no(user.getTaskNo());
-            dto.setAccountno(user.getAccountNo());
-            dto.setOfficer_Name(user.getFirstName() + " " + user.getMiddleName() + " " + user.getLastName());
-            return dto;
-        }).collect(Collectors.toList());
+        return users.stream().map(this::mapToResponseDto).collect(Collectors.toList());
     }
 
+    private ResponseRegistrationDTO mapToResponseDto(Users user) {
+        ResponseRegistrationDTO dto = new ResponseRegistrationDTO();
+        dto.setUsername(user.getUsername());
+        dto.setTask_no(user.getTaskNo());
+        dto.setAccountno(user.getAccountNo());
+        dto.setOfficer_Name(formatFullName(user.getFirstName(), user.getMiddleName(), user.getLastName()));
+        return dto;
+    }
+
+    private String formatFullName(String firstName, String middleName, String lastName) {
+        return String.join(" ", firstName != null ? firstName : "", middleName != null ? middleName : "", lastName != null ? lastName : "").trim();
+    }
+
+    @Override
+    public List<TableResponseDTO> getOfficerList() {
+        return userRepository.findAll().stream()
+                .map(this::mapToTableResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    private TableResponseDTO mapToTableResponseDto(Users user) {
+        return new TableResponseDTO(
+                user.getId(),
+                user.getFirstName() + " " + (user.getLastName() != null ? user.getLastName() : ""),
+                user.getUsername(),
+                user.getEmail(),
+                user.getAccountNo(),
+                user.getTaskNo()
+        );
+    }
 }

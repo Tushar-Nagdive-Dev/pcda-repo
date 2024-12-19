@@ -3,9 +3,9 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 import TitleWithInfo from '../components/common/Downloads/TitleWithInfo'
 import TitleWithLinkCard from '../components/common/TitleWithLinkCard'
-import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { Input } from '../components/ui/input.jsx'
+import { Separator } from "@/components/ui/separator"
 import LinkWithTitleCard from '../components/common/LinkWithTitleCard'
 
 import {
@@ -18,9 +18,7 @@ import {
  transportationContactDetails,
 } from '../components/common/Downloads/downloadLinkDummyData'
 
-import ContactDetailsCard from '../components/common/ContactDetailsCard'
 import Breadcrumbs from '../components/common/Breadcrumbs'
-import { MagnifyingGlass } from '@phosphor-icons/react'
 
 import apiClient from '../auth/ApiClient.jsx' // Adjust the path as necessary
 import { toast } from 'react-toastify'
@@ -123,12 +121,14 @@ function Downloads() {
      </div>
     </div>
 
+    <Separator className="my-2 h-1 bg-adminTextColor/60" />
+
     {/* Content */}
     <div className="flex flex-col gap-10">
      {/* Ledger Wing */}
      {currentTab === 'Ledger Wing' && (
       <div className="flex flex-col space-y-10">
-       <div>
+       {/* <div> */}
         {/* <TitleWithInfo title="Ledger Wing" subtitle="" /> */}
         {/* <div className="space-y-3 text-paragraphcolor text-lg my-3">
          <p>Stepping of Pay/Bunching of Pay in respect of Army Officers.</p>
@@ -192,9 +192,9 @@ function Downloads() {
           Certificates for superannuation cases.
          </li>
         </ul>*/}
-       </div>
+       {/* </div> */}
        <div className="flex flex-row-reverse w-full">
-        <div className="w-fit flex gap-2">
+        <div className="w-fit flex">
          <Input
           type="text"
           placeholder="Search"
@@ -239,7 +239,7 @@ function Downloads() {
         </TitleWithLinkCard>
        </div>
 
-       <Separator className="my-4 h-1" />
+       <Separator className="my-4 h-1 bg-adminTextColor/60" />
       </div>
      )}
 

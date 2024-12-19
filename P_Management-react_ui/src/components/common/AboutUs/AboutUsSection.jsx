@@ -27,7 +27,7 @@ const aboutusData = [
   title: 'About PCDA (O)',
   image: pcdaoTeam,
   description:
-   'Welcome to the PCDA (O), a distinguished organization within Defence Accounts Department (DAD), with a legacy as one of the oldest departments within Government of India. At the helm of this esteemed department is the Controller General of Defence Accounts (CGDA). We take pride in our pivotal role in providing indispensable facilitation of pay and allowances to the Army Officers, conducting meticulous accounting and performing comprehensive internal audits. Our focus lies in managing the expenditures and receipts of the Defence Officers. With our unwavering commitment ot excellence and accountability, we ensure the utmost precision in managing the financial affiars of these cirtical institutions, contributing to the nation’s defence and security. \n\n Mission Statement- We strives to achieve excellence and professionalism in accounting and financial services and in performing audit functions. Our Mission & Vision- PCDA (O) Strives to be a recognized leader in DAD, by consistently delivering first-class services and solutions. The Office has adopted a vision that challenges us to build upon past accomplishments to reach higher. \n\n Quality Policy- Office of the PCDA (O) is committed to render efficient, correct and prompt accounting, payment and financial services leading to customer satisfaction. It is also committed to render efficient audit services to ensure public accountability. \n\n Office of the PCDA (O), Pune takes great pride in providing service to services. Our key service features are as follows: \n • Audit, Accounting & disbursement of Pay & Allowances of the Officers of the Indian Army. \n • Audit & adjustment of the Travel related & other claims of the Officers. \n • Timely processing of Terminal/Retiring benefits of the Officers. \n• Updation/Maintenance of Pay Records',
+   'PCDA(O) a distinguished organization within Defence Accounts Department (DAD), with a rich legacy as one of the oldest departments within the Government of India. At the helm of this esteemed department is the Controller General of Defence Accounts (CGDA). PCDA(O) is responsible for audit & payment of Pay and Allowance & all personal claims including Travelling allowance & LTC of all army officers. PCDA(O) acts as financial advisor to headquarters of all commands & their lower formations in all matters of Pay & Allowances. This office also audits DGN(Draft Gazette Notifications) pertaining to army officers. With our unwavering commitment to excellence and accountability, we ensure the precision in managing the financial affairs of the army officers. \n\n Quality Policy- Office of the PCDA (O) is committed to render efficient, correct and prompt accounting, payment and financial services leading to customer satisfaction.',
  },
  {
   id: 'ab2',
@@ -180,7 +180,7 @@ function AboutUsSection() {
                   } rounded-lg`}
                  />
                 </div>
-                <p className="text-justify  overflow-y-auto whitespace-pre-line leading-relaxed">
+                <p className="text-justify text-xl overflow-y-auto whitespace-pre-line leading-relaxed">
                  {item.description}
                 </p>
                </div>

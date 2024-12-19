@@ -17,27 +17,27 @@ function RtiWingsOfficerTable({ currentStage, transitionStyles, state }) {
    }}
    className={`overflow-y-auto h-full p-10 ${currentStage === 1 ? 'bg-selectedSecondary rounded-lg' : 'bg-selectedSecondary rounded-r-lg rounded-b-lg'}`}
   >
-   <Table >
+   <Table className=" border [&_tr]:!border [&_tr]:border-adminTextColor">
     <TableHeader>
      <TableRow>
-      <TableHead className="text-xl font-bold">Section</TableHead>
-      <TableHead className="w-[350px] text-xl font-bold">Name of the officer</TableHead>
-      <TableHead className="w-[120px] text-xl font-bold">Phone Number</TableHead>
+      <TableHead className="text-xl font-bold border-r border-adminTextColor">Section</TableHead>
+      <TableHead className="w-[350px] text-xl font-bold border-r border-adminTextColor">Name of the officer</TableHead>
+      <TableHead className="w-[120px] text-xl font-bold ">Phone Number</TableHead>
      </TableRow>
     </TableHeader>
     <TableBody>
      {RTIWingsOfficerData.map((row, index) => (
       <React.Fragment key={row.id}>
        <TableRow>
-        <TableCell className={`font-medium`}>
-         <ul className="list-decimal list-inside text-justify">
+        <TableCell className={`font-medium border-r border-adminTextColor`}>
+         <ul className="list-decimal list-outside text-justify px-4">
           {row.section.map(item => (
            <li key={item} className="text-lg">{item}</li>
           ))}
          </ul>
         </TableCell>
-        <TableCell className="text-lg">{row.name_of_officer}</TableCell>
-        <TableCell className="text-lg">{row.phone_number}</TableCell>
+        <TableCell className="text-lg border-r border-adminTextColor whitespace-pre-line">{row.name_of_officer}</TableCell>
+        <TableCell className="text-lg ">{row.phone_number}</TableCell>
        </TableRow>
       </React.Fragment>
      ))}

@@ -20,22 +20,22 @@ export const centralWingContactDetails = [
   rank: 'IDAS, ACDA',
   number: '020-26401104',
  },
-];
+]
 
 export const LedgerWingContactDetails = [
-  {
-   id: 'lwc1',
-   person_name: 'SRI  UDAY G KADAM',
-   rank: 'IDAS, ACDA(O)',
-   number: '020-26401108',
-  },
-  {
-   id: 'lwc2',
-   person_name: 'Smt Leena Thankachan',
-   rank: 'IDAS, ACDA',
-   number: '020-26401104',
-  },
- ]
+ {
+  id: 'lwc1',
+  person_name: 'SRI  UDAY G KADAM',
+  rank: 'IDAS, ACDA(O)',
+  number: '020-26401108',
+ },
+ {
+  id: 'lwc2',
+  person_name: 'Smt Leena Thankachan',
+  rank: 'IDAS, ACDA',
+  number: '020-26401104',
+ },
+]
 
 export const recordSectionContactDetails = [
  {
@@ -121,5 +121,32 @@ export const RetiredOfficerContactDetails = [
   person_name: 'Shri Jeevan Kargaonkar',
   rank: 'SAO',
   number: '20-26401138',
+ },
+]
+
+export const ledgerWingDescriptionOne = [
+ {
+  id: 'lewd1',
+  title: 'LWSS Section',
+  description:
+   'Deals with initiation of Pay & Allowance of newly commissioned officers, re-employed officers, payment of stipend to cadets, updation of bank & unit matter.',
+ },
+ {
+  id: 'lewd2',
+  title: 'IT Cell',
+  description:
+   'Uploading of TDS recovered, generates form-16 & recovers discrepancies in tax filings.',
+ },
+ {
+  id: 'lewd3',
+  title: 'AFL Cell',
+  description:
+   'Vetting of various types of DGNs, Procuring of SUBPROM part-II order.',
+ },
+ {
+  id: 'lewd4',
+  title: 'NR Cell',
+  description:
+   'Maintains nominal rolls and strength returns, processes acting promotion (ACTPROM), training allowance.',
  },
 ]

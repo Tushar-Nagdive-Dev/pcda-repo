@@ -15,7 +15,6 @@ import { ArrowRight, Numpad } from '@phosphor-icons/react'
 import { cdaAccountNoValidaton } from './UserFirstTimeValidation'
 import { InputWithIcon } from '../../../ui/inputwithicon'
 import UserFirstTimeCreateAccount from './UserFirstTimeCreateAccount'
-import UserFirstTimeEmail from './UserFirstTimeEmail'
 
 function UserFirstTimeLogin() {
  const [isSetCDA, setIsSetCDA] = useState(false)
@@ -35,7 +34,7 @@ function UserFirstTimeLogin() {
  return (
   <React.Fragment>
    {isSetCDA ? (
-    <UserFirstTimeEmail />
+    <UserFirstTimeCreateAccount />
    ) : (
     <div className="w-full h-full flex flex-col justify-center items-center space-y-10">
      <h2 className="text-2xl font-raleway">First Time Login</h2>

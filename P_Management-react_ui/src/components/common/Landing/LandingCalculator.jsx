@@ -68,12 +68,8 @@ function LandingCalculator() {
             developed by this Office. This Pay Calculator is available below on
             experimental basis. The Officer concerned may fill in the relevent
             data to decide the most beneficial option for submitting separately
-            to PCDA(O) in the prescribed fromat within the stipulated time
+            to PCDA(O) in the prescribed format within the stipulated time
             limit. The option once exercised is final."
-                    info_two=" Comments and suggestions to improve the above Pay Calculator further
-            with regard to its user friendliness and accuracy may be sent at
-            email id generalquery-pcdaopune [at] nic [dot] in. The final version
-            of Pay Calculator will be made available thereafter."
                     isCheckedDisclaimer={isCheckedDisclaimer}
                     setIsCheckedDisclaimer={setIsCheckedDisclaimer}
                     openCalculator={openCalculator}

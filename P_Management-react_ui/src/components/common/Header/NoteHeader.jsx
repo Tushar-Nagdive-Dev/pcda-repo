@@ -70,16 +70,16 @@ function NoteHeader() {
  }
 
  return (
-  <div className={`${headerStyle.note_header_section} px-custom py-1`}>
+  <div className={`${headerStyle.note_header_section} px-custom`}>
    <div className="flex gap-4">
-    <p className="text-lg font-semibold px-2 py-1 bg-loginButtonPrimary rounded-sm">
+    <p className="text-lg font-semibold px-2 py-2 bg-loginButtonPrimary rounded-sm">
      <b>Key Updates:</b>
     </p>
     <marquee
      ref={marqueeRef}
      onMouseOver={handleMouseOver}
      onMouseOut={handleMouseOut}
-     className="py-1"
+     className="py-2"
     >
      <ul className="flex gap-5 w-full space-x-4">
       {newsData?.map((news) => (

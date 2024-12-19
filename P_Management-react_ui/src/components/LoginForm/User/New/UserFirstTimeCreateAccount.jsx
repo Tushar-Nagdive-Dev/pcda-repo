@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/select'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import UserMobileRegistration from '../../../users/Authentication/UserMobileRegistration'
+import UserMobileRegistration from './UserMobileRegistration.jsx'
 
 function UserFirstTimeCreateAccount() {
  const navigate = useNavigate()

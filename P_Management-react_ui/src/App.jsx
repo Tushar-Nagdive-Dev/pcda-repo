@@ -144,7 +144,7 @@ const routes = [
     children: [
      { index: true, element: <AdminManageOfficer /> },
      { path: 'upload', element: <AdminUploadOfficerFile /> },
-     { path: 'download', element: <></> },
+     { path: 'update', element: <></> },
     ],
    },
   ],

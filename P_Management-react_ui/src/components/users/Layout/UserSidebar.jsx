@@ -32,6 +32,8 @@ import pcdaoLogo from '@/assets/logo/pcdao_new.png'
 import UserButtonSideBar from './UserButtonSideBar.jsx'
 import {
     Circle, EnvelopeSimple,
+    Notebook,
+    Package,
     Receipt,
     SignOut,
 } from '@phosphor-icons/react'
@@ -79,6 +81,16 @@ const data = [
     //     url: 'dsop-fund-statement',
     //     icon: Receipt,
     // },
+    {
+        title: 'LTC Availed',
+        url: 'ltc-availed',
+        icon: Package,
+    },
+    {
+        title: 'Abbreviation in Salary Slip',
+        url: 'abbreviation-salary-slip',
+        icon: Notebook,
+    },
     {
         title: 'Status of Claims',
         url: 'status-claims',

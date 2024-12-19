@@ -224,11 +224,11 @@ function CentralWing() {
          />
         ))}
        </ul>
-       <ul className="list-disc list-inside">
+       {/* <ul className="list-disc list-inside">
         <li className="text-orangeIndiaPrimaryColor font-bold mt-6">
          Note: To Contact SAO/AO of the concerned Section,kindly visit RTI page.
         </li>
-       </ul>
+       </ul> */}
       </TitleWithLinkCard>
      </div>
 

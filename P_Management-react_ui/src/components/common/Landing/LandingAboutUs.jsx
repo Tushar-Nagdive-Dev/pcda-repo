@@ -23,11 +23,10 @@ function LandingAboutUs() {
     </div>
     <div className="w-full h-full text-ternaryGrey my-auto space-y-4">
      <p
-      className={`w-full m-0 p-0 text-lg text-justify ${accessibilityCtx.getFontSizeClass(
-       'text-base'
-      )}`}
+      className={`w-full m-0 p-0 text-2xl text-justify`}
      >
-      Welcome to the PCDA (O), a distinguished organization within Defence
+      PCDA(O) a distinguished organization within Defence Accounts Department (DAD), with a rich legacy as one of the oldest departments within the Government of India. At the helm of this esteemed department is the Controller General of Defence Accounts (CGDA). PCDA(O) is responsible for audit & payment of Pay and Allowance & all personal claims including Travelling allowance & LTC of all army officers. PCDA(O) acts as financial advisor to headquarters of all commands & their lower formations in all matters of Pay & Allowances. This office also audits DGN(Draft Gazette Notifications) pertaining to army officers. With our unwavering commitment to excellence and accountability, we ensure the precision in managing the financial affairs of the army officers.
+      {/* Welcome to the PCDA (O), a distinguished organization within Defence
       Accounts Department (DAD), with a legacy as one of the oldest departments
       within Government of India. At the helm of this esteemed department is the
       Controller General of Defence Accounts (CGDA). We take pride in our
@@ -37,9 +36,9 @@ function LandingAboutUs() {
       and receipts of the Defence Officers. With our unwavering commitment ot
       excellence and accountability, we ensure the utmost precision in managing
       the financial affiars of these cirtical institutions, contributing to the
-      nation’s defence and security.
+      nation’s defence and security. */}
      </p>
-     <p
+     {/* <p
       className={`w-full m-0 py-3 text-lg text-justify ${accessibilityCtx.getFontSizeClass(
        'text-base'
       )}`}
@@ -57,7 +56,7 @@ function LandingAboutUs() {
        <li>Timely processing of Terminal/Retiring benefits of the Officers.</li>
        <li>Updation/Maintenance of Pay Records</li>
       </ul>
-     </p>
+     </p> */}
     </div>
    </div>
   </div>

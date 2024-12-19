@@ -1,89 +1,3 @@
-// import React, { useCallback, useEffect, useState } from 'react'
-// import {
-//  Accordion,
-//  AccordionContent,
-//  AccordionItem,
-//  AccordionTrigger,
-// } from '@/components/ui/accordion'
-// import {
-//  SubAccordion,
-//  SubAccordionContent,
-//  SubAccordionItem,
-//  SubAccordionTrigger,
-// } from '@/components/ui/sub-accordion'
-// import { faqData } from './FAQData'
-// import apiClient from '../../../auth/ApiClient.jsx'
-//
-// function FAQSection({ currentTab }) {
-//  const [singleFaqDetails, setSingleFaqDetails] = useState([])
-//  const [faqDetails, setFaqDetails] = useState([])
-//  useEffect(() => {
-//   setSingleFaqDetails(() =>
-//    faqData.filter((item) => item.name === currentTab),
-//   )
-//  }, [currentTab])
-//
-//  useEffect(() => {
-//   fetchFAQDetails()
-//  }, [])
-//
-//  async function fetchFAQDetails() {
-//   try {
-//    const response = await apiClient.get('faqdetails')
-//    const data = await response.data
-//    console.log(data)
-//    setFaqDetails(faqDetails)
-//   } catch (error) {
-//    console.error(error)
-//   }
-//  }
-//
-//  const getSingleSectionDetails = useCallback(() => {
-//   if (faqDetails.length > 0) {
-//    // Determine wing
-//    const wing =
-//     currentTab === 'Ledger Wing'
-//      ? 'LEDGER_WING'
-//      : currentTab === 'Transportation Wing'
-//       ? 'TRANSPORT_WING'
-//       : 'CENTRAL_WING'
-//    setSingleFaqDetails(() => faqDetails.filter(item => item.wings === wing))
-//   }
-//  }, [currentTab])
-//
-//  console.log('Single FAQ', singleFaqDetails[0])
-//  return (
-//   <div className="w-full flex flex-col">
-//    <Accordion type="multiple" collapsible className="space-y-4">
-//     {singleFaqDetails[0]?.lists.map((item) => (
-//      <AccordionItem value={item?.title} key={item?.title}>
-//       <AccordionTrigger>{item?.title}</AccordionTrigger>
-//       <AccordionContent>
-//        <SubAccordion type="multiple" collapsible className="space-y-2">
-//         {item?.questions_lists?.map((subitem) => (
-//          <SubAccordionItem value={subitem?.id}>
-//           <SubAccordionTrigger>
-//            {subitem?.question}
-//           </SubAccordionTrigger>
-//           <SubAccordionContent>{subitem?.content}</SubAccordionContent>
-//          </SubAccordionItem>
-//         ))}
-//
-//         {/* <SubAccordionItem value="subitem-2">
-//                 <SubAccordionTrigger>Is it accessible?</SubAccordionTrigger>
-//                 <SubAccordionContent>this is SubAccordion</SubAccordionContent>
-//               </SubAccordionItem> */}
-//        </SubAccordion>
-//       </AccordionContent>
-//      </AccordionItem>
-//     ))}
-//    </Accordion>
-//   </div>
-//  )
-// }
-//
-// export default FAQSection
-
 import React, { useCallback, useEffect, useState } from 'react'
 import {
  Accordion,
@@ -99,7 +13,7 @@ import {
 } from '@/components/ui/sub-accordion'
 import apiClient from '../../../auth/ApiClient.jsx'
 import { faqData } from './FAQData'
-
+import { Input } from '../../ui/input.jsx'
 
 // function transformFAQData(apiData) {
 //  // Step 1: Group by wings
@@ -140,8 +54,6 @@ import { faqData } from './FAQData'
 //  return Object.values(groupedByWings)
 // }
 
-
-
 // Helper function to format wing names
 // function formatWingName(wing) {
 //  return wing
@@ -151,45 +63,46 @@ import { faqData } from './FAQData'
 // }
 
 const wingNamesMap = {
-  LEDGER_WING: "Ledger Wing",
-  TRANSPORT_WING: "Transportation Wing",
-  CENTRAL_WING: "Central Wing",
-};
+ LEDGER_WING: 'Ledger Wing',
+ TRANSPORT_WING: 'Transportation Wing',
+ CENTRAL_WING: 'Central Wing',
+}
 
 const processFAQData = (data) => {
-  return Object.values(
-    data.reduce((acc, item) => {
-      const wingName = wingNamesMap[item.wing.name] || item.wing.name;
-      const sectionTitle = item.section.name;
+ return Object.values(
+  data.reduce((acc, item) => {
+   const wingName = wingNamesMap[item.wing.name] || item.wing.name
+   const sectionTitle = item.section.name
 
-      if (!acc[wingName]) {
-        acc[wingName] = {
-          name: wingName,
-          lists: []
-        };
-      }
+   if (!acc[wingName]) {
+    acc[wingName] = {
+     name: wingName,
+     lists: [],
+    }
+   }
 
-      let section = acc[wingName].lists.find((list) => list.title === sectionTitle);
+   let section = acc[wingName].lists.find((list) => list.title === sectionTitle)
 
-      if (!section) {
-        section = {
-          title: sectionTitle,
-          questions_lists: []
-        };
-        acc[wingName].lists.push(section);
-      }
+   if (!section) {
+    section = {
+     title: sectionTitle,
+     questions_lists: [],
+    }
+    acc[wingName].lists.push(section)
+   }
 
-      section.questions_lists.push({
-        id: `${wingName.toLowerCase().replace(/\s+/g, "")}_${section.questions_lists.length + 1}`,
-        question: item.question,
-        content: item.answer
-      });
+   section.questions_lists.push({
+    id: `${wingName.toLowerCase().replace(/\s+/g, '')}_${
+     section.questions_lists.length + 1
+    }`,
+    question: item.question,
+    content: item.answer,
+   })
 
-      return acc;
-    }, {})
-  );
-};
-
+   return acc
+  }, {})
+ )
+}
 
 function FAQSection({ currentTab }) {
  const [singleFaqDetails, setSingleFaqDetails] = useState(faqData)
@@ -199,8 +112,8 @@ function FAQSection({ currentTab }) {
  async function fetchFAQDetails() {
   try {
    const response = await apiClient.get('faqdetails/getFaqTableData') // Make the API call
-   const data = await response.data;
-   const filterData = data.filter(item => item.faqStatus)
+   const data = await response.data
+   const filterData = data.filter((item) => item.faqStatus)
    // console.log('Fetched FAQ Data:', data)
    setFaqDetails(filterData) // Update the FAQ details state
   } catch (error) {
@@ -213,7 +126,7 @@ function FAQSection({ currentTab }) {
   if (faqDetails.length > 0) {
    const transformedData = processFAQData(faqDetails)
    setSingleFaqDetails(() =>
-    transformedData.filter((item) => item.name === currentTab),
+    transformedData.filter((item) => item.name === currentTab)
    )
   }
  }, [currentTab, faqDetails])
@@ -233,6 +146,16 @@ function FAQSection({ currentTab }) {
 
  return (
   <div className="w-full flex flex-col">
+   <div className="flex flex-row-reverse w-full my-5">
+    <div className="w-fit flex gap-2">
+     <Input
+      type="text"
+      placeholder="Search"
+      onChange={(e) => handleSearch(e.target.value)}
+      className="rounded-2xl h-full border bg-adminBreadCrumbsBg w-[350px] max-w-[450px]"
+     />
+    </div>
+   </div>
    <div className="w-full flex flex-col">
     <Accordion type="multiple" collapsible className="space-y-4">
      {singleFaqDetails[0]?.lists.map((item) => (
@@ -242,9 +165,7 @@ function FAQSection({ currentTab }) {
         <SubAccordion type="multiple" collapsible className="space-y-2">
          {item?.questions_lists?.map((subitem) => (
           <SubAccordionItem value={subitem?.id}>
-           <SubAccordionTrigger>
-            {subitem?.question}
-           </SubAccordionTrigger>
+           <SubAccordionTrigger>{subitem?.question}</SubAccordionTrigger>
            <SubAccordionContent>{subitem?.content}</SubAccordionContent>
           </SubAccordionItem>
          ))}
@@ -252,9 +173,9 @@ function FAQSection({ currentTab }) {
        </AccordionContent>
       </AccordionItem>
      ))}
-    </Accordion></div>
+    </Accordion>
+   </div>
   </div>
-
  )
 }
 

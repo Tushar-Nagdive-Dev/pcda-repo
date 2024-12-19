@@ -117,7 +117,7 @@ function LandingImportantLinks() {
     <h4 className={`text-3xl text-mainprimarycolor font-bold`}>
      Important Links
     </h4>
-    <div className="grid grid-cols-3 hd_screen:grid-cols-4 gap-6 h-[750px] max-h-[950px]">
+    <div className="grid grid-cols-3 hd_screen:grid-cols-4 gap-6 h-[600px] max-h-[650px]">
      {slides.map((slide) => (
       <React.Fragment>
        {slide.title === 'E-BOOK' ? (

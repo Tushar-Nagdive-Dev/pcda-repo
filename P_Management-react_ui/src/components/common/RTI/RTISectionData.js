@@ -59,13 +59,13 @@ export const RTISectionData = [
      'Accounting, Monitoring and Booking of expenditure with regard to Defence Civilians  and Army',
     ],
    },
-   {
-    name: 'Building/Security Wing',
-    workDealtWith: [
-     'Looking after Security of Office Building and Office Premises.',
-     'Maintenance and upkeep of office building and premises.',
-    ],
-   },
+//    {
+//     name: 'Building/Security Wing',
+//     workDealtWith: [
+//      'Looking after Security of Office Building and Office Premises.',
+//      'Maintenance and upkeep of office building and premises.',
+//     ],
+//    },
    {
     name: 'EDP Centre',
     workDealtWith: [

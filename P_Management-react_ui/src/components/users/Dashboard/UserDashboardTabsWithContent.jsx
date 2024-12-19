@@ -38,7 +38,7 @@ const userDashboardTabMenuList = [
  },
  {
   id: 'udt8',
-  title: 'Abbreviation in Salary Slip',
+  title: 'MRO Status',
  },
 ]
 

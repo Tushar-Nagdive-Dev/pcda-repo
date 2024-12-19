@@ -67,7 +67,8 @@ public class SecurityConfig {
                     "/testimonials/**",
                     "/api/document/**",
                     "/news-and-notifications/**",
-                    "/doc-download/**"
+                    "/doc-download/**",
+                    "/api/registration-processing/**"
                 ).permitAll()
                 .anyRequest().authenticated())
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
