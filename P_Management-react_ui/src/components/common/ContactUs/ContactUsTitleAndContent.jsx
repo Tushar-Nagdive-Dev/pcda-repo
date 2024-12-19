@@ -8,7 +8,7 @@ function ContactUsTitleAndContent({ title, info, className }) {
       `}
   >
    <p className="text-mainprimarycolor font-bold ">{title}</p>
-   <p className="text-titleColor">{info}</p>
+   <p className="text-titleColor whitespace-pre-line leading-relaxed text-center">{info}</p>
   </div>
  )
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.inn.pcda.downloadmanager.dto.AddDocDto;
+import com.inn.pcda.downloadmanager.dto.ResponseDto;
 import com.inn.pcda.downloadmanager.dto.UpdateDocDto;
 import com.inn.pcda.downloadmanager.entity.DocDownload;
 import com.inn.pcda.downloadmanager.services.IDocDownloadService;
@@ -48,7 +49,7 @@ public class DocDownloadController {
     @PutMapping("/{id}")
     public ResponseEntity<String> updateDocument(@PathVariable Long id, @ModelAttribute UpdateDocDto dto, @RequestParam(value = "file", required = false) MultipartFile file) {
         try {
-            if (docDownloadService.updateDocument(id, dto, file)) {
+            if (Boolean.TRUE.equals(docDownloadService.updateDocument(id, dto, file))) {
                 return ResponseEntity.ok("Document updated successfully");
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Document update failed");
@@ -61,7 +62,7 @@ public class DocDownloadController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteDocument(@PathVariable Long id) {
         try {
-            if (docDownloadService.deleteDocument(id)) {
+            if (Boolean.TRUE.equals(docDownloadService.deleteDocument(id))) {
                 return ResponseEntity.ok("Document deleted successfully");
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Document deletion failed");
@@ -72,9 +73,9 @@ public class DocDownloadController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DocDownload> getDocumentDetails(@PathVariable Long id) {
+    public ResponseEntity<ResponseDto> getDocumentDetails(@PathVariable Long id) {
         try {
-            DocDownload docDownload = docDownloadService.getDocumentDetails(id);
+            ResponseDto docDownload = docDownloadService.getDocumentDetails(id);
             return ResponseEntity.ok(docDownload);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -94,9 +95,9 @@ public class DocDownloadController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DocDownload>> getAllDocuments() {
+    public ResponseEntity<List<ResponseDto>> getAllDocuments() {
         try {
-            List<DocDownload> documents = docDownloadService.getAllDocuments();
+            List<ResponseDto> documents = docDownloadService.getAllDocuments();
             return ResponseEntity.ok(documents);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

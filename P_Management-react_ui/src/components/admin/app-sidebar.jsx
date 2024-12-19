@@ -86,7 +86,7 @@ const data = [
   items: [
    {
     title: 'Manage Officers',
-    url: '#',
+    url: 'manage-officer',
    },
    {
     title: 'AAO BSO Officers',

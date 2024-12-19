@@ -57,11 +57,6 @@ public class RegistrationService {
             throw new RegistrationException("The provided email is already in use.");
         }
 
-        // // Password validation
-        // if (!registrationRequest.getPassword().equals(registrationRequest.getConfirmPassword())) {
-        //     throw new RegistrationException("Passwords do not match.");
-        // }
-
         // Creating user
         Users user = new Users();
         user.setUsername(registrationRequest.getUsername());
@@ -87,4 +82,6 @@ public class RegistrationService {
 
         logger.info("UserConfig created for user: {}", user.getUsername());
     }
+
+    
 }

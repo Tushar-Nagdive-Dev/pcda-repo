@@ -148,65 +148,63 @@ function LedgerWing() {
        As on date 155 FAMA cases are there which has to be reviewed every month.
       </p>
       </div> */}
+       <Separator className="my-4" />
       <div className="w-full grid grid-cols-1 gap-6 h-full">
-       <ul className="grid grid-cols-2 gap-3 list-disc list-inside text-justify overflow-y-auto text-paragraphcolor my-4">
-        <li className="flex flex-col gap-2">
-         <p>
-          {' '}
-          <b>Pay & Allowances:</b>
-         </p>{' '}
-         <p>
-          Admittance, revision, and special cases such as UN Missions,
-          Territorial Army, and short-service officers.
-         </p>
+       <ul className="grid grid-cols-2 gap-3  list-outside text-justify overflow-y-auto text-paragraphcolor gap-x-6 my-4">
+        <li>
+         <b className='underline underline-offset-4'>Pay & Allowances:</b> Admittance, revision, and special cases such
+         as UN Missions, Territorial Army, and short-service officers.
         </li>
         <li>
-         <b>Claims & Reimbursements:</b> Processing medical claims, furniture,
+         <b className='underline underline-offset-4'>Claims & Reimbursements:</b> Processing medical claims, furniture,
          water bills, and various allowances.
         </li>
         <li>
-         <b>Financial Adjustments:</b> Handling tax-saving proofs, advances,
+         <b className='underline underline-offset-4'>Financial Adjustments:</b> Handling tax-saving proofs, advances,
          arrears, and special adjustments like pay stepping, bunching, and AFT
          judgments.
         </li>
         <li>
-         <b>Grievances & Reports:</b> Addressing officer queries, grievances,
+         <b className='underline underline-offset-4'>Grievances & Reports:</b> Addressing officer queries, grievances,
          RTI, and CPGRAM cases; preparing audit reports and LPCs.
         </li>
         <li>
-         <b>Final Settlements:</b> Managing retirement benefits such as DSOP
+         <b className='underline underline-offset-4'>Final Settlements:</b> Managing retirement benefits such as DSOP
          withdrawals, leave encashments, and gratuity.
-        </li>
-        <li>
-         <b>SS Section:</b> Deals with stipend payments, starting of psy snd
-         sllowances of newly commissioned officers,Commencement of Pay and
-         allowances for the Officers seconded to Army from Navy and Air Force.
-         and data updates such as personal and bank details.
-        </li>
-        <li>
-         <b>IT Cell:</b> Uploads TDS data, manages Form 16, and resolves
-         discrepancies in tax filings.
-        </li>
-        <li>
-         <b>AFL Section:</b>Handles promotions, PRC registers, and related
-         grievances.
-        </li>
-        <li>
-         <b>Rent Cell:</b> Ensures accurate recovery of rent and allied charges
-         for officers occupying govt accomodations.
-        </li>
-        <li>
-         <b>NR Cell:</b>Maintains strength returns and processes training and
-         allowance-related casualties.
-        </li>
-        <li>
-         <b>FSR Section:</b> Reviews IRLA accounts and issues Full Pay
-         Certificates for superannuation cases.
         </li>
        </ul>
       </div>
-      <ul className="text-lg list-disc list-inside   space-y-2 "></ul>
+      <Separator className="my-4" />
+      <ul className="grid grid-cols-2 gap-3  list-outside  text-justify overflow-y-auto text-paragraphcolor gap-x-6 my-4">
+       <li>
+        <b className='underline underline-offset-4'>SS Section:</b> Deals with stipend payments, starting of psy snd
+        sllowances of newly commissioned officers,Commencement of Pay and
+        allowances for the Officers seconded to Army from Navy and Air Force.
+        and data updates such as personal and bank details.
+       </li>
+       <li>
+        <b className='underline underline-offset-4'>IT Cell:</b> Uploads TDS data, manages Form 16, and resolves
+        discrepancies in tax filings.
+       </li>
+       <li>
+        <b className='underline underline-offset-4'>AFL Section:</b> Handles promotions, PRC registers, and related
+        grievances.
+       </li>
+       <li>
+        <b className='underline underline-offset-4'>Rent Cell:</b> Ensures accurate recovery of rent and allied charges
+        for officers occupying govt accomodations.
+       </li>
+       <li>
+        <b className='underline underline-offset-4'>NR Cell:</b> Maintains strength returns and processes training and
+        allowance-related casualties.
+       </li>
+       <li>
+        <b className='underline underline-offset-4'>FSR Section:</b> Reviews IRLA accounts and issues Full Pay
+        Certificates for superannuation cases.
+       </li>
+      </ul>
      </div>
+     <Separator className="my-4" />
      <div className="grid grid-cols-3 gap-6 h-full">
       <div className="col-span-2">
        <TitleWithLinkCard title="Important Points">

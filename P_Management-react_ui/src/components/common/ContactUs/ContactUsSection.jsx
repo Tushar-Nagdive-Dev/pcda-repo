@@ -183,12 +183,12 @@ function ContactUsSection() {
             </div>
            </div>
 
-           <div className='flex flex-col items-center space-y-4'>
+           <div className="flex flex-col items-center space-y-4">
             <p className="text-mainprimarycolor font-bold text-lg">Timings</p>
 
             <div className="grid grid-cols-2 gap-10">
              <ContactUsTitleAndContent
-            //   bigtitle="Timings"
+              //   bigtitle="Timings"
               title="PRO Timing"
               info="Monday To Friday (09:30hr to 18:00Hr)"
               className="items-center"
@@ -209,7 +209,7 @@ function ContactUsSection() {
             />
            </div> */}
 
-           <div className="flex flex-col gap-2 items-center">
+           <div className="flex flex-col items-center">
             <ContactUsInlineTitleAndContent
              title="Retired Officers and rank pay arrears related queries"
              info="rankpay-pcdaopune@nic.in"
@@ -257,11 +257,15 @@ function ContactUsSection() {
 
            <ContactUsTitleAndContent
             title="Address"
-            info="Office Of The CGDA, Ulan Batar Road, Palam, Delhi Cantt-110010"
+            info={`Office Of The CGDA, Ulan Batar Road, Palam, \n Delhi Cantt-110010`}
             className="items-center"
            />
 
-           <ContactUsTitleAndContent title="Telephone" info="011-20893013" />
+           <ContactUsTitleAndContent
+            title="Telephone"
+            info="011-20893013"
+            className="items-center"
+           />
 
            <ContactUsTitleAndContent
             title="Email"
@@ -289,22 +293,29 @@ function ContactUsSection() {
             : 'bg-selectedSecondary rounded-r-lg rounded-b-lg'
           }`}
          >
-          <div className="flex flex-col space-y-4">
+          <div className="h-full flex flex-col items-center justify-center space-y-4 text-2xl">
            <ContactUsTitleAndContent
             title="Shri. Prakash Chandra"
             info="IDAS, Addl. CDA & VO"
+            className="items-center"
            />
 
            <ContactUsTitleAndContent
             title="Address"
             info="Office Of The PCDA(O), Golibar Maidan, Pune-411011"
+            className="items-center"
            />
 
-           <ContactUsTitleAndContent title="Telephone" info="020-26401102" />
+           <ContactUsTitleAndContent
+            title="Telephone"
+            info="020-26401102"
+            className="items-center"
+           />
 
            <ContactUsTitleAndContent
             title="Email"
             info="chandraprakash.dad@hub.nic.in"
+            className="items-center"
            />
           </div>
          </div>
@@ -329,22 +340,23 @@ function ContactUsSection() {
          >
           <div className="flex flex-col space-y-6">
            <div className="flex flex-col gap-2">
-            <p className="text-mainprimarycolor font-bold text-xl">
+            <p className="text-mainprimarycolor font-bold text-xl text-center">
              Army Pay And Allowances Contact Centre (APACC)
             </p>
-            <p className="text-mainprimarycolor text-lg">
+            <p className="text-mainprimarycolor text-lg text-center">
              At PCDA(O), Pune - 411 001.
             </p>
            </div>
            <ContactUsTitleAndContent
             title="Lt. Col. Himani"
             info="Office-In-Charge"
+            className="items-center text-lg"
            />
 
-           <ContactUsTitleAndContent title="Email" info="ramkc.56566@gov.in" />
+           <ContactUsTitleAndContent title="Email" info="ramkc.56566@gov.in" className="items-center text-lg"/>
 
            <div className="w-full grid grid-cols-2">
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col space-y-2 items-center">
              <p className="text-mainprimarycolor font-bold text-xl">
               For Serving Officers
              </p>
@@ -355,7 +367,7 @@ function ContactUsSection() {
              />
             </div>
 
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col space-y-2 items-center">
              <p className="text-mainprimarycolor font-bold text-xl">
               For Retired Officers
              </p>
@@ -370,12 +382,13 @@ function ContactUsSection() {
             </div>
            </div>
 
-           <div className="flex flex-col space-y-4">
+           <div className="flex flex-col space-y-4 items-center">
             <p className="text-mainprimarycolor font-bold text-xl">Timings</p>
             <ContactUsTitleAndContent
-             title="Monday to Friday"
-             info="(09:00hr to 13:30Hr) & (14:30Hr to 17:30hr)"
-            />
+              title=""
+              info="Monday To Friday (09:30hr to 18:00Hr)"
+              className="items-center text-lg"
+             />
            </div>
           </div>
          </div>

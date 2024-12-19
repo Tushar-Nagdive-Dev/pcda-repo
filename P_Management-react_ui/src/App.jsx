@@ -22,6 +22,9 @@ import DynamicNewsAndEvents from './pages/DynamicNewsAndEvents'
 import LedgerWing from './components/common/Wing/LedgerWing.jsx'
 import CentralWing from './components/common/Wing/CentralWing.jsx'
 import TransportationWing from './components/common/Wing/TransportationWing.jsx'
+import Appreciations from './pages/Appreciations.jsx'
+import SparshDetails from './pages/SparshDetails.jsx'
+import NewsLists from './pages/NewsLists.jsx'
 
 /* Admin */
 import AdminNewsAndNotificationTableList from './pages/Admin/NewsAndNotification/AdminNewsAndNotificationTableList.jsx'
@@ -44,6 +47,7 @@ import AdminLoginComponent from './pages/AdminLoginComponent.jsx'
 import AdminDownloadForm from './pages/Admin/Download/AdminDownloadForm.jsx'
 import AdminEditDownloadForm from './pages/Admin/Download/AdminEditDownloadForm.jsx'
 import AdminDownloadTableList from './pages/Admin/Download/AdminDownloadTableList.jsx'
+import AdminManageOfficer from './pages/Admin/ManageOfficer/AdminManageOfficer.jsx'
 
 /* User */
 import UserLoginComponent from './pages/UserPanel/UserLoginComponent.jsx'
@@ -52,9 +56,7 @@ import UserPanelLayout from './pages/UserPanel/Layout/UserPanelLayout.jsx'
 import UserProtectPrivateRoute from './auth/UserProtectPrivateRoute.jsx'
 import UserDashboard from './pages/UserPanel/Dashboard/UserDashboard.jsx'
 import UserTwoFA from './pages/UserPanel/2FA/UserTwoFA.jsx'
-import Appreciations from './pages/Appreciations.jsx'
-import SparshDetails from './pages/SparshDetails.jsx'
-import NewsLists from './pages/NewsLists.jsx'
+import AdminUploadOfficerFile from './pages/Admin/ManageOfficer/AdminUploadOfficerFile.jsx'
 
 const websiteTitle = 'Welcome to PCDA(O) Pune '
 
@@ -82,7 +84,7 @@ const routes = [
    { path: '/faq', element: <FAQ /> },
    { path: '/appreciations', element: <Appreciations /> },
    { path: '/sparsh', element: <SparshDetails /> },
-   { path: '/news', element: <NewsLists />}
+   { path: '/news', element: <NewsLists /> },
   ],
  },
  { path: '/pcdao-login', element: <AdminLoginComponent /> },
@@ -135,6 +137,14 @@ const routes = [
      { index: true, element: <AdminGalleryTableList /> },
      { path: 'new', element: <AdminGalleryForm /> },
      { path: 'edit/:id', element: <EditAdminGalleryForm /> },
+    ],
+   },
+   {
+    path: 'manage-officer',
+    children: [
+     { index: true, element: <AdminManageOfficer /> },
+     { path: 'upload', element: <AdminUploadOfficerFile /> },
+     { path: 'download', element: <></> },
     ],
    },
   ],

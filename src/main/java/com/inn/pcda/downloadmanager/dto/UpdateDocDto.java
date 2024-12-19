@@ -12,4 +12,6 @@ public class UpdateDocDto {
     private Boolean status;
 
     private Integer uiOrder; 
+
+    private Long wingId;
 }

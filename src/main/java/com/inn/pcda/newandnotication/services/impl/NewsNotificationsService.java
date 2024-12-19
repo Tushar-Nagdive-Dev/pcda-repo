@@ -168,6 +168,7 @@ public class NewsNotificationsService implements INewsNotificationService {
             existingNews.setStatus(newsNotificationDTO.getStatus());
             existingNews.setType(newsNotificationDTO.getType());
             existingNews.setUiOrder(newsNotificationDTO.getUiOrder());
+            existingNews.setIsNew(newsNotificationDTO.getIsNew());
             if(!documentUrl.isEmpty())
                 existingNews.setDocumentUrl(documentUrl);
                 

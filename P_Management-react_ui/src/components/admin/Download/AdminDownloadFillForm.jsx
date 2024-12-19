@@ -162,9 +162,9 @@ function AdminDownloadFillForm() {
              <SelectValue placeholder="Select Wing" />
             </SelectTrigger>
             <SelectContent>
-             <SelectItem value="LEDGER_WING">Ledger</SelectItem>
-             <SelectItem value="TRANSPORT_WING">Transportation</SelectItem>
-             <SelectItem value="CENTRAL_WING">Central</SelectItem>
+             <SelectItem value="LEDGER_WING">Ledger Wing</SelectItem>
+             <SelectItem value="TRANSPORT_WING">Transportation Wing</SelectItem>
+             <SelectItem value="CENTRAL_WING">Central Wing</SelectItem>
             </SelectContent>
            </Select>
           </FormControl>

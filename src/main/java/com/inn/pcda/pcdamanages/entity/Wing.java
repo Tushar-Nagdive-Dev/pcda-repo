@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.inn.pcda.downloadmanager.entity.DocDownload;
 import com.inn.pcda.pcdamanages.enums.WingsTypes;
 
 import jakarta.persistence.*;
@@ -33,6 +34,11 @@ public class Wing {
     @JsonIgnore
     @ToString.Exclude
     private Set<Section> sections = new HashSet<>();
+    
+    @OneToMany(mappedBy = "wing", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<DocDownload> docDownloads = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
