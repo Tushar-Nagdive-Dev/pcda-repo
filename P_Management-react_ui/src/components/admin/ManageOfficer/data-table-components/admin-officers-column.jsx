@@ -2,7 +2,7 @@ import React from 'react'
 import { AdminDataTableColumnHeader } from '../../TableComponents/admin-data-table-column-header.jsx'
 import { Link } from 'react-router-dom'
 
-export const OfficersColumns =  [
+export const OfficersColumns = [
  {
   id: 'sr_no',
   header: ({ table }) => <p className>Sr. No.</p>,
@@ -65,7 +65,10 @@ export const OfficersColumns =  [
   header: ({ column }) => <p className>Action</p>,
   cell: ({ row }) => (
    <div className="flex space-x-2">
-    <Link to={`#`} className="truncate font-medium capitalize">
+    <Link
+     to={`update/${row.original.id}`}
+     className="truncate font-medium capitalize underline underline-offset-1"
+    >
      Reset
     </Link>
    </div>

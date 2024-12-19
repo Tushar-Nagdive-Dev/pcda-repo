@@ -127,33 +127,21 @@ function TransportationWing() {
     <div className="flex flex-col space-y-10">
      <LeftBorderWithTitle
       title="Transportation Wing"
-      className="font-semibold text-newprimaryColor text-lg"
+      className="font-semibold text-newprimaryColor text-2xl"
      />
 
      <div>
-      {/* Ledger Wing */}
+      {/* Transportation Wing */}
       <TitleWithInfo
-       title="Transportation Wing"
-       subtitle="The Transportation Wing in PCDA (O) deals with the payment related to  traveling claims such as  temporary duty or permanent duty and LTC claims of the Army Officers.Furthermore, it also ensures scrutiny and clearance of payment or advance of TA/DA & LTC including those drawn from Impress holders; other Accounts offices, CsDA/ PCsDA and NE cases. "
+       title=""
+       subtitle="Ensures payment of travelling entitlements on permanent move, temporary duty & LTC claims of army officers. It scrutinizes the advance payment of TA/DA & LTC post audit of railway warrants and procures e-ticket data received from CDA(Travel).It is also responsible for adjustment of MROs, Issue  of NDC (NE Cases)"
       />
-      <ul className="text-lg list-disc list-inside text-paragraphcolor my-4 space-y-2">
-       {/* <li>
-        Ensure prompt payment of entitlements for Army Officers' Permanent Move,
-        Temporary Duty, and LTC, maintaining morale and efficiency.
-       </li>
-       <li>
-        Prevent irregular expenditure on TA/DA, LTC journeys, Free Railway
-        Warrants, and Form D/G.
-       </li> */}
+      {/* <ul className="text-lg list-disc list-inside text-paragraphcolor my-4 space-y-2">
        <li>
         <b>Auditing of Claims:</b> Review and approve TA/DA, LTC entitlements
         of Army officers, Short Service, Territorial Army, NCC, re-employed,
         and reserve officers.
        </li>
-       {/* <li>
-        <b>Scrutiny & Payment:</b> Process advances and adjustments for TA/DA,
-        LTC, and related claims.
-       </li> */}
        <li>
         <b>Post-Audit:</b> Audit of railway warrants, Form D/G, and claims for
         transportation, daily allowances, and camp allowances.
@@ -170,7 +158,7 @@ function TransportationWing() {
         <b>Clearance & Adjustments::</b> Track TA/DA advances, MRO adjustments,
         and issue No Demand Certificates.
        </li>
-      </ul>
+      </ul> */}
      </div>
 
      <div className="grid grid-cols-3 gap-6 h-full">

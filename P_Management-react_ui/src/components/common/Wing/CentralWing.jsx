@@ -4,19 +4,19 @@ import { Separator } from '@/components/ui/separator'
 
 import {
  recordSectionLinkLists,
- recordSectionContactDetails,
- PROSectionLinkLists,
- PROSectionContactDetails,
- RetiredOfficerSectionLinkLists,
- RetiredOfficerContactDetails,
  centralWingContactDetails,
+ centralWingDescriptionTwo,
+ centralWingDescriptionOne,
 } from './sectionData'
-import LeftBorderWithTitle from '../../LeftBorderWithTitle.jsx'
-import Breadcrumbs from '../Breadcrumbs.jsx'
-import TitleWithInfo from '../Downloads/TitleWithInfo.jsx'
-import TitleWithLinkCard from '../TitleWithLinkCard.jsx'
-import LinkWithTitleCard from '../LinkWithTitleCard.jsx'
-import ContactDetailsCard from '../ContactDetailsCard.jsx'
+import {
+ Table,
+ TableBody,
+ TableCell,
+ TableHead,
+ TableHeader,
+ TableRow,
+} from '@/components/ui/table'
+
 import {
  Accordion,
  AccordionContent,
@@ -29,6 +29,14 @@ import {
  SubAccordionItem,
  SubAccordionTrigger,
 } from '@/components/ui/sub-accordion'
+
+import LeftBorderWithTitle from '../../LeftBorderWithTitle.jsx'
+import Breadcrumbs from '../Breadcrumbs.jsx'
+import TitleWithInfo from '../Downloads/TitleWithInfo.jsx'
+import TitleWithLinkCard from '../TitleWithLinkCard.jsx'
+import LinkWithTitleCard from '../LinkWithTitleCard.jsx'
+import ContactDetailsCard from '../ContactDetailsCard.jsx'
+
 import { faqData } from '../FAQ/FAQData.js'
 import { Input } from '../../ui/input.jsx'
 import { MagnifyingGlass } from '@phosphor-icons/react'
@@ -127,16 +135,16 @@ function CentralWing() {
     <div className="flex flex-col space-y-10">
      <LeftBorderWithTitle
       title="Central Wing"
-      className="font-semibold text-newprimaryColor text-lg"
+      className="font-semibold text-newprimaryColor text-2xl"
      />
 
      {/* Central Wing */}
      <div>
       <TitleWithInfo
-       title="Central Wing"
-       subtitle="The Central Wing primarily focuses on overall administration, legal matters, accounting procedures, disbursement of payments & providing liaison and personal relation between clients and Officers and staff of this Office."
+       title=""
+       subtitle="All work other than the monthly pay & allowances & travel claims of army officers are dealt within the central wing of PCDA(O).The sections under central wings with their brief objectives/duties are listed below:"
       />
-      <ul className="text-lg list-disc list-inside text-paragraphcolor my-4 space-y-2">
+      {/* <ul className="text-lg list-disc list-inside text-paragraphcolor my-4 space-y-2">
        <li>
         <b>Admin I Section:</b> Manages recruitment, promotions, performance
         appraisals, retirements, service records, allowances, and various
@@ -197,11 +205,84 @@ function CentralWing() {
        <li>
         <b>Departmental Wet Canteen:</b> Caters to the dietary needs of staff.
        </li>
-       {/* <li>
-        <b>Cash Office:</b> Manages cash and cheque transactions and
-        record-keeping.
-       </li> */}
-      </ul>
+      </ul> */}
+      <div className="h-full grid grid-cols-2 text-justify  text-paragraphcolor gap-x-6 my-4">
+       {/* Table One */}
+       <Table className="h-full border [&_tr]:!border [&_tr]:border-adminTextColor">
+        <TableHeader className="bg-newprimaryColor text-white">
+         <TableRow>
+          <TableHead className="w-[100px] font-bold text-xl border-r border-r-white">
+           Sr.No.
+          </TableHead>
+          <TableHead className="font-bold text-xl border-r border-r-white">
+           Section
+          </TableHead>
+          <TableHead className="w-[350px] font-bold text-xl border-r border-r-adminTextColor">
+           Description
+          </TableHead>
+         </TableRow>
+        </TableHeader>
+        <TableBody>
+         {centralWingDescriptionOne.map((row, index) => (
+          <React.Fragment key={row.id}>
+           <TableRow>
+            <TableCell
+             className={`font-medium text-xl border-r border-adminTextColor`}
+            >
+             {index + 1}
+            </TableCell>
+            <TableCell
+             className={`font-medium text-xl border-r border-adminTextColor`}
+            >
+             {row.title}
+            </TableCell>
+            <TableCell className={`text-xl border-r border-adminTextColor`}>
+             {row.description}
+            </TableCell>
+           </TableRow>
+          </React.Fragment>
+         ))}
+        </TableBody>
+       </Table>
+
+       {/* Table Two */}
+       <Table className="h-full border [&_tr]:!border [&_tr]:border-adminTextColor">
+        <TableHeader className="bg-newprimaryColor text-white">
+         <TableRow>
+          <TableHead className="w-[100px] font-bold text-xl border-r border-r-white">
+           Sr.No.
+          </TableHead>
+          <TableHead className="font-bold text-xl border-r border-r-white">
+           Section
+          </TableHead>
+          <TableHead className="w-[350px] font-bold text-xl border-r border-r-adminTextColor">
+           Description
+          </TableHead>
+         </TableRow>
+        </TableHeader>
+        <TableBody>
+         {centralWingDescriptionTwo.map((row, index) => (
+          <React.Fragment key={row.id}>
+           <TableRow>
+            <TableCell
+             className={`font-medium text-xl border-r border-adminTextColor`}
+            >
+             {index + 5}
+            </TableCell>
+            <TableCell
+             className={`font-medium text-xl border-r border-adminTextColor`}
+            >
+             {row.title}
+            </TableCell>
+            <TableCell className={`text-xl border-r border-adminTextColor`}>
+             {row.description}
+            </TableCell>
+           </TableRow>
+          </React.Fragment>
+         ))}
+        </TableBody>
+       </Table>
+      </div>
      </div>
      <div className="grid grid-cols-3 gap-6 h-full">
       <div className="col-span-2">

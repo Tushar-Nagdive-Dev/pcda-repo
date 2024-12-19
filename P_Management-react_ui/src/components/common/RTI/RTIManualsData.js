@@ -1,6 +1,7 @@
 import manualPartIDocs from '@/assets/docs/RTI Manual/12 - Office Manual Part I.pdf'
 import manualPartIIDocs from '@/assets/docs/RTI Manual/11 - OFFICE MANUAL II.pdf'
 import manualPartIXDocs from '@/assets/docs/RTI Manual/13 - OM IX 2014 EDITION.pdf'
+import GFRDocs from '@/assets/docs/RTI Manual/GFR2017_0.pdf'
 
 export const RTIManualsData = [
  {
@@ -35,6 +36,7 @@ export const RTIManualsData = [
   sr_no: 5,
   name_of_compilation: 'GFR',
   category: 'Manual',
+  docs: GFRDocs,
  },
  //  {
  //   sr_no: 10,

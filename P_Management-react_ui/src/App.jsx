@@ -57,6 +57,7 @@ import UserProtectPrivateRoute from './auth/UserProtectPrivateRoute.jsx'
 import UserDashboard from './pages/UserPanel/Dashboard/UserDashboard.jsx'
 import UserTwoFA from './pages/UserPanel/2FA/UserTwoFA.jsx'
 import AdminUploadOfficerFile from './pages/Admin/ManageOfficer/AdminUploadOfficerFile.jsx'
+import AdminOfficerResetAccount from './pages/Admin/ManageOfficer/AdminOfficerResetAccount.jsx'
 
 const websiteTitle = 'Welcome to PCDA(O) Pune '
 
@@ -144,7 +145,7 @@ const routes = [
     children: [
      { index: true, element: <AdminManageOfficer /> },
      { path: 'upload', element: <AdminUploadOfficerFile /> },
-     { path: 'update', element: <></> },
+     { path: 'update/:id', element: <AdminOfficerResetAccount /> },
     ],
    },
   ],
@@ -153,6 +154,7 @@ const routes = [
   path: '/login',
   element: <UserLoginComponent />,
  },
+ 
  /* Add Protect Layout for 2FA Authetication page if they havent login*/
  {
   path: '/twofa',

@@ -15,6 +15,7 @@ import {
  recordSectionLinkLists,
  ledgerWingDescriptionOne,
  LedgerWingContactDetails,
+ ledgerWingDescriptionTwo,
 } from './sectionData'
 import LeftBorderWithTitle from '../../LeftBorderWithTitle.jsx'
 import Breadcrumbs from '../Breadcrumbs.jsx'
@@ -130,19 +131,19 @@ function LedgerWing() {
     <div className="flex flex-col space-y-10">
      <LeftBorderWithTitle
       title="Ledger Wing"
-      className="font-semibold text-newprimaryColor text-lg"
+      className="font-semibold text-newprimaryColor text-2xl"
      />
 
      {/* Ledger Wing */}
      <div>
       <TitleWithInfo
-       title="Ledger Wing"
+       title=""
        subtitle="This wing maintains the IRLAs of all the officers for prompt & correct authorization of the pay & allowances. It is entrusted with the duties such as audit & admittance of claims namely CEA, OPD medical claims, encashment of leave on LTC, reimbursement of furniture & water bills etc. It also deals with payment of advances viz, HBA advance, personal computer advance etc. It undertakes admittance of FAMA based on GOC-in-c orders, transfer of DSOP fund through DID schedule, stepping up of pay of the army officers as well."
       />
-      {/* <div className="space-y-3 text-paragraphcolor text-lg my-3">
+       <div className=" text-paragraphcolor text-lg my-6">
        <p>Section under ledger wing with brief description is listed below:</p>
       </div>
-      <div className="w-full grid grid-cols-1 gap-6 h-full">
+      {/*<div className="w-full grid grid-cols-1 gap-6 h-full">
        <ul className="grid grid-cols-2 gap-3  list-outside text-justify overflow-y-auto text-paragraphcolor gap-x-6 my-4">
         <li>
          <b className="underline underline-offset-4">Pay & Allowances:</b>{' '}
@@ -205,14 +206,15 @@ function LedgerWing() {
         IRLA accounts and issues Full Pay Certificates for superannuation cases.
        </li>
       </ul> */}
-      <div className="grid grid-cols-2 text-justify  text-paragraphcolor gap-x-6 my-4">
-       <Table className=" border [&_tr]:!border [&_tr]:border-adminTextColor">
-        <TableHeader>
+      <div className="h-full grid grid-cols-2 text-justify  text-paragraphcolor gap-x-6 my-4">
+        {/* Table One */}
+       <Table className="h-full border [&_tr]:!border [&_tr]:border-adminTextColor">
+        <TableHeader className="bg-newprimaryColor text-white">
          <TableRow>
-          <TableHead className="w-[100px] font-bold text-xl border-r border-r-adminTextColor">
+          <TableHead className="w-[100px] font-bold text-xl border-r border-r-white">
            Sr.No.
           </TableHead>
-          <TableHead className="font-bold text-xl border-r border-r-adminTextColor">
+          <TableHead className="font-bold text-xl border-r border-r-white">
            Section
           </TableHead>
           <TableHead className="w-[350px] font-bold text-xl border-r border-r-adminTextColor">
@@ -228,6 +230,44 @@ function LedgerWing() {
              className={`font-medium text-xl border-r border-adminTextColor`}
             >
              {index + 1}
+            </TableCell>
+            <TableCell
+             className={`font-medium text-xl border-r border-adminTextColor`}
+            >
+             {row.title}
+            </TableCell>
+            <TableCell className={`text-xl border-r border-adminTextColor`}>
+             {row.description}
+            </TableCell>
+           </TableRow>
+          </React.Fragment>
+         ))}
+        </TableBody>
+       </Table>
+
+       {/* Table Two */}
+       <Table className=" border [&_tr]:!border [&_tr]:border-adminTextColor">
+        <TableHeader className="bg-newprimaryColor text-white">
+         <TableRow>
+          <TableHead className="w-[100px] font-bold text-xl border-r border-r-white">
+           Sr.No.
+          </TableHead>
+          <TableHead className="font-bold text-xl border-r border-r-white">
+           Section
+          </TableHead>
+          <TableHead className="w-[350px] font-bold text-xl border-r border-r-adminTextColor">
+           Description
+          </TableHead>
+         </TableRow>
+        </TableHeader>
+        <TableBody>
+         {ledgerWingDescriptionTwo.map((row, index) => (
+          <React.Fragment key={row.id}>
+           <TableRow>
+           <TableCell
+             className={`font-medium text-xl border-r border-adminTextColor`}
+            >
+             {index + 5}
             </TableCell>
             <TableCell
              className={`font-medium text-xl border-r border-adminTextColor`}
