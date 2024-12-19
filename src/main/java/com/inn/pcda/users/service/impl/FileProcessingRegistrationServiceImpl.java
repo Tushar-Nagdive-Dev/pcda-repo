@@ -12,9 +12,8 @@ import com.inn.pcda.users.repository.RoleRepository;
 import com.inn.pcda.users.repository.UserRepository;
 import com.inn.pcda.users.service.IFileProcessingRegistrationService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,20 +25,13 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class FileProcessingRegistrationServiceImpl implements IFileProcessingRegistrationService {
 
     private final ObjectMapper objectMapper;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public FileProcessingRegistrationServiceImpl(ObjectMapper objectMapper, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
-        this.objectMapper = objectMapper;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     public String processFile(MultipartFile file) throws IOException {
@@ -49,9 +41,7 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
 
         List<RegistrationRequestDTO> registrationRequestDTOs = parseFile(file);
 
-        for (RegistrationRequestDTO dto : registrationRequestDTOs) {
-            processUser(dto);
-        }
+        registrationRequestDTOs.forEach(this::processUser);
 
         log.info("File processing completed for {} records.", registrationRequestDTOs.size());
         return "File successfully processed and data saved to User table!";
@@ -59,9 +49,9 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
 
     private List<RegistrationRequestDTO> parseFile(MultipartFile file) throws IOException {
         try {
-            return objectMapper.readValue(file.getInputStream(), new TypeReference<List<RegistrationRequestDTO>>() {});
+            return objectMapper.readValue(file.getInputStream(), new TypeReference<>() {});
         } catch (IOException e) {
-            log.error("Error occurred while parsing the uploaded file: {}", file.getOriginalFilename(), e);
+            log.error("Error parsing uploaded file: {}", file.getOriginalFilename(), e);
             throw new FileProcessingException("Failed to parse the uploaded file.", e);
         }
     }
@@ -69,49 +59,33 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
     private void processUser(RegistrationRequestDTO dto) {
         Users user = mapToUserEntity(dto);
 
-        // Ensure required fields like office_code are populated
         if (user.getOfficeCode() == null || user.getOfficeCode().isEmpty()) {
-            user.setOfficeCode("DEFAULT_CODE"); // Set a default value
+            user.setOfficeCode("DEFAULT_CODE");
         }
 
         userRepository.save(user);
-        log.info("User successfully saved: {}", user.getUsername());
+        log.info("User saved successfully: {}", user.getUsername());
     }
 
     private Users mapToUserEntity(RegistrationRequestDTO dto) {
         Users user = new Users();
-
-        // Generate random username and password if not provided
-        String randomUsername = generateRandomString();
-        String randomPassword = generateRandomString();
-
-        user.setUsername(dto.getUsername() != null ? dto.getUsername() : randomUsername);
-        user.setPassword(dto.getPassword() != null ? passwordEncoder.encode(dto.getPassword()) : passwordEncoder.encode(randomPassword));
-        user.setOldPassword(randomPassword);
-        user.setOfficeCode("OFFCODE"); // Set default office code
-
-        log.info("Generated credentials for user - Username: {}, Password: [encrypted]", randomUsername);
-
-        setNameFields(dto.getOfficer_Name(), user);
+        user.setUsername(dto.getUsername() != null ? dto.getUsername() : generateRandomString());
+        user.setPassword(passwordEncoder.encode(dto.getPassword() != null ? dto.getPassword() : generateRandomString()));
         user.setEmail(dto.getEmail());
-        user.setTaskNo(dto.getTask_no());
         user.setAccountNo(dto.getAccountno());
+        user.setTaskNo(dto.getTask_no());
+        user.setOfficeCode("DEFAULT_CODE");
+        user.setFirstName(getNamePart(dto.getOfficer_Name(), 0));
+        user.setMiddleName(getNamePart(dto.getOfficer_Name(), 1));
+        user.setLastName(getNamePart(dto.getOfficer_Name(), 2));
         user.setRole(getDefaultRole());
-
         return user;
     }
 
-    private void setNameFields(String fullName, Users user) {
-        if (fullName != null && !fullName.trim().isEmpty()) {
-            String[] nameParts = fullName.trim().split("\\s+");
-            user.setFirstName(nameParts[0]);
-            user.setMiddleName(nameParts.length > 2 ? nameParts[1] : null);
-            user.setLastName(nameParts.length > 1 ? nameParts[nameParts.length - 1] : null);
-        } else {
-            user.setFirstName("Unknown");
-            user.setMiddleName(null);
-            user.setLastName("User");
-        }
+    private String getNamePart(String fullName, int index) {
+        if (fullName == null || fullName.trim().isEmpty()) return index == 0 ? "Unknown" : null;
+        String[] parts = fullName.trim().split("\\s+");
+        return parts.length > index ? parts[index] : null;
     }
 
     private Roles getDefaultRole() {
@@ -125,17 +99,18 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
 
     @Override
     public List<ResponseRegistrationDTO> downloadAllDataAsJson() {
-        List<Users> users = userRepository.findAll();
-        return users.stream().map(this::mapToResponseDto).collect(Collectors.toList());
+        return userRepository.findAll().stream().map(this::mapToResponseDto).collect(Collectors.toList());
     }
 
     private ResponseRegistrationDTO mapToResponseDto(Users user) {
-        ResponseRegistrationDTO dto = new ResponseRegistrationDTO();
-        dto.setUsername(user.getUsername());
-        dto.setTask_no(user.getTaskNo());
-        dto.setAccountno(user.getAccountNo());
-        dto.setOfficer_Name(formatFullName(user.getFirstName(), user.getMiddleName(), user.getLastName()));
-        return dto;
+        return new ResponseRegistrationDTO(
+                user.getId(),
+                formatFullName(user.getFirstName(), user.getMiddleName(), user.getLastName()),
+                user.getUsername(),
+                user.getEmail(),
+                user.getAccountNo(),
+                user.getTaskNo()
+        );
     }
 
     private String formatFullName(String firstName, String middleName, String lastName) {
@@ -144,15 +119,13 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
 
     @Override
     public List<TableResponseDTO> getOfficerList() {
-        return userRepository.findAll().stream()
-                .map(this::mapToTableResponseDto)
-                .collect(Collectors.toList());
+        return userRepository.findAll().stream().map(this::mapToTableResponseDto).collect(Collectors.toList());
     }
 
     private TableResponseDTO mapToTableResponseDto(Users user) {
         return new TableResponseDTO(
                 user.getId(),
-                user.getFirstName() + " " + (user.getLastName() != null ? user.getLastName() : ""),
+                formatFullName(user.getFirstName(), user.getMiddleName(), user.getLastName()),
                 user.getUsername(),
                 user.getEmail(),
                 user.getAccountNo(),
