@@ -13,7 +13,7 @@ function AdminOfficersTable() {
 
  const fetchAllOfficer = async () => {
   try {
-   const response = await apiClient.get('') // Adjusted endpoint
+   const response = await apiClient.get('/registration-processing/users') // Adjusted endpoint
    const data = response.data.map(mapOfficerData) // Map response data to table format
    setMappedData(data) // Update state with mapped data
   } catch (error) {
@@ -24,9 +24,9 @@ function AdminOfficersTable() {
  const mapOfficerData = (item) => ({
   id: String(item.id),
   officer_name: item.officer_name,
-  cdac_acc_no: item.cdac_acc_no,
+  cdac_acc_no: item.accountno,
   email: item.email,
-  user_name: item.user_name,
+  user_name: item.username,
  });
 
  return (

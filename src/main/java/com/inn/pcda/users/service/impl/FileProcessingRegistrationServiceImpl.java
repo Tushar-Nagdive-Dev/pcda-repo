@@ -75,9 +75,9 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
         user.setAccountNo(dto.getAccountno());
         user.setTaskNo(dto.getTask_no());
         user.setOfficeCode("DEFAULT_CODE");
-        user.setFirstName(getNamePart(dto.getOfficer_Name(), 0));
-        user.setMiddleName(getNamePart(dto.getOfficer_Name(), 1));
-        user.setLastName(getNamePart(dto.getOfficer_Name(), 2));
+        user.setFirstName(getNamePart(dto.getOfficer_name(), 0));
+        user.setMiddleName(getNamePart(dto.getOfficer_name(), 1));
+        user.setLastName(getNamePart(dto.getOfficer_name(), 2));
         user.setRole(getDefaultRole());
         return user;
     }
