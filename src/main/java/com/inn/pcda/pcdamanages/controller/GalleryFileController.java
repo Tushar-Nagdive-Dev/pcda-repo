@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -19,6 +23,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GalleryFileController {
 
+    @Operation(summary = "Serve a file from the gallery", 
+               description = "This endpoint allows clients to retrieve a specific file from the gallery. " +
+                             "The `id` represents the folder of the gallery, and the `fileName` is the name of the file within the gallery. " +
+                             "If the file exists and is readable, it will be returned as an inline response; otherwise, a 404 error will be returned.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "File found and returned successfully"),
+        @ApiResponse(responseCode = "404", description = "File not found or not readable"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @GetMapping("/{id}/{fileName:.+}")
     public ResponseEntity<Resource> serveFile(@PathVariable String id, @PathVariable String fileName) {
         try {

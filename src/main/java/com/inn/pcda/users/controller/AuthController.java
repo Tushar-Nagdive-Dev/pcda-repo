@@ -18,6 +18,9 @@ import com.inn.pcda.users.dto.LoginRequestDTO;
 import com.inn.pcda.users.dto.RegistrationRequestDTO;
 import com.inn.pcda.users.service.impl.RegistrationService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -37,9 +40,14 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    /**
-     * Login API (POST)
-     */
+    @Operation(
+            summary = "Login user",
+            description = "Authenticate the user using username, password, and captcha. Returns a JWT token if successful."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Login successful"),
+            @ApiResponse(responseCode = "400", description = "Invalid username, password, or captcha")
+    })
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequestDTO loginRequet) {
         Map<String, String> response = new HashMap<>();
@@ -81,9 +89,14 @@ public class AuthController {
         }
     }
 
-    /**
-     * Generate Captcha API (GET)
-     */
+    @Operation(
+            summary = "Generate captcha",
+            description = "Generates a new captcha token and image for validation purposes."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Captcha generated successfully"),
+            @ApiResponse(responseCode = "500", description = "Error generating captcha")
+    })
     @GetMapping("/generate")
     public ResponseEntity<Map<String, String>> generateCaptcha() {
         log.info("@AuthController method generateCaptcha: Generating new captcha");
@@ -92,9 +105,14 @@ public class AuthController {
         return ResponseEntity.ok(captchaData);
     }
 
-    /**
-     * Registration API (POST)
-     */
+    @Operation(
+            summary = "Register user",
+            description = "Registers a new user by accepting registration details such as username, password, and other required fields."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User registered successfully"),
+            @ApiResponse(responseCode = "400", description = "Error during registration")
+    })
     @PostMapping("/register")
     public ResponseEntity<Map<String, String>> registerUser(@RequestBody RegistrationRequestDTO request) {
         Map<String, String> response = new HashMap<>();

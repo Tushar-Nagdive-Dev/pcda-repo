@@ -8,6 +8,9 @@ import com.inn.pcda.users.service.IFileProcessingRegistrationService;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -27,6 +29,13 @@ public class FileProcessingRegistrationController {
 
     private final IFileProcessingRegistrationService fileProcessingService;
 
+    @Operation(summary = "Upload a registration file", 
+               description = "This endpoint allows uploading a registration file for processing. The file must be provided as a `multipart/form-data` request with the parameter name `file`.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "File processed successfully"),
+        @ApiResponse(responseCode = "400", description = "Unexpected error during processing"),
+        @ApiResponse(responseCode = "500", description = "Error processing the file")
+    })
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
@@ -43,6 +52,12 @@ public class FileProcessingRegistrationController {
         }
     }
 
+    @Operation(summary = "Download all registration data as JSON", 
+               description = "This endpoint allows downloading all processed registration data in JSON format. The file will be downloaded as `registration_data.json`.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "File downloaded successfully"),
+        @ApiResponse(responseCode = "500", description = "Error during file download")
+    })
     @GetMapping("/download")
     public void downloadAllData(HttpServletResponse response) {
         log.info("Starting file download process...");
@@ -67,6 +82,12 @@ public class FileProcessingRegistrationController {
         }
     }
 
+    @Operation(summary = "Get a list of officers", 
+               description = "Retrieves a list of officers with their details in a tabular format.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Officer list retrieved successfully"),
+        @ApiResponse(responseCode = "500", description = "Error fetching officer list")
+    })
     @GetMapping("/users")
     public ResponseEntity<List<TableResponseDTO>> getOfficerList() {
         try {
@@ -77,11 +98,23 @@ public class FileProcessingRegistrationController {
         }
     }
 
+    @Operation(summary = "Get user details by ID", 
+               description = "Retrieves user details by their unique ID.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "User details retrieved successfully"),
+        @ApiResponse(responseCode = "404", description = "User not found")
+    })
     @GetMapping("/user/{id}")
     public ResponseEntity<ResetPasswordResponseDTO> getUserById(@PathVariable Long id) {
-       return ResponseEntity.ok(fileProcessingService.getUserById(id));
+        return ResponseEntity.ok(fileProcessingService.getUserById(id));
     }
 
+    @Operation(summary = "Reset user password", 
+               description = "Allows resetting the password for a user by their ID. The new password should be passed as a query parameter.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Password reset successfully"),
+        @ApiResponse(responseCode = "500", description = "Error resetting password")
+    })
     @PutMapping("/reset-password/{id}")
     public ResponseEntity<String> resetPassword(@PathVariable Long id, @RequestParam("password") String newPassword) {
         try {
@@ -93,6 +126,4 @@ public class FileProcessingRegistrationController {
                     .body("Error resetting password: " + e.getMessage());
         }
     }
-
-    
 }
