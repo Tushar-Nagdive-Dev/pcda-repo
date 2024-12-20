@@ -69,9 +69,12 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
     }
 
     private Users mapToUserEntity(RegistrationRequestDTO dto) {
+        String username = generateRandomString();
+        String password = generateRandomString();
         Users user = new Users();
-        user.setUsername(dto.getUsername() != null ? dto.getUsername() : generateRandomString());
-        user.setPassword(passwordEncoder.encode(dto.getPassword() != null ? dto.getPassword() : generateRandomString()));
+        user.setUsername(dto.getUsername() != null ? dto.getUsername() : username);
+        user.setPassword(passwordEncoder.encode(dto.getPassword() != null ? dto.getPassword() : password));
+        user.setOldPassword(password);
         user.setEmail(dto.getEmail());
         user.setAccountNo(dto.getAccountno());
         user.setTaskNo(dto.getTask_no());
@@ -105,9 +108,9 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
 
     private ResponseRegistrationDTO mapToResponseDto(Users user) {
         return new ResponseRegistrationDTO(
-                user.getId(),
                 formatFullName(user.getFirstName(), user.getMiddleName(), user.getLastName()),
                 user.getUsername(),
+                user.getOldPassword(),
                 user.getEmail(),
                 user.getAccountNo(),
                 user.getTaskNo()
@@ -139,4 +142,15 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
         Users user = userRepository.findById(id).orElseThrow(() -> new FileProcessingException("User not found"));
         return new ResetPasswordResponseDTO(user.getId(), formatFullName(user.getFirstName(), user.getMiddleName(), user.getLastName()), user.getAccountNo(), user.getOldPassword());
     }
+
+    @Override
+    public void updatePassword(Long id, String newPassword) {
+        Users user = userRepository.findById(id)
+                .orElseThrow(() -> new FileProcessingException("User not found"));
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setOldPassword(newPassword); // Optional: store the current password as old
+        userRepository.save(user);
+        log.info("Password updated successfully for user: {}", user.getUsername());
+    }
+
 }

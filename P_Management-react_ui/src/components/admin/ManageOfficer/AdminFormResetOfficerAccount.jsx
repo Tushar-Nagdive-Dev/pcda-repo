@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import apiClient from "../../../auth/ApiClient"; // Adjust the import path
+import apiClient from "../../../auth/ApiClient";
 
 function AdminFormResetOfficerAccount() {
   const { id } = useParams(); // Get the user ID from the route parameters
@@ -30,33 +30,6 @@ function AdminFormResetOfficerAccount() {
     fetchOfficerData(); // Fetch the officer details when the component mounts
   }, []);
 
-  useEffect(() => {
-    form.setValue("password", generatePassword()); // Set a random password initially
-  }, []);
-
-  // Function to generate a random password
-  const generatePassword = () => {
-    const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const lowercase = "abcdefghijklmnopqrstuvwxyz";
-    const digits = "0123456789";
-
-    const uppercaseChar = uppercase[Math.floor(Math.random() * uppercase.length)];
-    const lowercaseChar = lowercase[Math.floor(Math.random() * lowercase.length)];
-    const digitChar = digits[Math.floor(Math.random() * digits.length)];
-
-    const allChars = uppercase + lowercase + digits;
-    const remainingChars = Array.from(
-      { length: 5 },
-      () => allChars[Math.floor(Math.random() * allChars.length)]
-    ).join("");
-
-    return (uppercaseChar + lowercaseChar + digitChar + remainingChars)
-      .split("")
-      .sort(() => Math.random() - 0.5)
-      .join("");
-  };
-
-  // Fetch officer data from the API
   const fetchOfficerData = async () => {
     try {
       const response = await apiClient.get(`/registration-processing/user/${id}`);
@@ -65,7 +38,7 @@ function AdminFormResetOfficerAccount() {
       if (response.status === 200) {
         form.setValue("officer_name", data.officerName);
         form.setValue("account_no", data.accountNo);
-        form.setValue("password", data.password);
+        form.setValue("password", generatePassword());
       }
     } catch (error) {
       console.error("Error fetching officer data:", error);
@@ -73,28 +46,29 @@ function AdminFormResetOfficerAccount() {
     }
   };
 
-  // Generate a new password on button click
+  const generatePassword = () => {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    return Array.from({ length: 8 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+  };
+
   const generatePasswordAction = () => {
     form.setValue("password", generatePassword());
   };
 
-  // Handle form submission
   const onSubmit = async (values) => {
     setIsFormSubmitted(true);
-    console.log("Form Values Submitted:", values);
-
     try {
-      // Call your API for password reset or update
-      const response = await apiClient.post(
+      const response = await apiClient.put(
         `/registration-processing/reset-password/${id}`,
+        null,
         {
-          password: values.password,
+          params: { password: values.password }, // Send the new password as a parameter
         }
       );
 
       if (response.status === 200) {
         toast.success("Password reset successfully!");
-        navigate("/admin/dashboard"); // Redirect on success
+        navigate("/admin/dashboard");
       }
     } catch (error) {
       console.error("Error resetting password:", error);

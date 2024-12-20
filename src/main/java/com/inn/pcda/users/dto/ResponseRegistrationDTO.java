@@ -1,9 +1,9 @@
 package com.inn.pcda.users.dto;
 
 public record ResponseRegistrationDTO(
-    Long id,
-    String officer_Name,
+    String officer_name,
     String username,
+    String passowrd,
     String email,
     String accountno,
     Integer task_no

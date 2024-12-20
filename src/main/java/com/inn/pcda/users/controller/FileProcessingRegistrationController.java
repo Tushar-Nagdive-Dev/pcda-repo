@@ -17,8 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Slf4j
@@ -83,5 +81,18 @@ public class FileProcessingRegistrationController {
     public ResponseEntity<ResetPasswordResponseDTO> getUserById(@PathVariable Long id) {
        return ResponseEntity.ok(fileProcessingService.getUserById(id));
     }
+
+    @PutMapping("/reset-password/{id}")
+    public ResponseEntity<String> resetPassword(@PathVariable Long id, @RequestParam("password") String newPassword) {
+        try {
+            fileProcessingService.updatePassword(id, newPassword);
+            return ResponseEntity.ok("Password reset successfully!");
+        } catch (Exception e) {
+            log.error("Error resetting password: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error resetting password: " + e.getMessage());
+        }
+    }
+
     
 }

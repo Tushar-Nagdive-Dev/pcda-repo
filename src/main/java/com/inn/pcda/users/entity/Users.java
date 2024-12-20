@@ -52,7 +52,7 @@ public class Users extends BaseEntity {
     @Column(name = "last_name",nullable = false)
     private String lastName;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String email;
 
     @Column(name = "account_no",nullable = false, unique = true)
