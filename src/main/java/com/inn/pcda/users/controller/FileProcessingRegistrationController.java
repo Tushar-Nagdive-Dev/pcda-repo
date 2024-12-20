@@ -1,6 +1,7 @@
 package com.inn.pcda.users.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.inn.pcda.users.dto.ResetPasswordResponseDTO;
 import com.inn.pcda.users.dto.ResponseRegistrationDTO;
 import com.inn.pcda.users.dto.TableResponseDTO;
 import com.inn.pcda.users.service.IFileProcessingRegistrationService;
@@ -16,6 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Slf4j
 @RestController
@@ -74,4 +78,10 @@ public class FileProcessingRegistrationController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<ResetPasswordResponseDTO> getUserById(@PathVariable Long id) {
+       return ResponseEntity.ok(fileProcessingService.getUserById(id));
+    }
+    
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inn.pcda.exceptions.FileProcessingException;
 import com.inn.pcda.users.dto.RegistrationRequestDTO;
+import com.inn.pcda.users.dto.ResetPasswordResponseDTO;
 import com.inn.pcda.users.dto.ResponseRegistrationDTO;
 import com.inn.pcda.users.dto.TableResponseDTO;
 import com.inn.pcda.users.entity.Roles;
@@ -131,5 +132,11 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
                 user.getAccountNo(),
                 user.getTaskNo()
         );
+    }
+
+    @Override
+    public ResetPasswordResponseDTO getUserById(Long id) {
+        Users user = userRepository.findById(id).orElseThrow(() -> new FileProcessingException("User not found"));
+        return new ResetPasswordResponseDTO(user.getId(), formatFullName(user.getFirstName(), user.getMiddleName(), user.getLastName()), user.getAccountNo(), user.getOldPassword());
     }
 }

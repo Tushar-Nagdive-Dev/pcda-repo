@@ -5,12 +5,17 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.inn.pcda.users.dto.ResetPasswordResponseDTO;
 import com.inn.pcda.users.dto.ResponseRegistrationDTO;
 import com.inn.pcda.users.dto.TableResponseDTO;
 
 public interface IFileProcessingRegistrationService {
 
 	String processFile(MultipartFile file) throws IOException;
+    
     List<ResponseRegistrationDTO> downloadAllDataAsJson();
+
     public List<TableResponseDTO> getOfficerList();
+
+    public ResetPasswordResponseDTO getUserById(Long id);
 }
