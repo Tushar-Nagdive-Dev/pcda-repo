@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inn.pcda.users.dto.RegistrationRequestDTO;
+import com.inn.pcda.users.dto.OfficerDetailsDTO;
 import com.inn.pcda.users.entity.Users;
 import com.inn.pcda.users.service.IUserReLoginService;
 
@@ -27,10 +27,10 @@ public class UpdateOfficerController {
   private final IUserReLoginService userReLoginService;
 
     @GetMapping("/{accountNo}")
-    public ResponseEntity<RegistrationRequestDTO> getOfficerByAccountNo(@PathVariable String accountNo) {
+    public ResponseEntity<OfficerDetailsDTO> getOfficerByAccountNo(@PathVariable String accountNo) {
         log.info("Fetching officer details for account number: {}", accountNo);
 
-        RegistrationRequestDTO officer = userReLoginService.getOfficerByAccountNo(accountNo);
+        OfficerDetailsDTO officer = userReLoginService.getOfficerByAccountNo(accountNo);
 
         if (officer == null) {
             log.warn("No officer found for account number: {}", accountNo);
@@ -44,7 +44,7 @@ public class UpdateOfficerController {
 
        
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody Users user) {
+    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody Users user) {
         
         if (user.getUsername() == null || user.getUsername().isEmpty()) {
             return ResponseEntity.badRequest().body("Username cannot be null or empty");

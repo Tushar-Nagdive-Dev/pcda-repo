@@ -8,5 +8,4 @@ public class LoginRequestDTO {
     private String captchaToken;
     private String password;
     private String username;
-    
 }

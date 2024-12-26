@@ -1,7 +1,5 @@
 package com.inn.pcda.users.dto;
 
-
-
 public record ResponseRegistrationDTO(
     String officer_name,
     String username,

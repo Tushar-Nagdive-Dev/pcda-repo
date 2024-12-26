@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
+import com.inn.pcda.users.dto.OfficerDetailsDTO;
 import com.inn.pcda.users.dto.RegistrationRequestDTO;
 import com.inn.pcda.users.entity.UserConfigs;
 import com.inn.pcda.users.entity.Users;
@@ -50,22 +50,21 @@ public class UserReLoginServiceImpl implements IUserReLoginService {
     private String senderId;
 
     @Override
-    public RegistrationRequestDTO getOfficerByAccountNo(String accountNo) {
-        return officerRepository.findByAccountNo(accountNo)
-                .map(this::mapToDTO)
-                .orElse(null);
+    public OfficerDetailsDTO getOfficerByAccountNo(String accountNo) {
+        return officerRepository.findByAccountNo(accountNo).map(this::mapToDTO).orElse(null);
     }
 
-    private RegistrationRequestDTO mapToDTO(Users officerEntity) {
-        RegistrationRequestDTO dto = new RegistrationRequestDTO();
-        //officerEntity.getId();
-       
-        dto.setUsername(officerEntity.getUsername());
-        dto.setOfficer_name(formatFullName(officerEntity.getFirstName(),officerEntity.getMiddleName(),officerEntity.getLastName()));
-        dto.setAccountno(officerEntity.getAccountNo());
-        dto.setPassword(officerEntity.getPassword());
-        dto.setEmail(officerEntity.getEmail());
-        return dto;
+    private OfficerDetailsDTO mapToDTO(Users officerEntity) {
+        return new OfficerDetailsDTO(
+            formatFullName(officerEntity.getFirstName(), officerEntity.getMiddleName(), officerEntity.getLastName()), 
+            officerEntity.getAccountNo(), 
+            officerEntity.getUsername(), 
+            officerEntity.getOldPassword(), 
+            "", 
+            "", 
+            "", 
+            officerEntity.getId()
+        );
     }
 
     private String formatFullName(String firstName, String middleName, String lastName) {

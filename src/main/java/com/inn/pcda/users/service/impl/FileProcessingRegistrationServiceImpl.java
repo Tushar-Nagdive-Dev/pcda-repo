@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -79,17 +80,35 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
         user.setAccountNo(dto.getAccountno());
         user.setTaskNo(dto.getTask_no());
         user.setOfficeCode("DEFAULT_CODE");
-        user.setFirstName(getNamePart(dto.getOfficer_name(), 0));
-        user.setMiddleName(getNamePart(dto.getOfficer_name(), 1));
-        user.setLastName(getNamePart(dto.getOfficer_name(), 2));
+        user.setFirstName(getNamePart(dto.getOfficer_name(), "first"));
+        user.setMiddleName(getNamePart(dto.getOfficer_name(), "middle"));
+        user.setLastName(getNamePart(dto.getOfficer_name(), "last"));
         user.setRole(getDefaultRole());
         return user;
     }
 
-    private String getNamePart(String fullName, int index) {
-        if (fullName == null || fullName.trim().isEmpty()) return index == 0 ? "Unknown" : null;
+    private String getNamePart(String fullName, String part) {
+        if (fullName == null || fullName.trim().isEmpty()) {
+            return part.equals("first") ? "Unknown" : null;
+        }
+    
         String[] parts = fullName.trim().split("\\s+");
-        return parts.length > index ? parts[index] : null;
+        
+        switch (part) {
+            case "first":
+                return parts[0]; // Always the first part
+            case "last":
+                return parts[parts.length - 1]; // Always the last part
+            case "middle":
+                if (parts.length > 2) {
+                    // Join the middle parts into a single string
+                    return String.join(" ", Arrays.copyOfRange(parts, 1, parts.length - 1));
+                } else {
+                    return ""; // No middle name
+                }
+            default:
+                return null; // Invalid part request
+        }
     }
 
     private Roles getDefaultRole() {
