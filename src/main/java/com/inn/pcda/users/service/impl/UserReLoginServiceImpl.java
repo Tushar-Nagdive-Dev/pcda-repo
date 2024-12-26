@@ -13,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.inn.pcda.users.dto.OfficerDetailsDTO;
-import com.inn.pcda.users.dto.RegistrationRequestDTO;
 import com.inn.pcda.users.entity.UserConfigs;
 import com.inn.pcda.users.entity.Users;
 import com.inn.pcda.users.repository.UserConfigRepository;
