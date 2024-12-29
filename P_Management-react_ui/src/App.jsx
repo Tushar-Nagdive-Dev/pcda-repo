@@ -48,6 +48,8 @@ import AdminDownloadForm from './pages/Admin/Download/AdminDownloadForm.jsx'
 import AdminEditDownloadForm from './pages/Admin/Download/AdminEditDownloadForm.jsx'
 import AdminDownloadTableList from './pages/Admin/Download/AdminDownloadTableList.jsx'
 import AdminManageOfficer from './pages/Admin/ManageOfficer/AdminManageOfficer.jsx'
+import AdminUploadOfficerFile from './pages/Admin/ManageOfficer/AdminUploadOfficerFile.jsx'
+import AdminOfficerResetAccount from './pages/Admin/ManageOfficer/AdminOfficerResetAccount.jsx'
 
 /* User */
 import UserLoginComponent from './pages/UserPanel/UserLoginComponent.jsx'
@@ -56,8 +58,9 @@ import UserPanelLayout from './pages/UserPanel/Layout/UserPanelLayout.jsx'
 import UserProtectPrivateRoute from './auth/UserProtectPrivateRoute.jsx'
 import UserDashboard from './pages/UserPanel/Dashboard/UserDashboard.jsx'
 import UserTwoFA from './pages/UserPanel/2FA/UserTwoFA.jsx'
-import AdminUploadOfficerFile from './pages/Admin/ManageOfficer/AdminUploadOfficerFile.jsx'
-import AdminOfficerResetAccount from './pages/Admin/ManageOfficer/AdminOfficerResetAccount.jsx'
+// import PCDAOHandbook from './components/common/PDFBookFlip/PCDAOHandbook.jsx'
+
+
 
 const websiteTitle = 'Welcome to PCDA(O) Pune '
 
@@ -86,6 +89,7 @@ const routes = [
    { path: '/appreciations', element: <Appreciations /> },
    { path: '/sparsh', element: <SparshDetails /> },
    { path: '/news', element: <NewsLists /> },
+//    { path: "/handbook", element: <PCDAOHandbook />}
   ],
  },
  { path: '/pcdao-login', element: <AdminLoginComponent /> },
