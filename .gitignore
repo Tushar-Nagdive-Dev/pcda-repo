@@ -36,3 +36,4 @@ node
 *.zip
 uploads
 gallery-files/
+database_sample
