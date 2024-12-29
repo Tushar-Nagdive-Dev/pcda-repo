@@ -72,7 +72,7 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
     }
 
     private Users mapToUserEntity(RegistrationRequestDTO dto) {
-        String username = generateUsername(dto.getOfficer_name());
+        String username = generateRandomString();
         String password = generateRandomString();
         Users user = new Users();
         user.setUsername(dto.getUsername() != null ? dto.getUsername() : username);
@@ -88,31 +88,6 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
         user.setRole(getDefaultRole());
         return user;
     }
-
-    private String generateUsername(String officerName) {
-    // Get the current timestamp with abbreviated year and month
-        LocalDateTime now = LocalDateTime.now();
-        String abbreviatedYear = "2K" + (now.getYear() % 100); // Example: 2024 -> 2K24
-        String abbreviatedMonth = now.getMonth().name().substring(0, 3).toUpperCase(); // Example: FEB
-        String day = String.format("%02d", now.getDayOfMonth()); // Example: 26
-        String time = now.format(DateTimeFormatter.ofPattern("HHmmss")); // Example: 123456
-
-        // Construct timestamp as YEAR_MONTH_DAY_TIME
-        String timestamp = abbreviatedYear + abbreviatedMonth + day + time;
-
-        if (officerName == null || officerName.trim().isEmpty()) {
-            return "user" + timestamp;
-        }
-        String[] parts = officerName.trim().split("\\s+");
-        String firstName = capitalize(parts[0]); // Capitalize the first part
-        return firstName + timestamp; // Combine first name with timestamp
-    }
-
-    private String capitalize(String input) {
-        if (input == null || input.isEmpty()) return input;
-        return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
-    }
-
 
     private String getNamePart(String fullName, String part) {
         if (fullName == null || fullName.trim().isEmpty()) {

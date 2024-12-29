@@ -69,14 +69,14 @@ public class SecurityConfig {
                     "/news-and-notifications/**",
                     "/doc-download/**",
                     "/api/registration-processing/**",
-                  
+                    "/api/officer/**",
                 // swagger access
                     "/swagger-ui/**", 
                     "/v3/api-docs/**", 
                     "/swagger-resources/**", 
                     "/webjars/**",
-                    "/swagger-ui.html"
-
+                    "/swagger-ui.html",
+                    "/api/opt/**"
                 ).permitAll()
                 .anyRequest().authenticated())
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

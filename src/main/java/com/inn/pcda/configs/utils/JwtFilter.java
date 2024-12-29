@@ -60,4 +60,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        // Bypass JWT validation for public endpoints
+        String path = request.getRequestURI();
+        return path.startsWith("/api/officer/sendOtp");
+    }
+
 }

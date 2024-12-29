@@ -1,17 +1,19 @@
 package com.inn.pcda.users.service.impl;
 
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.inn.pcda.configs.baseimplementation.AESUtil;
 import com.inn.pcda.users.dto.OfficerDetailsDTO;
 import com.inn.pcda.users.entity.UserConfigs;
 import com.inn.pcda.users.entity.Users;
@@ -28,167 +30,117 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class UserReLoginServiceImpl implements IUserReLoginService {
 
-
-    private final UserRepository officerRepository;
-    private final PasswordEncoder passwordEncoder;  
-  
-    private final  UserConfigRepository userConfigRepository;
-
-
-
-    @Value("${sms.gateway.url}")
-    private String smsGatewayUrl;
-
-    @Value("${sms.gateway.username}")
-    private String username;
-
-    @Value("${sms.gateway.pin}")
-    private String pin;
-
-    @Value("${sms.gateway.senderId}")
-    private String senderId;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserConfigRepository userConfigRepository;
+    private final AESUtil aesUtil;
 
     @Override
     public OfficerDetailsDTO getOfficerByAccountNo(String accountNo) {
-        return officerRepository.findByAccountNo(accountNo).map(this::mapToDTO).orElse(null);
+        return userRepository.findByAccountNo(accountNo).map(this::mapToDTO).orElse(null);
     }
-
-    private OfficerDetailsDTO mapToDTO(Users officerEntity) {
-        return new OfficerDetailsDTO(
-            formatFullName(officerEntity.getFirstName(), officerEntity.getMiddleName(), officerEntity.getLastName()), 
-            officerEntity.getAccountNo(), 
-            officerEntity.getUsername(), 
-            officerEntity.getOldPassword(), 
-            "", 
-            "", 
-            "", 
-            officerEntity.getId()
-        );
-    }
-
-    private String formatFullName(String firstName, String middleName, String lastName) {
-        return String.join(" ", firstName != null ? firstName : "", middleName != null ? middleName : "", lastName != null ? lastName : "").trim();
-    }   
-
 
     @Transactional
     @Override
-    public Users updateUser(Users user) {
-     
-        Users existingUser = officerRepository.findById(user.getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        updateUserDetails(existingUser, user);
-    
-        // Save updated user
-        officerRepository.save(existingUser);
-        UserConfigs userConfig = userConfigRepository.findByUser(existingUser);
-        if (userConfig == null) {
-            // If UserConfig does not exist, create a new one
-            userConfig = new UserConfigs();
-            userConfig.setUser(existingUser);
-            initializeUserConfig(userConfig);
-    
-            // Save the new UserConfig
-            userConfigRepository.save(userConfig);
-        }else {
+    public Users updateUser(OfficerDetailsDTO officerDetailsDTO) {
+        Users user = userRepository.findById(officerDetailsDTO.userId()).orElseThrow(() -> new RuntimeException("Officer not found"));
 
+        updateUserDetails(user, officerDetailsDTO);
+        userRepository.save(user);
+
+        UserConfigs userConfig = Optional.ofNullable(userConfigRepository.findByUser(user)).orElseGet(() -> initializeNewUserConfig(user));
+        updateUserConfig(userConfig, officerDetailsDTO);
+
+        userConfigRepository.save(userConfig);
+        return user;
+    }
+
+    private OfficerDetailsDTO mapToDTO(Users user) throws RuntimeException{
+        try {
+            return new OfficerDetailsDTO(
+                    formatFullName(user.getFirstName(), user.getMiddleName(), user.getLastName()),
+                    user.getAccountNo(),
+                    user.getUsername(),
+                    aesUtil.decrypt(user.getOldPassword()),
+                    "",
+                    "",
+                    "",
+                    user.getId()
+            );
+        } catch (Exception e) {
+            log.error("Error Occured inside @class UserReLoginServiceImpl @method", e);
+            throw new RuntimeException(e.getMessage());
         }
-        return existingUser;
     }
 
-    
-    
-    private void updateUserDetails(Users existingUser, Users user) {
-        // Update the existing user's properties with the new values
-        existingUser.setOfficeCode(user.getOfficeCode());
-        existingUser.setUsername(user.getUsername());
-        existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        existingUser.setOldPassword(user.getPassword());
-        existingUser.setRole(user.getRole());
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setMiddleName(user.getMiddleName());
-        existingUser.setLastName(user.getLastName());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setAccountNo(user.getAccountNo());
-        existingUser.setTaskNo(user.getTaskNo());
-        existingUser.setIsOldPassword(user.getIsOldPassword());
-    }
-    
-    private void initializeUserConfig(UserConfigs userConfig) {
-        // Set default values for the new UserConfig
-        userConfig.setQuestion(""); 
-        userConfig.setAnswer(""); 
-        userConfig.setPasswordCounter(0); 
-        userConfig.setLastForgetDate(null);
-        userConfig.setLastPasswordDate(null);
-        userConfig.setPasswordResetStatus('N');
-        userConfig.setTermAndCondition('y');
-        userConfig.setLastLogin(null);
-        userConfig.setEmailOtp("");
-        userConfig.setMobileOtp("");
-        userConfig.setEmailOtpCreated(null);
-        userConfig.setMobileOtpCreated(null);
-        userConfig.setEmailVerifiedCount(0);
-        userConfig.setMobileVerifiedCount(0);
-        userConfig.setEmailVerifiedAt(null);
-        userConfig.setMobileVerifiedAt(null);
-        userConfig.setAuthData("");
-        userConfig.setOtp("");
-        userConfig.setOtpCreatedAt(null);
-        userConfig.setForgotOtp("");
-        userConfig.setForgotOtpCreated(null);
-        userConfig.setAuthDataOld("");
-        userConfig.setResetOtp("");
-        userConfig.setResetOtpCreated(null);
+    private String formatFullName(String firstName, String middleName, String lastName) {
+        return String.join(" ", 
+                Optional.ofNullable(firstName).orElse(""),
+                Optional.ofNullable(middleName).orElse(""),
+                Optional.ofNullable(lastName).orElse("")
+        ).trim();
     }
 
-
-
-    @Override
-    public String sendOtp(String mobileNumber) {
-    try {
-        String otp = generateOtp();
-        String message = "Your OTP is: " + otp;
-        message = URLEncoder.encode(message, "UTF-8");
-
-        // Ensure that smsGatewayUrl has the correct endpoint
-        String apiUrl = smsGatewayUrl + "username=" + username + "&pin=" + pin + "&signature=" + senderId + "&mnumber=" + mobileNumber + "&message=" + message;
-
-        // Call the sendSms method with the correct API URL
-        return sendSms(apiUrl);
-    } catch (Exception e) {
-        e.printStackTrace();
-        return "Failed to send OTP: " + e.getMessage();
+    private void updateUserDetails(Users user, OfficerDetailsDTO dto) {
+        try {
+            user.setUsername(dto.username());
+            user.setPassword(passwordEncoder.encode(dto.password()));
+            user.setOldPassword(aesUtil.encrypt(dto.password()));
+            String[] nameParts = parseFullName(dto.officerName());
+            user.setFirstName(nameParts[0]);
+            user.setMiddleName(nameParts[1]);
+            user.setLastName(nameParts[2]);
+        } catch (Exception e) {
+            log.error("Error updating user details", e);
+            throw new RuntimeException("Failed to update user details: " + e.getMessage());
+        }
     }
-}
 
+    private UserConfigs initializeNewUserConfig(Users user) {
+        UserConfigs userConfig = new UserConfigs();
+        userConfig.setUser(user);
+        return userConfig;
+    }
+
+    private void updateUserConfig(UserConfigs userConfig, OfficerDetailsDTO dto) {
+        try {
+            userConfig.setQuestion(dto.securityQuestion());
+            userConfig.setAnswer(aesUtil.encrypt(dto.securityAnswer()));
+            userConfig.setPasswordCounter(0);
+            userConfig.setPasswordResetStatus('N');
+            userConfig.setTermAndCondition('Y');
+        } catch (Exception e) {
+            log.error("Error updating user config", e);
+            throw new RuntimeException("Failed to update user config: " + e.getMessage());
+        }
+    }
 
     private String generateOtp() {
-        Random rand = new Random();
-        int otp = rand.nextInt(999999); 
-        return String.format("%06d", otp);
+        return String.format("%06d", new Random().nextInt(999999));
     }
 
     private String sendSms(String apiUrl) throws Exception {
-        URL url = new URL(apiUrl);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        HttpURLConnection conn = (HttpURLConnection) new URL(apiUrl).openConnection();
         conn.setRequestMethod("GET");
-        conn.setDoOutput(true);
-    
-        int responseCode = conn.getResponseCode(); // Get the HTTP response code
+
+        int responseCode = conn.getResponseCode();
         if (responseCode != HttpURLConnection.HTTP_OK) {
             return "Failed to send OTP. HTTP error code: " + responseCode;
         }
-    
-        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        StringBuilder response = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            response.append(line);
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+            StringBuilder response = new StringBuilder();
+            reader.lines().forEach(response::append);
+            return "OTP sent successfully: " + response;
         }
-        rd.close();
-    
-        return "OTP sent successfully: " + response.toString();
     }
-    
+
+    private String[] parseFullName(String fullName) {
+        String[] parts = Optional.ofNullable(fullName).orElse("").trim().split("\\s+");
+        return new String[]{
+                parts.length > 0 ? parts[0] : "Unknown",
+                parts.length > 2 ? String.join(" ", Arrays.copyOfRange(parts, 1, parts.length - 1)) : "",
+                parts.length > 1 ? parts[parts.length - 1] : ""
+        };
+    }
 }

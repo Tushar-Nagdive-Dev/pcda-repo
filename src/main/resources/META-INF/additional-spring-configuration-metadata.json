@@ -48,5 +48,40 @@
     "name": "file.external.docDownload.path",
     "type": "java.lang.String",
     "description": "A description for 'file.external.docDownload.path'"
+  },
+  {
+    "name": "sms.gateway.url",
+    "type": "java.lang.String",
+    "description": "SMS from NIC Gateway 'sms.gateway.url'"
+  },
+  {
+    "name": "sms.gateway.username",
+    "type": "java.lang.String",
+    "description": "username for 'sms.gateway.username'"
+  },
+  {
+    "name": "sms.gateway.pin",
+    "type": "java.lang.String",
+    "description": "Pin for 'sms.gateway.pin'"
+  },
+  {
+    "name": "sms.gateway.senderId",
+    "type": "java.lang.String",
+    "description": "Sender ID for 'sms.gateway.senderId'"
+  },
+  {
+    "name": "sms.gateway.dltEntityId",
+    "type": "java.lang.String",
+    "description": "A EntityId for 'sms.gateway.dltEntityId'"
+  },
+  {
+    "name": "sms.gateway.dltTemplateId",
+    "type": "java.lang.String",
+    "description": "A Template for 'sms.gateway.dltTemplateId'"
+  },
+  {
+    "name": "sms.gateway.dltTemplateId",
+    "type": "java.lang.String",
+    "description": "A description for 'sms.gateway.dltTemplateId'"
   }
 ]}

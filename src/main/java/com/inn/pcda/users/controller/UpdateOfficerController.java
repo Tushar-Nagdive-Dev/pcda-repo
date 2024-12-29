@@ -1,17 +1,18 @@
 package com.inn.pcda.users.controller;
 
+import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.inn.pcda.common.service.IEmailService;
+import com.inn.pcda.common.service.ISMSService;
 import com.inn.pcda.users.dto.OfficerDetailsDTO;
-import com.inn.pcda.users.entity.Users;
 import com.inn.pcda.users.service.IUserReLoginService;
 
 
@@ -24,50 +25,37 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class UpdateOfficerController {
 
-  private final IUserReLoginService userReLoginService;
+    private final IUserReLoginService userReLoginService;
 
     @GetMapping("/{accountNo}")
     public ResponseEntity<OfficerDetailsDTO> getOfficerByAccountNo(@PathVariable String accountNo) {
-        log.info("Fetching officer details for account number: {}", accountNo);
-
-        OfficerDetailsDTO officer = userReLoginService.getOfficerByAccountNo(accountNo);
-
-        if (officer == null) {
-            log.warn("No officer found for account number: {}", accountNo);
-            return ResponseEntity.notFound().build();
-        }
-
-        log.info("Officer details retrieved for account number: {}", accountNo);
-        return ResponseEntity.ok(officer);
+        return Optional.ofNullable(userReLoginService.getOfficerByAccountNo(accountNo))
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-
-       
-    @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody Users user) {
-        
-        if (user.getUsername() == null || user.getUsername().isEmpty()) {
-            return ResponseEntity.badRequest().body("Username cannot be null or empty");
-        }
-        if (user.getEmail() == null || user.getEmail().isEmpty()) {
-            return ResponseEntity.badRequest().body("Email cannot be null or empty");
-        }
-          
-        user.setId(id);
-          
-       userReLoginService.updateUser(user);
-    
-        return ResponseEntity.ok("User updated successfully");
-    }
-    
-
-    @PostMapping("/send")
-    public String sendOtp(@RequestParam String mobileNumber) {
+    @PutMapping("/{userId}")
+    public ResponseEntity<Boolean> updateOfficer(@PathVariable Long userId, @RequestBody OfficerDetailsDTO officerDto) {
         try {
-            return userReLoginService.sendOtp(mobileNumber);
+            userReLoginService.updateUser(officerDto);
+            return ResponseEntity.ok(true);
         } catch (Exception e) {
-            return "Error sending OTP: " + e.getMessage();
+            log.error("Error updating officer", e);
+            return ResponseEntity.internalServerError().body(false);
         }
     }
-    
+
+    // @GetMapping("/sendOtp/{mobileNumber}")
+    // public ResponseEntity<String> sendOtp(@PathVariable String mobileNumber) {
+    //     log.info("Request to send OTP to: {}", mobileNumber);
+    //     String response = iSMSService.sendOtp(mobileNumber);
+    //     return ResponseEntity.ok(response);
+    // }
+
+    // @PostMapping("/sendOtp/email")
+    // public ResponseEntity<String> sendOtpByEmail(@RequestParam String email) {
+    //     log.info("Request to send OTP to email: {}", email);
+    //     String response = iEmailService.sendOtp(email);
+    //     return ResponseEntity.ok(response);
+    // }
 }
