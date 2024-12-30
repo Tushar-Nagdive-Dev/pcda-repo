@@ -13,6 +13,10 @@ import com.inn.pcda.users.repository.RoleRepository;
 import com.inn.pcda.users.repository.UserRepository;
 import com.inn.pcda.users.service.IFileProcessingRegistrationService;
 
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,9 +25,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -36,6 +41,7 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final Validator validator;
 
     @Override
     public String processFile(MultipartFile file) throws IOException {
@@ -45,10 +51,30 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
 
         List<RegistrationRequestDTO> registrationRequestDTOs = parseFile(file);
 
+        // Validate all records
+        validateRequestData(registrationRequestDTOs);
+
         registrationRequestDTOs.forEach(this::processUser);
 
         log.info("File processing completed for {} records.", registrationRequestDTOs.size());
         return "File successfully processed and data saved to User table!";
+    }
+
+    private void validateRequestData(List<RegistrationRequestDTO> registrationRequestDTOs) {
+        for (RegistrationRequestDTO dto : registrationRequestDTOs) {
+            Set<ConstraintViolation<RegistrationRequestDTO>> violations = validator.validate(dto);
+
+            if (!violations.isEmpty()) {
+                StringBuilder errorMessages = new StringBuilder();
+                for (ConstraintViolation<RegistrationRequestDTO> violation : violations) {
+                    errorMessages.append(violation.getPropertyPath())
+                                .append(" - ")
+                                .append(violation.getMessage())
+                                .append("; ");
+                }
+                throw new FileProcessingException("Validation failed: " + errorMessages.toString());
+            }
+        }
     }
 
     private List<RegistrationRequestDTO> parseFile(MultipartFile file) throws IOException {
@@ -114,8 +140,8 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
     }
 
     private Roles getDefaultRole() {
-        return roleRepository.findById(1L)
-                .orElseThrow(() -> new FileProcessingException("Default role not found with ID: 1"));
+        return roleRepository.findById(2L)
+                .orElseThrow(() -> new FileProcessingException("Default role not found with ID: 2"));
     }
 
     private String generateRandomString() {
@@ -125,21 +151,6 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
     @Override
     public List<ResponseRegistrationDTO> downloadAllDataAsJson() {
         return userRepository.findAll().stream().map(this::mapToResponseDto).collect(Collectors.toList());
-    }
-
-    private ResponseRegistrationDTO mapToResponseDto(Users user) {
-        return new ResponseRegistrationDTO(
-                formatFullName(user.getFirstName(), user.getMiddleName(), user.getLastName()),
-                user.getUsername(),
-                user.getOldPassword(),
-                user.getEmail(),
-                user.getAccountNo(),
-                user.getTaskNo()
-        );
-    }
-
-    private String formatFullName(String firstName, String middleName, String lastName) {
-        return String.join(" ", firstName != null ? firstName : "", middleName != null ? middleName : "", lastName != null ? lastName : "").trim();
     }
 
     @Override
@@ -172,6 +183,107 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
         user.setOldPassword(newPassword); // Optional: store the current password as old
         userRepository.save(user);
         log.info("Password updated successfully for user: {}", user.getUsername());
+    }
+
+    /**
+     * Prepares and writes JSON data to the HTTP response for a given date range.
+     *
+     * @param startDate the start date in ISO-8601 format
+     * @param endDate   the end date in ISO-8601 format
+     * @param response  the HTTP servlet response
+     */
+    @Override
+    public void prepareAndWriteJsonResponse(String startDate, String endDate, HttpServletResponse response) throws IOException {
+        log.info("Processing request to fetch data from {} to {}", startDate, endDate);
+
+        // Parse and validate date range
+        LocalDateTime startDateTime;
+        LocalDateTime endDateTime;
+        try {
+            startDateTime = LocalDateTime.parse(startDate);
+            endDateTime = LocalDateTime.parse(endDate);
+        } catch (DateTimeParseException e) {
+            log.error("Invalid date format: StartDate={}, EndDate={}", startDate, endDate, e);
+            throw new IllegalArgumentException("Invalid date format. Use ISO-8601 format (yyyy-MM-dd'T'HH:mm:ss).", e);
+        }
+
+        if (startDateTime.isAfter(endDateTime)) {
+            log.error("Start date {} is after end date {}", startDate, endDate);
+            throw new IllegalArgumentException("Start date must be before end date.");
+        }
+
+        // Fetch data
+        List<ResponseRegistrationDTO> data = fetchDataByDateRange(startDateTime, endDateTime);
+        log.info("Fetched {} records for range: {} to {}", data.size(), startDate, endDate);
+
+        // Convert data to JSON
+        String jsonData = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
+
+        // Write JSON data to response
+        writeJsonToResponse(jsonData, response);
+        log.info("JSON response written successfully for range: {} to {}", startDate, endDate);
+    }
+
+    /**
+     * Fetches data for a given date range.
+     *
+     * @param startDateTime the start date
+     * @param endDateTime   the end date
+     * @return list of data DTOs
+     */
+    private List<ResponseRegistrationDTO> fetchDataByDateRange(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return userRepository.findAllByCreatedDateBetween(startDateTime, endDateTime)
+                .stream()
+                .map(this::mapToResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Writes JSON data to the HTTP servlet response.
+     *
+     * @param jsonData the JSON data to write
+     * @param response the HTTP servlet response
+     * @throws IOException if an I/O error occurs
+     */
+    private void writeJsonToResponse(String jsonData, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
+        response.setHeader("Content-Disposition", "attachment; filename=data.json");
+        try (ServletOutputStream outputStream = response.getOutputStream()) {
+            outputStream.write(jsonData.getBytes());
+            outputStream.flush();
+        }
+    }
+
+    /**
+     * Maps a User entity to a ResponseRegistrationDTO.
+     *
+     * @param user the User entity
+     * @return the mapped DTO
+     */
+    private ResponseRegistrationDTO mapToResponseDto(Users user) {
+        return new ResponseRegistrationDTO(
+                formatFullName(user.getFirstName(), user.getMiddleName(), user.getLastName()),
+                user.getUsername(),
+                user.getOldPassword(),
+                user.getEmail(),
+                user.getAccountNo(),
+                user.getTaskNo()
+        );
+    }
+
+    /**
+     * Formats a full name from first, middle, and last names.
+     *
+     * @param firstName  the first name
+     * @param middleName the middle name
+     * @param lastName   the last name
+     * @return the formatted full name
+     */
+    private String formatFullName(String firstName, String middleName, String lastName) {
+        return String.join(" ",
+                firstName != null ? firstName : "",
+                middleName != null ? middleName : "",
+                lastName != null ? lastName : "").trim();
     }
 
 }

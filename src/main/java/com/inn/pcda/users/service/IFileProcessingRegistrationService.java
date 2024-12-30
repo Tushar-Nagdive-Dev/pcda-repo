@@ -9,6 +9,8 @@ import com.inn.pcda.users.dto.ResetPasswordResponseDTO;
 import com.inn.pcda.users.dto.ResponseRegistrationDTO;
 import com.inn.pcda.users.dto.TableResponseDTO;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 public interface IFileProcessingRegistrationService {
 
 	String processFile(MultipartFile file) throws IOException;
@@ -20,4 +22,6 @@ public interface IFileProcessingRegistrationService {
     public ResetPasswordResponseDTO getUserById(Long id);
 
     public void updatePassword(Long id, String newPassword);
+
+    public void prepareAndWriteJsonResponse(String startDate, String endDate, HttpServletResponse response) throws IOException;
 }

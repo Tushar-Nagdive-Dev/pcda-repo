@@ -126,4 +126,22 @@ public class FileProcessingRegistrationController {
                     .body("Error resetting password: " + e.getMessage());
         }
     }
+
+    @GetMapping("/downloadInRange")
+    public void downloadDataInRange(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate,
+            HttpServletResponse response) {
+        log.info("Received request to download data between {} and {}", startDate, endDate);
+
+        try {
+            fileProcessingService.prepareAndWriteJsonResponse(startDate, endDate, response);
+            log.info("Data successfully downloaded for range: {} to {}", startDate, endDate);
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid request parameters: {}", e.getMessage());
+            throw e; // Or return ResponseEntity with proper status and message if applicable
+        } catch (IOException e) {
+            log.error("Error writing data to response: {}", e.getMessage());
+            throw new RuntimeException("Failed to download JSON file", e);
+        }
+    }
+
 }
