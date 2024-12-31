@@ -7,8 +7,11 @@ import com.inn.pcda.users.dto.RegistrationRequestDTO;
 import com.inn.pcda.users.dto.ResetPasswordResponseDTO;
 import com.inn.pcda.users.dto.ResponseRegistrationDTO;
 import com.inn.pcda.users.dto.TableResponseDTO;
+import com.inn.pcda.users.entity.RegisterUserJsonFileMetadata;
 import com.inn.pcda.users.entity.Roles;
 import com.inn.pcda.users.entity.Users;
+import com.inn.pcda.users.entity.RegisterUserJsonFileMetadata.Status;
+import com.inn.pcda.users.repository.RegisterUserJsonFileMetaRepository;
 import com.inn.pcda.users.repository.RoleRepository;
 import com.inn.pcda.users.repository.UserRepository;
 import com.inn.pcda.users.service.IFileProcessingRegistrationService;
@@ -42,6 +45,8 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final Validator validator;
+    private final AsyncFileProcessingService asyncFileProcess;
+    private final RegisterUserJsonFileMetaRepository metaRepository;
 
     @Override
     public String processFile(MultipartFile file) throws IOException {
@@ -54,6 +59,15 @@ public class FileProcessingRegistrationServiceImpl implements IFileProcessingReg
         // Validate all records
         validateRequestData(registrationRequestDTOs);
 
+        if(registrationRequestDTOs.size() > 100) {
+            log.info("Large file detected: {} records. Processing asynchronously.", registrationRequestDTOs.size());
+            RegisterUserJsonFileMetadata metadata = new RegisterUserJsonFileMetadata();
+            metadata.setFilename(file.getOriginalFilename());
+            metadata.setTotalRecords(registrationRequestDTOs.size());
+            metadata.setStatus(Status.Processing);
+            metadata = metaRepository.save(metadata);
+            asyncFileProcess.processLargeFileAsync(metadata.getFilename(), metadata.getId(), registrationRequestDTOs);
+        }
         registrationRequestDTOs.forEach(this::processUser);
 
         log.info("File processing completed for {} records.", registrationRequestDTOs.size());
